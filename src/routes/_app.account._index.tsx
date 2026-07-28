@@ -95,6 +95,7 @@ function AccountDetailsContent({
     const [isEditingProfile, setIsEditingProfile] = useState(false);
     const [isEditingPassword, setIsEditingPassword] = useState(false);
     const [isEditingEmail, setIsEditingEmail] = useState(false);
+    const profileFormRef = useRef<HTMLDivElement | null>(null);
     // Optimistic profile values shown after save until the server customer prop refreshes.
     const [profileOverride, setProfileOverride] = useState<Partial<Customer> | null>(null);
 
@@ -112,6 +113,17 @@ function AccountDetailsContent({
     useEffect(() => {
         setProfileOverride(null);
     }, [customer]);
+
+    useEffect(() => {
+        if (isEditingProfile) {
+            requestAnimationFrame(() => {
+                const el = profileFormRef.current?.querySelector<HTMLElement>(
+                    'input:not([type="hidden"]), textarea, select'
+                );
+                el?.focus();
+            });
+        }
+    }, [isEditingProfile]);
 
     const { addToast } = useToast();
     const updatePasswordLoginFetcher = useFetcher();
@@ -442,6 +454,10 @@ function AccountDetailsContent({
                     // Email is used as loginId in SFCC; after an email update the current session
                     // USID is tied to the old identity. Skip it so SLAS issues a fresh session.
                     skipUsid: 'true',
+                    // Background re-auth: keep this a client-side redirect. A document reload
+                    // (used on the login page to dismiss the passkey picker) would unmount the
+                    // page before the success toast queued above can render.
+                    skipDocumentRedirect: 'true',
                 },
                 {
                     method: 'POST',
@@ -594,6 +610,10 @@ function AccountDetailsContent({
                     password: formData.password,
                     loginMode: 'password',
                     returnUrl: accountUrl,
+                    // Background re-auth: keep this a client-side redirect. A document reload
+                    // (used on the login page to dismiss the passkey picker) would unmount the
+                    // page before the success toast queued above can render.
+                    skipDocumentRedirect: 'true',
                 },
                 {
                     method: 'POST',
@@ -693,21 +713,23 @@ function AccountDetailsContent({
 
                 <CardContent className="pt-6">
                     {isEditingProfile ? (
-                        <CustomerProfileForm
-                            formId="customer-profile-form"
-                            hideActions
-                            initialData={{
-                                firstName: displayCustomer?.firstName || '',
-                                lastName: displayCustomer?.lastName || '',
-                                phone: displayCustomer?.phoneHome || displayCustomer?.phoneMobile || '',
-                                gender: displayCustomer?.gender !== undefined ? String(displayCustomer.gender) : '',
-                                birthday: displayCustomer?.birthday || '',
-                            }}
-                            updateFetcher={updateProfileFetcher}
-                            onSuccess={handleCustomerProfileSuccess}
-                            onError={handleCustomerProfileError}
-                            onCancel={handleCustomerProfileCancel}
-                        />
+                        <div ref={profileFormRef}>
+                            <CustomerProfileForm
+                                formId="customer-profile-form"
+                                hideActions
+                                initialData={{
+                                    firstName: displayCustomer?.firstName || '',
+                                    lastName: displayCustomer?.lastName || '',
+                                    phone: displayCustomer?.phoneHome || displayCustomer?.phoneMobile || '',
+                                    gender: displayCustomer?.gender !== undefined ? String(displayCustomer.gender) : '',
+                                    birthday: displayCustomer?.birthday || '',
+                                }}
+                                updateFetcher={updateProfileFetcher}
+                                onSuccess={handleCustomerProfileSuccess}
+                                onError={handleCustomerProfileError}
+                                onCancel={handleCustomerProfileCancel}
+                            />
+                        </div>
                     ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div className="space-y-2">

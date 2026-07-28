@@ -142,7 +142,8 @@
         "checkoutAsGuest": "Checkout as Guest",
         "resendCode": "Resend Code",
         "resendCodeTimer": "Resend in {{timer}}s",
-        "resendCodeError": "Failed to resend code. Please try again."
+        "resendCodeError": "Failed to resend code. Please try again.",
+        "passkeyError": "We couldn't sign you in with that passkey. Please try again or use another sign-in method."
     },
     "resetPassword": {
         "title": "Reset Password",
@@ -209,7 +210,7 @@
         }
     },
     "socialCallback": {
-        "socialError": "Social login was cancelled or failed. Try again."
+        "socialError": "Social login was canceled or failed. Try again."
     },
     "errors": {
         "genericTryAgain": "Something went wrong. Try again.",
@@ -288,7 +289,8 @@
             "registrationFailed": "Registration failed. Try again.",
             "autoLoginFailed": "Auto-login failed. Log in manually.",
             "autoLoginAfterRegistrationFailed": "Account was created but auto-login failed. Log in manually.",
-            "notAuthenticated": "Customer ID not found."
+            "notAuthenticated": "Customer ID not found.",
+            "loginAlreadyInUse": "Email address is already registered. Please use a different email or try logging in."
         },
         "passwordless": {
             "missingToken": "Missing token.",
@@ -316,6 +318,7 @@
         "quantityInput": "Quantity",
         "quantityUpdated": "Quantity updated",
         "quantityUpdateFailed": "Failed to update quantity",
+        "quantityForProduct": "Quantity for {{productName}}",
         "onlyLeft": "Only {{stockLevel}} left!",
         "onlyLeftForProduct": "Only {{stockLevel}} left for {{productName}}!",
         "maxStockReached": "Maximum stock reached",
@@ -466,7 +469,8 @@
             "lookupFallbackMessage": "Customer lookup failed. Continuing as guest.",
             "saveError": "Failed to save contact information",
             "sessionExpired": "Session expired. Sign in again.",
-            "verificationFailed": "We couldn't verify your information. Please try again."
+            "verificationFailed": "We couldn't verify your information. Please try again.",
+            "passkeyLoginFailed": "We couldn't sign you in with that passkey. Please try again or use another sign-in method."
         },
         "addressModal": {
             "title": "Add New Address",
@@ -711,7 +715,8 @@
                 "title": "Get 10% off your next order. Join email list.",
                 "subtitle": "Stay up to date on product drops and exclusive offers.",
                 "placeholder": "Email address",
-                "cta": "Join"
+                "cta": "Join",
+                "label": "Email address"
             },
             "summaryTitle": "Summary",
             "emptyItemsFallback": "Your items are being prepared.",
@@ -779,6 +784,7 @@
             "addresses": "Addresses",
             "manageAddresses": "Manage Addresses",
             "paymentMethods": "Payment Methods",
+            "passkeys": "Passkeys",
             "storePreferences": "Store Preferences",
             "logOut": "Log Out"
         },
@@ -960,7 +966,7 @@
                 "created": "Created",
                 "new": "New",
                 "completed": "Completed",
-                "cancelled": "Cancelled",
+                "cancelled": "Canceled",
                 "replaced": "Replaced",
                 "failed": "Failed"
             },
@@ -1028,27 +1034,27 @@
             "returnAvailableToReturn": "Up to {{count}} available to return",
             "returnQuantityLabel": "Quantity",
             "returnReasonFor": "Reason for {{name}}",
-            "returnReviewButton": "Review return",
+            "returnReviewButton": "Review Return",
             "returnBackButton": "Back",
-            "returnSubmitButton": "Submit return",
+            "returnSubmitButton": "Submit Return",
             "returnCancelButton": "Cancel",
             "returnReviewTitle": "Review your return",
-            "returnReviewSubtitle": "Confirm the items below. We'll email a return label once your request is submitted.",
-            "returnReviewSubtitleNoReasons": "Confirm the items below. A return reason will be assigned automatically, and we'll email a return label once your request is submitted.",
+            "returnReviewSubtitle": "Confirm these items. We'll email you a return label once your request is submitted.",
+            "returnReviewSubtitleNoReasons": "Confirm these items. A return reason will be assigned automatically, and we'll email you a return label once your request is submitted.",
             "returnReviewQuantity": "Quantity: {{count}}",
             "returnReviewReason": "Reason: {{reason}}",
             "returnSuccessTitle": "Return submitted",
-            "returnSuccessMessage": "We'll email a return label shortly.",
-            "returnError400InvalidReasonMessage": "The selected reason is no longer available. Please choose another.",
-            "returnError400UnknownItemsMessage": "One or more items couldn't be found on this order. Please refresh and try again.",
-            "returnError400QuantityMessage": "The quantity you selected exceeds what's available to return. Please adjust and try again.",
-            "returnError404Message": "We could not find this order. Please refresh and try again.",
-            "returnError409Message": "This order can't be returned right now. Please reach out to the merchant.",
-            "returnErrorGenericTitle": "Something went wrong",
-            "returnErrorGenericMessage": "We couldn't process your return right now. Please wait a moment and try again.",
+            "returnSuccessMessage": "We'll email you a return label shortly.",
+            "returnError400InvalidReasonMessage": "The selected reason is no longer available. Choose another reason.",
+            "returnError400UnknownItemsMessage": "We can't find one or more items on this order. Refresh and try again.",
+            "returnError400QuantityMessage": "The quantity you selected exceeds what's available to return. Adjust the quantity and try again.",
+            "returnError404Message": "We can't find this order. Refresh and try again.",
+            "returnError409Message": "This order can't be returned right now. Reach out to the merchant.",
+            "returnErrorGenericTitle": "Something went wrong.",
+            "returnErrorGenericMessage": "We couldn't process your return right now. Try again in a few minutes.",
             "returnReasonAutoAssigned": "A return reason will be assigned automatically.",
             "cancelOrder": "Cancel order",
-            "cancelUnavailable": "This order can no longer be cancelled.",
+            "cancelUnavailable": "This order can no longer be canceled.",
             "cancelDialogTitle": "Cancel order {{orderNo}}",
             "cancelDialogSubtitle": "Select a reason and confirm cancellation.",
             "cancelDialogSubtitleNoReasons": "Confirm cancellation below.",
@@ -1057,13 +1063,13 @@
             "cancelReasonPlaceholder": "Select a reason (optional)",
             "cancelKeepOrder": "Keep order",
             "cancelConfirm": "Confirm cancellation",
-            "cancelConfirmSubmitting": "Cancelling…",
-            "cancelSuccessTitle": "Order cancelled",
-            "cancelSuccessDescription": "Your order was cancelled successfully.",
+            "cancelConfirmSubmitting": "Canceling…",
+            "cancelSuccessTitle": "Order canceled",
+            "cancelSuccessDescription": "Your order was canceled successfully.",
             "cancelErrorNotFoundTitle": "Unable to cancel order",
             "cancelErrorNotFoundDescription": "We could not find this order. Please refresh and try again.",
             "cancelErrorConflictTitle": "Unable to cancel order",
-            "cancelErrorConflictDescription": "This order is already being processed and cannot be cancelled. Please reach out to the merchant.",
+            "cancelErrorConflictDescription": "This order is already being processed and cannot be canceled. Please reach out to the merchant.",
             "cancelErrorGenericTitle": "Something went wrong",
             "cancelErrorGenericDescription": "We couldn't process your cancellation right now. Please wait a moment and try again."
         },
@@ -1198,7 +1204,8 @@
                 "emailInvalid": "Enter a valid email address.",
                 "phoneInvalid": "Enter a valid phone number.",
                 "birthdayFuture": "Date of birth cannot be in the future."
-            }
+            },
+            "phoneDescription": "Enter phone number including area code"
         },
         "email": {
             "title": "Email Address",
@@ -1284,6 +1291,50 @@
             "disclaimer": "By enabling these communication preferences, you agree to receive marketing communications from us, including exclusive offers, latest product information, and news about upcoming collections. See our Terms & Conditions and Privacy Policy for more details.",
             "updateError": "Failed to update marketing preference. Try again.",
             "partialSuccess": "Some preferences saved. Refresh to see current settings."
+        },
+        "passkeys": {
+            "pageTitle": "Passkeys",
+            "pageSubtitle": "Sign in faster and more securely using your face, fingerprint, or device PIN.",
+            "sectionTitle": "Your passkeys",
+            "sectionSubtitle": "Manage the passkeys registered to your account.",
+            "addPasskey": "Add Passkey",
+            "addDialogTitle": "Name your passkey",
+            "addDialogDescription": "Choose a name that helps you identify this passkey later, like the device or browser you're using.",
+            "passkeyNameLabel": "Passkey name",
+            "passkeyNamePlaceholder": "For example, Chrome on MacBook Pro",
+            "passkeyNameHint": "To rename this passkey after saving, you need to remove it and add it again.",
+            "nameRequired": "Please enter a name for this passkey.",
+            "nameTooLong": "Passkey name must be 128 characters or fewer.",
+            "addContinue": "Continue",
+            "otpStepTitle": "Verify your email",
+            "otpStepDescription": "Check your email for a {{otpLength}}-digit code. Enter it to verify your identity before creating the passkey.",
+            "otpCodeLabel": "Verification code",
+            "addSuccess": "Passkey was added.",
+            "addSuccessDescription": "Manage passkeys in My Account.",
+            "viewPasskeys": "View Passkeys",
+            "addedOn": "Added {{date}}",
+            "lastUsed": "Last used {{date}}",
+            "notUsedYet": "Not used yet",
+            "uses_one": "{{count}} use",
+            "uses_other": "{{count}} uses",
+            "newBadge": "New",
+            "unnamedPasskey": "Unnamed passkey",
+            "deletePasskeyAriaLabel": "Delete passkey {{name}}",
+            "deleteDialogTitle": "Remove passkey?",
+            "deleteDialogDescription": "After you remove \"{{name}}\", you can't use it to sign in.",
+            "deleteConfirm": "Remove",
+            "deleting": "Removing…",
+            "deleteSuccess": "Passkey removed.",
+            "deleteError": "Failed to remove passkey. Please try again.",
+            "empty": "No Saved Passkeys",
+            "emptyHint": "Add a passkey to sign in faster with your face, fingerprint, or device PIN.",
+            "loadError": "We couldn't load your passkeys. Please refresh the page to try again.",
+            "addError": "Passkey creation failed. Please try again.",
+            "notSupportedError": "Passkeys aren't supported in this app or device. Please try again in a different way.",
+            "unsupportedBrowser": "This browser doesn't support passkeys. Try updating it or use a different browser.",
+            "registerToastTitle": "Set up faster sign-in",
+            "registerToastDescription": "Create a passkey to sign in with your face, fingerprint, or device PIN — no password needed.",
+            "registerToastAction": "Create Passkey"
         }
     },
     "home": {
@@ -1666,6 +1717,15 @@
             "next": "Next",
             "nextPage": "Next page",
             "page": "Page {{number}}"
+        },
+        "loadMore": {
+            "button": "Load more",
+            "loading": "Loading…",
+            "retry": "Try again",
+            "status": "Showing {{loaded}} of {{total}}",
+            "error": "Something went wrong. Please try again.",
+            "end": "You've reached the end of the results",
+            "capReached": "You've viewed {{loaded}} products. Refine your filters to narrow down the results."
         }
     },
     "maintenancePage": {
@@ -1720,7 +1780,8 @@
             "viewAllReviews": "View all reviews",
             "distributionAriaLabel": "{{rating}} stars: {{count, number}} out of {{totalReviews, number}} reviews",
             "distributionsAriaLabel": "Star rating distribution, {{total, number}} total reviews",
-            "seeCustomerReviews": "See customer reviews >"
+            "seeCustomerReviews": "See customer reviews >",
+            "reviewCount": "{{count, number}} reviews"
         },
         "from": "from",
         "outOfStock": "Out of stock for {{productName}}",

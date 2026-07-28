@@ -39,6 +39,9 @@ import authMiddleware, {
     destroyAuth,
     flashAuth,
     clearInvalidSessionAndRestoreGuest,
+    startPasskeyAuthentication,
+    finishPasskeyAuthentication,
+    authorizePasskeyRegistration,
 } from './auth.server';
 import type { ShopperLogin } from '@/scapi';
 
@@ -70,6 +73,13 @@ const mockAuth = {
     otp: {
         request: vi.fn(),
         verify: vi.fn(),
+    },
+    webAuthn: {
+        authorizeRegistration: vi.fn(),
+        startRegistration: vi.fn(),
+        finishRegistration: vi.fn(),
+        startAuthentication: vi.fn(),
+        finishAuthentication: vi.fn(),
     },
 };
 
@@ -253,6 +263,11 @@ describe('auth middleware (server)', () => {
         mockAuth.password.reset.mockReset();
         mockAuth.otp.request.mockReset();
         mockAuth.otp.verify.mockReset();
+        mockAuth.webAuthn.authorizeRegistration.mockReset();
+        mockAuth.webAuthn.startRegistration.mockReset();
+        mockAuth.webAuthn.finishRegistration.mockReset();
+        mockAuth.webAuthn.startAuthentication.mockReset();
+        mockAuth.webAuthn.finishAuthentication.mockReset();
     });
 
     afterEach(() => {
@@ -912,6 +927,200 @@ describe('auth middleware (server)', () => {
                     email: expect.anything(),
                 })
             );
+        });
+    });
+
+    describe('startPasskeyAuthentication', () => {
+        it('should start passkey authentication without a userId', async () => {
+            const { provider } = mockContext();
+            const mockPublicKey = { challenge: 'challenge-1' };
+
+            mockAuth.webAuthn.startAuthentication.mockResolvedValue({
+                data: { publicKey: mockPublicKey },
+                response: {},
+            });
+
+            const result = await startPasskeyAuthentication(provider);
+
+            expect(result).toEqual({ publicKey: mockPublicKey });
+            expect(mockAuth.webAuthn.startAuthentication).toHaveBeenCalledWith({ userId: undefined });
+            expect(mockLogger.debug).toHaveBeenCalledWith('Auth: startPasskeyAuthentication starting');
+            expect(mockLogger.debug).toHaveBeenCalledWith('Auth: startPasskeyAuthentication succeeded');
+        });
+
+        it('should pass userId through when provided', async () => {
+            const { provider } = mockContext();
+            const mockPublicKey = { challenge: 'challenge-2' };
+
+            mockAuth.webAuthn.startAuthentication.mockResolvedValue({
+                data: { publicKey: mockPublicKey },
+                response: {},
+            });
+
+            await startPasskeyAuthentication(provider, { userId: 'shopper@example.com' });
+
+            expect(mockAuth.webAuthn.startAuthentication).toHaveBeenCalledWith({ userId: 'shopper@example.com' });
+        });
+
+        it('should throw and log on failure', async () => {
+            const { provider } = mockContext();
+            const mockError = new Error('SLAS unavailable');
+
+            mockAuth.webAuthn.startAuthentication.mockRejectedValue(mockError);
+
+            await expect(startPasskeyAuthentication(provider)).rejects.toThrow('SLAS unavailable');
+            expect(mockLogger.error).toHaveBeenCalledWith('Auth: startPasskeyAuthentication failed', {
+                error: mockError,
+            });
+        });
+    });
+
+    describe('finishPasskeyAuthentication', () => {
+        it('should finish passkey authentication and pass the current usid', async () => {
+            const { provider } = mockContext(getMockAuthData());
+            const mockCredential = { id: 'cred-1', type: 'public-key' };
+            const mockTokenResponse = getMockAuthResponse();
+
+            mockAuth.webAuthn.finishAuthentication.mockResolvedValue(mockTokenResponse);
+
+            const result = await finishPasskeyAuthentication(provider, { credential: mockCredential });
+
+            expect(result).toBe(mockTokenResponse);
+            expect(mockAuth.webAuthn.finishAuthentication).toHaveBeenCalledWith({
+                credential: mockCredential,
+                usid: 'usid',
+            });
+            expect(mockLogger.debug).toHaveBeenCalledWith('Auth: finishPasskeyAuthentication starting');
+            expect(mockLogger.debug).toHaveBeenCalledWith('Auth: finishPasskeyAuthentication succeeded');
+        });
+
+        it('should omit usid when there is no existing session', async () => {
+            const { provider } = mockContext();
+            const mockCredential = { id: 'cred-2', type: 'public-key' };
+            const mockTokenResponse = getMockAuthResponse();
+
+            mockAuth.webAuthn.finishAuthentication.mockResolvedValue(mockTokenResponse);
+
+            await finishPasskeyAuthentication(provider, { credential: mockCredential });
+
+            expect(mockAuth.webAuthn.finishAuthentication).toHaveBeenCalledWith({
+                credential: mockCredential,
+                usid: undefined,
+            });
+        });
+
+        it('should throw and log on failure', async () => {
+            const { provider } = mockContext(getMockAuthData());
+            const mockCredential = { id: 'cred-3', type: 'public-key' };
+            const mockError = new Error('Invalid assertion');
+
+            mockAuth.webAuthn.finishAuthentication.mockRejectedValue(mockError);
+
+            await expect(finishPasskeyAuthentication(provider, { credential: mockCredential })).rejects.toThrow(
+                'Invalid assertion'
+            );
+            expect(mockLogger.error).toHaveBeenCalledWith('Auth: finishPasskeyAuthentication failed', {
+                error: mockError,
+            });
+        });
+    });
+
+    describe('authorizePasskeyRegistration', () => {
+        function getMockRegisteredAuthDataWithLoginEmail(): AuthData {
+            return {
+                ...getMockRegisteredAuthData(),
+                accessToken: buildMockAccessToken({ rcid: 'reg-cust-1' }),
+            };
+        }
+
+        it('should authorize passkey registration with default (email) mode', async () => {
+            const { provider } = mockContext(getMockRegisteredAuthDataWithLoginEmail());
+
+            mockAuth.webAuthn.authorizeRegistration.mockResolvedValue(undefined);
+
+            await authorizePasskeyRegistration(provider);
+
+            expect(mockAuth.webAuthn.authorizeRegistration).toHaveBeenCalledWith({
+                userId: 'user@example.com',
+                mode: 'email',
+                callbackUri: undefined,
+            });
+            expect(mockLogger.debug).toHaveBeenCalledWith('Auth: authorizePasskeyRegistration starting', {
+                mode: 'email',
+            });
+            expect(mockLogger.debug).toHaveBeenCalledWith('Auth: authorizePasskeyRegistration succeeded');
+        });
+
+        it('should use mode and callbackUri from config in callback mode', async () => {
+            const { provider, appConfig } = mockContext(getMockRegisteredAuthDataWithLoginEmail());
+            appConfig.features.passkey = {
+                enabled: true,
+                mode: 'callback',
+                callbackUri: 'https://custom-domain.com/passkey-callback',
+            };
+
+            mockAuth.webAuthn.authorizeRegistration.mockResolvedValue(undefined);
+
+            await authorizePasskeyRegistration(provider);
+
+            expect(mockAuth.webAuthn.authorizeRegistration).toHaveBeenCalledWith({
+                userId: 'user@example.com',
+                mode: 'callback',
+                callbackUri: 'https://custom-domain.com/passkey-callback',
+            });
+        });
+
+        it('should resolve a relative callbackUri to an absolute URL', async () => {
+            const { provider, appConfig } = mockContext(getMockRegisteredAuthDataWithLoginEmail());
+            appConfig.features.passkey = {
+                enabled: true,
+                mode: 'callback',
+                callbackUri: '/passkey-callback',
+            };
+
+            mockAuth.webAuthn.authorizeRegistration.mockResolvedValue(undefined);
+
+            await authorizePasskeyRegistration(provider);
+
+            expect(mockAuth.webAuthn.authorizeRegistration).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    callbackUri: 'https://example.com/passkey-callback',
+                })
+            );
+        });
+
+        it('should omit callbackUri when not configured', async () => {
+            const { provider, appConfig } = mockContext(getMockRegisteredAuthDataWithLoginEmail());
+            appConfig.features.passkey = { enabled: true, mode: 'email', callbackUri: '' };
+
+            mockAuth.webAuthn.authorizeRegistration.mockResolvedValue(undefined);
+
+            await authorizePasskeyRegistration(provider);
+
+            expect(mockAuth.webAuthn.authorizeRegistration).toHaveBeenCalledWith(
+                expect.objectContaining({ callbackUri: undefined })
+            );
+        });
+
+        it('should throw when no login email can be resolved from the access token', async () => {
+            const { provider } = mockContext(getMockRegisteredAuthData());
+
+            await expect(authorizePasskeyRegistration(provider)).rejects.toThrow(
+                'Could not resolve login email from access token for passkey authorization'
+            );
+            expect(mockAuth.webAuthn.authorizeRegistration).not.toHaveBeenCalled();
+        });
+
+        it('should throw and log on SLAS failure', async () => {
+            const { provider } = mockContext(getMockRegisteredAuthDataWithLoginEmail());
+            const mockError = new Error('SLAS unavailable');
+
+            mockAuth.webAuthn.authorizeRegistration.mockRejectedValue(mockError);
+
+            await expect(authorizePasskeyRegistration(provider)).rejects.toThrow('SLAS unavailable');
+            expect(mockLogger.error).toHaveBeenCalledWith('Auth: authorizePasskeyRegistration failed', {
+                error: mockError,
+            });
         });
     });
 
@@ -2423,46 +2632,49 @@ describe('auth middleware (server)', () => {
                 expectedCustomerId: 'registered-id',
                 expectedUsid: 'token-usid-registered',
             },
-        ])(
-            'should derive customerId and usid from JWT claims for $userType user without any usid/customerId cookies',
-            async ({ refreshTokenCookie, isb, sub, expectedCustomerId, expectedUsid }) => {
-                const now = Math.floor(Date.now() / 1000);
-                const exp = now + 1800;
-                const mockAccessToken = `header.${btoa(JSON.stringify({ exp, isb, sub }))}.signature`;
+        ])('should derive customerId and usid from JWT claims for $userType user without any usid/customerId cookies', async ({
+            refreshTokenCookie,
+            isb,
+            sub,
+            expectedCustomerId,
+            expectedUsid,
+        }) => {
+            const now = Math.floor(Date.now() / 1000);
+            const exp = now + 1800;
+            const mockAccessToken = `header.${btoa(JSON.stringify({ exp, isb, sub }))}.signature`;
 
-                mockParseAllCookies.mockReturnValue({
-                    [refreshTokenCookie]: 'refresh-token',
-                    'cc-at': mockAccessToken,
-                });
+            mockParseAllCookies.mockReturnValue({
+                [refreshTokenCookie]: 'refresh-token',
+                'cc-at': mockAccessToken,
+            });
 
-                const request = new Request('https://example.com/test');
-                const context = new RouterContextProvider();
-                const storage = new Map<keyof AuthStorageData, AuthStorageData[keyof AuthStorageData]>();
+            const request = new Request('https://example.com/test');
+            const context = new RouterContextProvider();
+            const storage = new Map<keyof AuthStorageData, AuthStorageData[keyof AuthStorageData]>();
 
-                vi.spyOn(context, 'get').mockImplementation((key) => {
-                    if (key === performanceTimerContext) return mockPerformanceTimer;
-                    if (key === appConfigContext) return mockConfig;
-                    return storage;
-                });
+            vi.spyOn(context, 'get').mockImplementation((key) => {
+                if (key === performanceTimerContext) return mockPerformanceTimer;
+                if (key === appConfigContext) return mockConfig;
+                return storage;
+            });
 
-                vi.spyOn(context, 'set').mockImplementation((_key, value) => {
-                    if (typeof value === 'object' && value instanceof Map) {
-                        value.forEach((v, k) => storage.set(k, v));
-                    }
-                });
+            vi.spyOn(context, 'set').mockImplementation((_key, value) => {
+                if (typeof value === 'object' && value instanceof Map) {
+                    value.forEach((v, k) => storage.set(k, v));
+                }
+            });
 
-                const mockSerialize = vi.fn().mockResolvedValue('Set-Cookie: mock=value');
-                mockCreateCookie.mockReturnValue({ serialize: mockSerialize });
+            const mockSerialize = vi.fn().mockResolvedValue('Set-Cookie: mock=value');
+            mockCreateCookie.mockReturnValue({ serialize: mockSerialize });
 
-                const mockResponse = new Response('OK');
-                const next = vi.fn().mockResolvedValue(mockResponse);
+            const mockResponse = new Response('OK');
+            const next = vi.fn().mockResolvedValue(mockResponse);
 
-                await authMiddleware({ request, context, params: {}, pattern: '/', url: new URL(request.url) }, next);
+            await authMiddleware({ request, context, params: {}, pattern: '/', url: new URL(request.url) }, next);
 
-                expect(storage.get('customerId')).toBe(expectedCustomerId);
-                expect(storage.get('usid')).toBe(expectedUsid);
-            }
-        );
+            expect(storage.get('customerId')).toBe(expectedCustomerId);
+            expect(storage.get('usid')).toBe(expectedUsid);
+        });
 
         it('should ignore an existing customerId cookie and not emit a deletion for it', async () => {
             // The customerId cookie is no longer set or actively cleared by the middleware.
