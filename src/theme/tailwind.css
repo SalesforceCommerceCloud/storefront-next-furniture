@@ -1,8 +1,10 @@
 @theme inline {
-    /* Font families */
-    --font-sans: 'Sen', -apple-system, 'system-ui', 'Helvetica Neue', Arial, sans-serif;
-    --font-serif: 'Sen', Georgia, serif;
-    --font-mono: 'Sen', 'Courier New', monospace;
+    /* Font families — Furniture Next: editorial Fraunces serif for display/headings,
+       a clean system sans for body/UI. Fraunces ships at public/fonts and is
+       preloaded via lib/fonts.ts; @font-face lives in base.css. */
+    --font-sans: -apple-system, 'system-ui', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --font-mono: 'SFMono-Regular', 'Menlo', 'Courier New', monospace;
 
     /* Error page tokens */
     --text-error-status: 12rem;  /* Large status code display for error pages */

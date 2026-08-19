@@ -1,14 +1,23 @@
 @font-face {
-    font-family: 'Sen';
-    src: url('/fonts/sen-variable.woff2') format('woff2');
-    font-weight: 400 800;
+    /* Fraunces — editorial variable serif (OFL). Display/headings face for
+       Furniture Next. Body/UI text uses the system sans stack (--font-sans). */
+    font-family: 'Fraunces';
+    src: url('/fonts/fraunces-variable.woff2') format('woff2');
+    font-weight: 100 900;
     font-style: normal;
     font-display: swap;
 }
 
 @layer components {
+    /*
+     * Tight percentage gutters — content uses nearly the full viewport width.
+     * Floor at 0.5rem so small phones don't lose touch targets. Full-bleed
+     * surfaces (hero, footer band) opt out by living outside `.section-container`.
+     */
     .section-container {
-        @apply px-4 sm:px-8 lg:px-16 max-w-screen-2xl mx-auto;
+        @apply w-full mx-auto;
+        max-width: none;
+        padding-inline: max(0.5rem, 1.5%);
     }
 }
 
@@ -21,17 +30,28 @@
         font-family: var(--font-sans);
     }
 
-    /* Scroll padding prevents focused elements from being hidden underneath the sticky header.
-     * Matches the header's measured height so keyboard navigation and anchor links scroll the
-     * target element clear of the header. (WCAG 2.1 SC 2.4.7 Focus Visible) */
+    /* Reserve scrollbar space so layout doesn't shift when content overflows.
+       Use `stable` (not `both-edges`) — both-edges leaves a blank strip on the
+       non-scrollbar side that reads as a site-wide left margin. */
     html {
         scroll-padding-top: var(--header-height, 145px);
+        scrollbar-gutter: stable;
     }
 
     @media (min-width: 64rem) {
         html {
             scroll-padding-top: var(--header-height, 105px);
         }
+    }
+
+    /* Editorial display: headings render in the Fraunces serif. Brand-neutral
+       element selector so it applies without forking any canonical component. */
+    h1,
+    h2,
+    h3,
+    h4 {
+        font-family: var(--font-serif);
+        letter-spacing: -0.01em;
     }
 
     /* Cursor pointer for all interactive elements */
@@ -75,7 +95,98 @@
     }
 }
 
-/* NOTE: fashion's borderless-Card :where() block is intentionally omitted —
-   furniture sets --ui-border-width: 1px globally in core.css, so Cards already
-   have visible borders everywhere and don't need the per-section re-enable. */
+/* Cards are borderless by default (--ui-border-width: 0) with a soft --ui-shadow.
+   Cards in account / auth / checkout / order-confirmation sit on white and read
+   better with a 1px delineation border and no shadow. :where() keeps specificity
+   low so per-card className overrides still win. */
+:where([data-testid="account-layout"]) [data-slot="card"],
+:where([data-section="auth"]) [data-slot="card"],
+:where([data-section="checkout"]) [data-slot="card"],
+:where([data-section="order-confirmation"]) [data-slot="card"] {
+    --ui-border-width: 1px;
+    --ui-shadow: none;
+}
 
+/* Surface rounding — softer than the global --ui-radius so cards, popovers,
+   dialogs, and dropdowns read as editorial paper insets. Override the SOURCE
+   token (--ui-radius), not the bridge var, so the rounded-ui utility picks it up. */
+[data-slot='card'],
+[data-slot='popover-content'],
+[data-slot='dialog-content'],
+[data-slot='alert-dialog-content'],
+[data-slot='dropdown-menu-content'],
+[data-slot='navigation-menu-content'],
+[data-slot='select-content'] {
+    --ui-radius: var(--radius-2xl);
+}
+
+/* Pills — badges / status chips read as full-pill geometry */
+[data-slot='badge'] {
+    --ui-radius: 9999px;
+}
+
+/* Product gallery — editorial furniture imagery. Hero frames are rounded. */
+[data-gallery-hero] {
+    border-radius: var(--radius-2xl);
+}
+/* The DynamicImage `<picture>` is an inline element with no intrinsic size, so an
+   `<img>` set to height:100% resolves against the picture (auto height), not the
+   square frame — leaving object-fit nothing to crop against (the canonical
+   contain only "fills" because SCAPI/DIS serves square images). Make the picture
+   a block that fills the frame so the image fills it and object-cover can crop.
+   These MUST live in `@layer utilities`: the canonical `[&_img]:object-contain!`
+   is an `!important` utility, and for `!important` declarations layered styles beat
+   un-layered ones — so an un-layered override loses regardless of specificity.
+   Inside the same layer, our higher-specificity selector wins normally. */
+@layer utilities {
+    div[data-gallery-hero] picture,
+    .product-card picture,
+    .product-image picture {
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+    div[data-gallery-hero] img,
+    .product-card img,
+    .product-image img {
+        object-fit: cover !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        margin-inline: 0 !important;
+    }
+}
+
+/* Match the thumbnails to the rounded hero. */
+[data-gallery-thumbs] button {
+    border-radius: var(--radius-lg);
+}
+
+/* Skeleton placeholders for rounded card surfaces match their eventual radius
+   so layout doesn't shift on hydrate. */
+[data-slot='skeleton'].is-card {
+    --ui-radius: var(--radius-2xl);
+}
+
+/* Header / footer logo — left-aligned icon + single-line wordmark.
+   Scale by height; compact viewBox avoids empty side padding. */
+[data-testid="header-logo"] img {
+    height: 1.75rem;
+    max-height: 2rem;
+    width: auto;
+    display: block;
+}
+@media (min-width: 1024px) {
+    [data-testid="header-logo"] img {
+        height: 2rem;
+        max-height: 2.25rem;
+        width: auto;
+    }
+}
+footer .footer-logo,
+footer img.footer-logo,
+footer a img {
+    height: 2rem;
+    width: auto;
+    display: block;
+}

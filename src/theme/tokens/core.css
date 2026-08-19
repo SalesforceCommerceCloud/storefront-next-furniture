@@ -1,82 +1,76 @@
 :root {
-    /* core */
-    --background: #FFFFFF;
-    --foreground: #17171B;
+    /*
+     * Furniture Next — warm, editorial, design-led furniture palette.
+     * Warm taupe primary (#8B7355), charcoal-navy ink (#2C3E50), brass/gold
+     * accent (#D4A574) on a warm-stone canvas. Brand swatches (exact source
+     * hexes) live in tokens/brand.css; here we map them to the SEMANTIC tokens
+     * the primitives consume, deepening a couple of values where needed so
+     * every default pairing clears WCAG AA. Hue is preserved; only luminance
+     * shifts. Exact brand taupe is kept as --brand-taupe for non-text surfaces.
+     */
+
+    /* core — warm stone canvas, charcoal-navy ink */
+    --background: #F8F6F3;             /* warm stone-50 */
+    --foreground: #2C3E50;             /* charcoal navy — 9.98:1 on bg (AAA) */
 
     --card: #FFFFFF;
-    --card-foreground: #3F3F46;
+    --card-foreground: #2C3E50;        /* 11.3:1 on white (AAA) */
 
     --popover: #FFFFFF;
-    --popover-foreground: #3F3F46;
+    --popover-foreground: #2C3E50;
 
-    /* Furniture brand — placeholder warm-natural palette (walnut primary,
-       sage tertiary). A full brand theme is out of scope for this scaffold;
-       swap these for the real palette during the brand pass. */
-    --primary: #44403C;                 /* walnut (stone-700) */
-    --primary-foreground: #FAFAF9;      /* 9.3:1 on walnut (AAA) */
+    /* primary — warm taupe, deepened from brand #8B7355 so white labels and
+       primary-on-muted badges clear WCAG AA (≥4.5:1 on --muted / stone surfaces) */
+    --primary: #7A6245;                /* warm taupe — white ~5.6:1; muted ~5.05:1 (AA) */
+    --primary-foreground: #FFFFFF;
+    --primary-hover: #6B5640;          /* taupe-dark */
 
-    --secondary: #F5F5F4;               /* warm stone-100 */
-    --secondary-foreground: #33373D;
+    --secondary: #F0EDE8;              /* warm stone-100 */
+    --secondary-foreground: #2C3E50;   /* 9.6:1 (AAA) */
 
-    --tertiary: #4D7C0F;                /* sage (lime-700) */
-    --tertiary-foreground: #FFFFFF;     /* 4.6:1 on sage (AA) */
+    /* tertiary — positive green (in-stock / delivery-confirmed pills) */
+    --tertiary: #1E7A48;               /* white 5.4:1 (AA) */
+    --tertiary-foreground: #FFFFFF;
 
-    --muted: #F9FAFB;
-    --muted-foreground: #35353B;
-    /* not in Figma JSON */
-    --muted-hover: #ebebeb;
+    --muted: #F0EDE8;                  /* warm stone-100 */
+    --muted-foreground: #5C5347;       /* warm taupe-gray — 6.4:1 on muted (AA) */
+    --muted-hover: #E2DDD5;            /* warm stone-200 */
 
-    --accent: #ECECEC;
-    --accent-foreground: #373737;
+    /* accent — brass / gold */
+    --accent: #D4A574;
+    --accent-foreground: #2C3E50;      /* navy on brass — 4.93:1 (AA) */
 
     /*
-     * Status colors. Figma's source values (red-500 / green-600 / amber-600 / sky-600)
-     * fail WCAG AA 4.5:1 against white and against their -foreground companions.
-     * We darken each to the next Tailwind shade (-700/-800) so all default pairings
-     * pass AA. Hue is preserved; only luminance changes. Flag for UX whether to
-     * sync these darker values back into Figma.
+     * Status colors — inherited from the canonical WCAG-AA-tuned values
+     * (red-700 / green-800 / amber-700 / sky-700). Not brand-differentiating;
+     * all default pairings pass AA against white and their -foreground tints.
      */
-    /* WCAG AA: 6.47:1 on white; 5.30:1 on --destructive-foreground; 5.45:1 on bg-destructive/10 */
-    --destructive: #B91C1C;
+    --destructive: #B91C1C;            /* 6.47:1 on white */
     --destructive-foreground: #FEE2E2;
-
-    /* WCAG AA: 7.13:1 on white; 5.53:1 on --success-foreground */
-    --success: #166534;
+    --success: #166534;                /* 7.13:1 on white */
     --success-foreground: #CBEAD7;
-
-    /* WCAG AA: 5.02:1 on white; 4.68:1 on --warning-foreground */
-    --warning: #B45309;
+    --warning: #B45309;                /* 5.02:1 on white */
     --warning-foreground: #FEF9C3;
-
-    /* WCAG AA: 5.93:1 on white; 4.86:1 on --info-foreground */
-    --info: #0369A1;
+    --info: #0369A1;                   /* 5.93:1 on white */
     --info-foreground: #DBEAFE;
 
-    --border: #9CA3AF;
-    --border-subtle: #D1D5DB;
-    /* not in Figma JSON for light mode (Figma only defines `input` in dark) */
-    --input: #e8e8e8;
-    /* 3.66:1 on #FFFFFF — meets WCAG SC 1.4.11 (3:1 for graphics); use for focus rings only,
-       not as text color on white. */
-    --ring: #3B82F6;
+    --border: #C9C1B5;                 /* warm stone-300 */
+    --border-subtle: #E2DDD5;          /* warm stone-200 */
+    --input: #E2DDD5;                  /* warm stone-200 */
+    --ring: #836A4B;                   /* taupe — 5.09:1 on white (graphics ≥3:1) */
 
-    /* not in Figma JSON */
-    --separator: rgba(0, 0, 0, 0.08);
-    --separator-foreground: #9e9e9e;
+    /* separators */
+    --separator: rgba(44, 62, 80, 0.10);   /* navy @10% — reads on warm stone */
+    --separator-foreground: #877B6D;        /* warm stone-500 */
 
-    /* not in Figma JSON */
-    --rating: #facc15;
+    /* rating stars */
+    --rating: #D4A574;                 /* brass/gold stars on-brand */
     --rating-foreground: #ffffff;
 
-    /*
-     * The aliases below inherit the WCAG-AA-passing values of their parent tokens.
-     */
-    /* not in Figma JSON: review-verified badge — semantic alias of --success* (5.53:1) */
-    --review-verified-bg: var(--success-foreground);
+    /* semantic aliases (inherit AA-passing parents) */
+    --review-verified-bg: var(--success-foreground);   /* 5.53:1 */
     --review-verified-text: var(--success);
-
-    /* not in Figma JSON: selected filter chip — semantic alias of --info* (4.86:1) */
-    --filter-selected: var(--info-foreground);
+    --filter-selected: var(--info-foreground);          /* 4.86:1 */
     --filter-selected-border: var(--info);
 
     /* generic opacity helpers */
@@ -85,13 +79,22 @@
     --opacity-50: 50%;
     --opacity-30: 70%;
 
-    /* shape tokens — furniture uses a softly rounded shape with a gentle shadow
-       and visible 1px borders on primitives. The --ui-* names are the source
-       values; tailwind.css bridges them into Tailwind's rounded-ui / shadow-ui
-       / border-ui utility namespaces. */
-    --ui-radius: var(--radius-md);
-    --ui-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-    --ui-border-width: 1px;
+    /*
+     * Shape tokens — Furniture Next is rounded/editorial. The --ui-* SOURCE
+     * tokens bridge into Tailwind's rounded-ui / shadow-ui / border-ui
+     * utilities (see tailwind.css). Surface rounding (cards, popovers) bumps
+     * to --radius-2xl and badges go full-pill via scoped overrides in base.css.
+     *
+     * --ui-border-width: 0 — Cards are borderless by default; account / auth /
+     * checkout / order-confirmation Cards restore a 1px border via a :where()
+     * block in base.css (they sit on white and need delineation).
+     */
+    --ui-radius: var(--radius-xl);     /* 0.75rem */
+    --ui-shadow: 0 1px 3px 0 rgb(44 62 80 / 0.08), 0 1px 2px -1px rgb(44 62 80 / 0.08);
+    --ui-border-width: 0;
+
+    /* vertical rhythm — extra top spacing for padded content pages (e.g. PDP) */
+    --ui-vertical-spacing: 2rem;
 
     [role="radio"]:not([data-labeled]) {
         min-width: var(--swatch-pill-size);

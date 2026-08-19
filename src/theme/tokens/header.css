@@ -1,26 +1,35 @@
 /*
- * Storefront header/footer chrome — auto-derived for furniture.
- * The walnut --primary is dark, so white foreground reads on it and the black
- * logo.svg is inverted to white. Replace this file if you want different chrome.
+ * Storefront header/footer chrome — Furniture Next.
+ *
+ * Editorial furniture brands read as light and airy (West Elm / Pottery Barn),
+ * so the header is a clean warm-white bar with charcoal-navy ink rather than a
+ * dark chrome band. Derived from the brand palette: navy foreground on white,
+ * warm-stone borders, taupe-dark hover text on a stone hover wash. The logo is
+ * a left-aligned lounge-mark + "Furniture Next" wordmark on a light bar, so no
+ * recolor filter is needed.
+ *
+ * Replace this file to change the chrome.
  */
 :root {
-    /* header & navigation — furniture walnut chrome */
-    --header-background: #44403C;
-    --header-foreground: #FFFFFF;
-    --header-border: rgba(255, 255, 255, 0.1);
+    /* header & navigation */
+    --header-background: #FFFFFF;
+    --header-foreground: #2C3E50;                 /* navy — 11.3:1 on white */
+    --header-border: #E2DDD5;                      /* warm stone-200 */
     --header-divider: var(--header-border);
-    /* header menu dropdowns */
-    --header-menu-background: var(--header-background);
-    --header-menu-foreground: var(--header-foreground);
-    --header-menu-border: var(--header-border);
-    --header-menu-hover-background: #FFFFFF;
-    --header-menu-hover-foreground: #000000;
-    --header-menu-active-background: rgba(255, 255, 255, 0.05);
-    --header-menu-icon: rgba(255, 255, 255, 0.7);
-    /* logo.svg is black; invert to white on dark header */
-    --header-logo-filter: brightness(0) invert(1);
 
-    /* footer */
-    --footer-background: #ffffff;
-    --footer-foreground: #000000;
+    /* dropdowns — continuous with the bar surface */
+    --header-menu-background: var(--header-background);
+    --header-menu-foreground: #2C3E50;
+    --header-menu-border: #E2DDD5;
+    --header-menu-hover-background: #F0EDE8;        /* warm stone-100 */
+    --header-menu-hover-foreground: #6B5640;        /* taupe-dark — 6:1 on hover bg */
+    --header-menu-active-background: #E2DDD5;        /* warm stone-200 */
+    --header-menu-icon: #6B6052;                    /* warm stone-600 — ≥3:1 graphics */
+
+    /* logo.svg wordmark is navy on a light bar — no filter */
+    --header-logo-filter: none;
+
+    /* footer — page background to avoid a hard chrome edge */
+    --footer-background: var(--background);
+    --footer-foreground: #2C3E50;
 }

@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
-/** The site's primary font, bound to `<body>` in `root.tsx`. */
-import sen from '/fonts/sen-variable.woff2';
+// Primary font binding for Furniture Next. Preloads the Fraunces editorial serif
+// (the display/headings face) that appears above the fold in the hero and
+// section titles. Body/UI text uses the system sans stack (--font-sans), so no
+// body webfont is preloaded.
+import fraunces from '/fonts/fraunces-variable.woff2';
 
-export const primaryFont = sen;
+/** The site's preloaded brand font, bound via `<link rel="preload">` in `root.tsx`. */
+export const primaryFont = fraunces;

@@ -1,4 +1,4 @@
-/* Store locator uses square, high-contrast radio styling (furniture template specific). */
+/* Store locator uses square, high-contrast radio styling (furniture overlay-specific). */
 .store-locator-square-radio-group [data-slot="radio-group-item"].store-locator-square-radio {
     position: relative;
     border-radius: 0;
