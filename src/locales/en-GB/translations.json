@@ -2078,5 +2078,53 @@
         "sessionExpired": "Your session has expired. Please start over.",
         "cooldownActive": "Please wait {{seconds}} seconds before requesting a new code.",
         "codeResentHint": "Didn't receive the email? Check your spam folder or wait 15 minutes before requesting a new code."
+    },
+    "showrooms": {
+        "meta": {
+            "title": "Showrooms",
+            "description": "Find a nearby furniture showroom and explore pieces in person."
+        },
+        "eyebrow": "Visit us",
+        "title": "Showrooms made for unhurried decisions",
+        "description": "See finishes in natural light, settle into every seat, and compare dimensions with help nearby.",
+        "search": {
+            "title": "Find a showroom near you",
+            "description": "Explore materials, comfort, and scale in person before choosing pieces for your home.",
+            "formLabel": "Showroom search form",
+            "country": "Country",
+            "selectCountry": "Select a country",
+            "postalCode": "Postal code",
+            "postalCodePlaceholder": "Enter postal code",
+            "submit": "Find showrooms",
+            "separator": "or",
+            "useLocation": "Use my location"
+        },
+        "messages": {
+            "loading": "Finding nearby showrooms",
+            "geolocationError": "We could not use your location. Search by postcode instead.",
+            "fetchError": "We could not find showrooms right now. Please try again.",
+            "noResults": "No showrooms found in this area."
+        },
+        "map": {
+            "label": "Showroom locations",
+            "loadingLabel": "Loading showroom map"
+        },
+        "results": {
+            "label": "Showroom results",
+            "showMore": "Show more showrooms",
+            "showOnMap": "Show on map",
+            "shownOnMap": "Shown on map",
+            "details": "Showroom details",
+            "phone": "Phone:",
+            "email": "Email:",
+            "hours": "Showroom hours",
+            "distance": "{{distance}} {{unit}} away"
+        },
+        "availability": {
+            "available": "Available at this showroom",
+            "unavailable": "Not currently available at this showroom",
+            "unknown": "Availability unavailable"
+        },
+        "appointment": "Book a showroom appointment"
     }
 }
