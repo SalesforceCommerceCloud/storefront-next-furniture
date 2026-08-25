@@ -125,6 +125,63 @@
     --ui-radius: 9999px;
 }
 
+/* Checkboxes are small (size-4); the global editorial --ui-radius (radius-xl) rounds them into
+   near-circles that read as radio buttons. Pin them to a small radius so they read as checkboxes. */
+[data-slot='checkbox'] {
+    --ui-radius: var(--radius-sm);
+}
+
+/* "Complete the Room" recommendation rail — flat, borderless tiles that read as an editorial
+   cross-sell (image + name + price on the page), not raised cards. Drop the product-card shadow
+   and card background; the squared image + 2-up/4-up sizing come from the rail's props. */
+.complete-the-room-rail .product-card {
+    --ui-shadow: none;
+    background-color: transparent;
+}
+/* Borderless tiles no longer get their image corners rounded by the card clip, so round the image
+   wrapper itself (it already has overflow-hidden) — a fully-rounded squared image with text below. */
+.complete-the-room-rail .product-image > div {
+    border-radius: var(--ui-radius);
+}
+
+/* "How to get it" — the furniture PDP presents the canonical delivery/pickup experience (bopis
+   PickupOrDelivery, rendered by DeliveryOptions) as vertically stacked flat rows inside one headed
+   card, matching the reference cross-sell design. The canonical component is reused verbatim; these
+   scoped rules only restyle its presentation. Unlayered rules beat the component's Tailwind utility
+   classes (same mechanism as the .complete-the-room-rail rules above), so no !important is needed. */
+[data-section="how-to-get-it"] {
+    --ui-radius: var(--radius-2xl);
+}
+/* Stack the two option cards vertically — canonical lays them out grid-cols-2 with a gap. */
+[data-section="how-to-get-it"] [data-testid="delivery-option-select"] {
+    grid-template-columns: 1fr;
+    gap: 0;
+}
+/* Flatten each option card into a borderless full-width row; the shared card provides the frame.
+   `border`/`box-shadow` here override the label's raw Tailwind utilities (not token-driven); the row
+   radius is neutralized via the source token (--ui-radius) since the label carries `rounded-ui`. */
+[data-section="how-to-get-it"] [data-testid="delivery-option-select"] > label {
+    --ui-radius: 0;
+    border: 0;
+    box-shadow: none;
+    padding-block: 0.875rem;
+    padding-inline: 0;
+    transition: background-color 150ms ease;
+}
+/* Inset divider between the rows (matches the reference's mx-4 rule — inset by the body's px-4). */
+[data-section="how-to-get-it"] [data-testid="delivery-option-select"] > label + label {
+    border-top: 1px solid var(--separator);
+}
+/* Shade the selected row — the selected RadioGroupItem carries Radix data-state="checked". */
+[data-section="how-to-get-it"] [data-testid="delivery-option-select"] > label:has([data-state="checked"]) {
+    background-color: color-mix(in oklab, var(--muted) 55%, transparent);
+}
+/* Circular radio dots — the canonical dot + its inner fill are the border-2 elements. */
+[data-section="how-to-get-it"] [data-testid="delivery-option-select"] [class~="border-2"],
+[data-section="how-to-get-it"] [data-testid="delivery-option-select"] [class~="border-2"] > div {
+    border-radius: 9999px;
+}
+
 /* Product gallery — editorial furniture imagery. Hero frames are rounded. */
 [data-gallery-hero] {
     border-radius: var(--radius-2xl);

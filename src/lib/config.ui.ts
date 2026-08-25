@@ -15,135 +15,63 @@
  */
 
 /**
- * Per-page UI configuration.
+ * Furniture per-page UI overrides:
+ * - Renders the `fabric` variation axis as a grouped/tabbed swatch selector
+ *   (`product.groupedSwatchAxes`). Furniture ships fabric display-values as
+ *   "Label, Family" (e.g. "Navy, Velvet"), so the PDP shows a family filter row
+ *   ["All", Linen, Velvet, Leather, Performance] above image-tile swatches that
+ *   display the short label (the part before the first comma).
+ * - Renders the `size` and `legStyle` axes as larger "option cards"
+ *   (`product.imageCardAxes`): a 4:3 image thumb stacked above the option name +
+ *   price hint, all inside one bordered, padded card — visually distinct from the
+ *   small fabric swatches.
+ * - Wraps each swatch section in a collapsible (`product.collapsibleSwatchSections`):
+ *   the collapsed summary shows the selected value's thumbnail + attribute label +
+ *   selected value name, and the section collapses after a value is selected.
  *
- * The global app config (`config.server.ts`) is a single static module — it is
- * not resolved per build target and there is no merge layer, so a value placed
- * there is identical everywhere. This module is the override seam: the default
- * export below is the baseline, and a build target can shadow the whole module
- * with its own `lib/config.ui.ts` (resolved via the `@/` alias chain and
- * flattened at build time — same mechanism as `@/lib/fonts`).
+ * "Your Configuration" and "Available services" are NOT config-gated: they're rendered by
+ * the furniture PDP route + ProductView overlays — the summary shows once a full variant is
+ * resolved; services resolve from the catalog via the product's `c_addonServiceProductIds`
+ * attribute. The furniture route overlay also adds the PDP recommendation rails.
  *
- * The shape intentionally mirrors the global config's `pages.*` tree so that if
- * an SDK-level config-override mechanism lands later, consumers can swap
- * `uiConfig.pages.cart.X` for `getConfig(context).pages.cart.X` with no other
- * change. Keep keys aligned with `config.server.ts`. Add new page sections here
- * as they need overridable UI flags.
+ * Every other flag matches the canonical baseline, so cart, category, and the
+ * rest of the product page behave exactly like the default (mirrored verbatim
+ * below).
  */
-export interface UIConfig {
+interface UIConfig {
     pages: {
         cart: {
-            /**
-             * When true, the cart fetches and renders the below-the-fold
-             * recommendation carousels. Gated in both the loader (skips the
-             * Einstein calls when false) and the route render.
-             *
-             * @default true
-             */
             showRecommendations: boolean;
-            /**
-             * When true, the cart line item (default variant) shows the
-             * variation-attributes row (e.g. "Color: …", "Size: …").
-             *
-             * @default true
-             */
             showLineItemVariantAttributes: boolean;
-            /**
-             * When true, the cart line item (default variant) shows the
-             * strikethrough list price alongside the current price. When false,
-             * only the current price renders (no list price, "From" prefix, or
-             * inline `ProductPrice` promo callout). Note: this is the price
-             * column's inline callout, NOT the separate "Saved $X" badge —
-             * that is gated independently by `showLineItemPromoBadge`.
-             *
-             * @default true
-             */
             showLineItemListPrice: boolean;
-            /**
-             * When true, the cart line item (default variant) shows the
-             * "Saved $X" promotion badge in the price column.
-             *
-             * @default true
-             */
             showLineItemPromoBadge: boolean;
-            /**
-             * When true, the cart line item (default variant) shows the
-             * "Bonus Product" badge next to the title for bonus line items.
-             *
-             * @default true
-             */
             showLineItemBonusBadge: boolean;
         };
         category: {
-            /**
-             * When true, the category page's QuickFilters renders a
-             * "Shop by {label}" header (with a leading sparkles icon) before the
-             * subcategory chips. The label is the active `cgid` refinement label.
-             * The route computes the label and passes it to QuickFilters only
-             * when this flag is on, so the chips-only baseline stays unchanged.
-             *
-             * @default false
-             */
             showCategoryLabel: boolean;
-            /**
-             * How the product listing paginates its results.
-             *
-             * - `'load-more'`: a "Load more" button appends the next batch below the grid
-             *   without a page reload.
-             * - `'traditional'`: numbered previous/next pagination that navigates the URL
-             *   `offset` and reloads the page.
-             *
-             * @default 'load-more'
-             */
-            pagination: PaginationConfig;
-            /**
-             * Opt-in: keep the category (`cgid`) refinement in the side-panel filters and
-             * render it as a single-select radio group (`cgid` is single-valued per SCAPI),
-             * instead of excluding it (the default,
-             * where category navigation is owned by QuickFilters). When enabled, the category
-             * route also suppresses the QuickFilters chip row so the same category level is not
-             * filterable in two UIs at once. Used by verticals that surface a category level
-             * (e.g. footwear "Shop by Activity") as a sidebar facet.
-             *
-             * @default undefined (cgid excluded from the sidebar — unchanged for all verticals)
-             */
+            pagination: {
+                mode: 'load-more' | 'traditional';
+                batchSize: number;
+                mobileBatchSize: number;
+                maxProducts: number;
+            };
+            /** Opt-in: keep the `cgid` refinement in the sidebar as a single-select radio group. @default undefined */
             sidebarCategoryRefinement?: {
                 enabled: boolean;
             };
         };
         product: {
-            /**
-             * When true, the PDP rating summary (below the product description)
-             * shows the numeric average and a "{count} reviews" label beside the
-             * stars (e.g. "★★★★☆ 4.8 (124 reviews)"). When false, only the review
-             * count in parentheses renders (e.g. "★★★★☆ (124)"). The average and
-             * distribution are always available to the component; this only gates
-             * the extra label, so the count-only baseline stays unchanged.
-             *
-             * @default false
-             */
             showRatingAverage: boolean;
+            /** Variation-attribute ids rendered as a grouped/tabbed swatch selector. @default undefined */
+            groupedSwatchAxes?: string[];
+            /** Variation-attribute ids whose image swatches render as larger option cards. @default undefined */
+            imageCardAxes?: string[];
+            /** When true, wrap each PDP swatch section in a collapsible with a selected-value summary. @default false */
+            collapsibleSwatchSections?: boolean;
+            /** PDP product-image gallery layout: 'stacked' (hero + thumbnails) or 'mosaic'. @default 'stacked' */
+            galleryLayout?: 'stacked' | 'mosaic';
         };
     };
-}
-
-/**
- * Product-listing pagination behavior. `mode` selects the interaction; the batch sizes and
- * DOM cap only apply to `'load-more'`. Batch size falls back to the global
- * `config.search.products.hits.limit` (SCAPI page size) when a mode-specific value is omitted.
- */
-export interface PaginationConfig {
-    /** Pagination interaction mode. @default 'load-more' */
-    mode: 'load-more' | 'traditional';
-    /** Products fetched per "Load more" batch on desktop/tablet viewports. @default 24 */
-    batchSize: number;
-    /** Products fetched per "Load more" batch on mobile viewports (smaller for performance). @default 12 */
-    mobileBatchSize: number;
-    /**
-     * Maximum number of products kept in the DOM before the "Load more" control is replaced with
-     * a prompt to refine filters. Prevents DOM bloat / jank on low-end devices. @default 200
-     */
-    maxProducts: number;
 }
 
 export const uiConfig: UIConfig = {
@@ -166,6 +94,10 @@ export const uiConfig: UIConfig = {
         },
         product: {
             showRatingAverage: false,
+            groupedSwatchAxes: ['fabric'],
+            imageCardAxes: ['size', 'legStyle'],
+            collapsibleSwatchSections: true,
+            galleryLayout: 'mosaic',
         },
     },
 };

@@ -13,15 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { type ReactElement } from 'react';
+import { type ReactElement, useState, useEffect } from 'react';
 import type { ShopperProducts } from '@/scapi';
 import ImageGallery from '@/components/image-gallery';
 import ProductInfo from '@/components/product-view/product-info';
-import ProductCartActions from '@/components/product-cart-actions';
+import ProductCartActions, { type AdditionalItem } from '@/components/product-cart-actions';
+import ConfigurationSummary from './configuration-summary';
+import HowToGetIt from './how-to-get-it';
+import AvailableServices from './available-services';
+import type { ServiceAddon } from '../../lib/service-addons.server';
 import ProductViewProvider from '@/providers/product-view';
 import { useProductImages } from '@/hooks/product/use-product-images';
 import { useSelectedVariations } from '@/hooks/product/use-selected-variations';
 import { isProductSet, isProductBundle } from '@/lib/product/product-utils';
+import { uiConfig } from '@/lib/config.ui';
 import CollapsibleHtmlSection from '@/components/collapsible-section/collapsible-html-section';
 import { useTranslation } from 'react-i18next';
 import { UITarget } from '@/targets/ui-target';
@@ -29,23 +34,24 @@ import { UITarget } from '@/targets/ui-target';
 interface ProductViewProps {
     product: ShopperProducts.schemas['Product'];
     mode?: 'add' | 'edit';
+    /** Deferred catalog-resolved add-on services (from the furniture PDP loader). */
+    serviceAddonsPromise?: Promise<ServiceAddon[]>;
 }
 
 /**
- * ProductView component renders a complete product detail view with image gallery and product information.
- *
- * @param props - The component props
- * @param props.product - The product data from Salesforce Commerce Cloud containing all product details,
- *                        variants, pricing, and metadata
- *
- * @returns A React element containing the complete product view layout
- *
- * @example
- * ```tsx
- * <ProductView product={productData} />
- * ```
+ * Furniture ProductView overlay: renders the baseline product view plus "Your Configuration"
+ * summary and "Available services" when service add-ons are provided. Owns the selected-services
+ * state and passes it as additionalItems to ProductCartActions, so the furniture loader can
+ * control service availability without touching the canonical ProductCartActions component.
  */
-export default function ProductView({ product }: ProductViewProps): ReactElement {
+export default function ProductView({ product, serviceAddonsPromise }: ProductViewProps): ReactElement {
+    const [additionalItems, setAdditionalItems] = useState<AdditionalItem[]>([]);
+
+    // Reset additional items when navigating to a different product.
+    useEffect(() => {
+        setAdditionalItems([]);
+    }, [product.id]);
+
     // Calculate directly without useMemo since these are simple operations
     const isProductASet = isProductSet(product);
     const isProductABundle = isProductBundle(product);
@@ -59,6 +65,10 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
 
     const { t } = useTranslation('product');
 
+    // Furniture opts into the mosaic PDP gallery via config; every other vertical stays 'stacked'
+    // (hero + thumbnails). Read here (the PDP caller) so non-PDP ImageGallery usages are unaffected.
+    const galleryLayout = uiConfig.pages.product.galleryLayout ?? 'stacked';
+
     return (
         <ProductViewProvider product={product} mode="add">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12">
@@ -71,6 +81,7 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
                         showNavigationArrows
                         navigationArrowSize="lg"
                         productName={product.name}
+                        layout={galleryLayout}
                     />
                     <UITarget targetId="sfcc.pdp.agent.productHelper" />
                     {product.longDescription && product.longDescription !== product.shortDescription && (
@@ -86,8 +97,24 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
 
                 {/* Right Column - Product Info */}
                 <div className="order-2">
-                    <ProductInfo product={product} />
-                    <ProductCartActions product={product} />
+                    <ProductInfo
+                        product={product}
+                        afterVariations={
+                            <>
+                                <ConfigurationSummary />
+                                <HowToGetIt />
+                            </>
+                        }
+                        hideDeliveryOptions
+                        showQuantityPicker={false}
+                    />
+                    <ProductCartActions product={product} additionalItems={additionalItems} showInlineQuantity />
+                    {serviceAddonsPromise && (
+                        <AvailableServices
+                            servicesPromise={serviceAddonsPromise}
+                            onSelectionChange={setAdditionalItems}
+                        />
+                    )}
                     <UITarget targetId="sfcc.pdp.returnsWarranty" />
                     {/* @sfdc-extension-block-start SFDC_EXT_SHIPPING_DELIVERY */}
                     <UITarget targetId="sfcc.pdp.estimatedDelivery" />

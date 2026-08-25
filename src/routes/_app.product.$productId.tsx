@@ -18,16 +18,23 @@ import { Await, useRouteLoaderData } from 'react-router';
 import type { loader as rootLoader } from '@/root';
 import { shouldRevalidate as shouldRevalidateProduct } from '@/lib/revalidation/routes/product';
 import type { Route } from './+types/_app.product.$productId';
-import { type ShopperProducts } from '@/scapi';
+import { type ShopperProducts, type ShopperSearch } from '@/scapi';
 import { fetchProductById } from '@/lib/api/products.server';
 import { NormalizedApiError } from '@/lib/api/normalized-api-error';
 import { siteContext } from '@salesforce/storefront-next-runtime/site-context';
-import ProductView from '@/components/product-view';
+import ProductView from '@/components/product-view/product-view';
 import ChildProducts from '@/components/product-view/child-products';
 import CategoryBreadcrumbs from '@/components/category-breadcrumbs';
 import { isProductSet, isProductBundle } from '@/lib/product/product-utils';
 import ProductRecommendations from '@/components/product-recommendations';
 import { EINSTEIN_RECOMMENDERS } from '@/lib/product/einstein-recommenders';
+import type { Recommendation } from '@/hooks/recommenders/use-recommenders';
+import { fetchServiceAddons, type ServiceAddon } from '../lib/service-addons.server';
+import {
+    fetchRoomCandidatePool,
+    deriveYouMightAlsoLike,
+    deriveCompleteTheRoom,
+} from '../lib/pdp-recommendations.server';
 import { useTranslation } from 'react-i18next';
 import { useAnalytics } from '@/hooks/use-analytics';
 import { Region } from '@/components/region';
@@ -42,6 +49,7 @@ import { getPublicOrigin } from '@/utils/schema-url';
 import { buildCanonicalUrl } from '@/utils/canonical-url';
 import { getLogger } from '@/lib/logger.server';
 import { UITarget } from '@/targets/ui-target';
+import { getTranslation } from '@salesforce/storefront-next-runtime/i18n';
 // @sfdc-extension-block-start SFDC_EXT_BOPIS
 import { selectedStoreContext } from '@/extensions/store-locator/middlewares/selected-store.server';
 import PickupProvider from '@/extensions/bopis/context/pickup-context';
@@ -72,7 +80,7 @@ import {
     getReturnsAndWarranty,
     pdpSectionApi,
     type ReturnsAndWarrantyData,
-    type HtmlContent,
+    type SectionContent,
 } from '@/extensions/product-content/lib/api/product-content.server';
 import { resolvePdpSections } from '@/extensions/product-content/lib/pdp-sections';
 import { ProductContentDataProvider } from '@/extensions/product-content/context/product-content-data-context';
@@ -112,6 +120,9 @@ export type ProductPageData = {
     pageKey: string;
     pageUrl: string;
     productSchema: Promise<ReturnType<typeof generateProductSchema> | null>;
+    serviceAddons?: Promise<ServiceAddon[]>;
+    youMightAlsoLikeRecommendations: Promise<Recommendation>;
+    completeTheRoomRecommendations: Promise<Recommendation>;
     // @sfdc-extension-block-start SFDC_EXT_BNPL
     bnplMessage: Promise<BuyNowPayLaterMessageData>;
     bnplLearnMore: Promise<BuyNowPayLaterLearnMoreData>;
@@ -123,7 +134,7 @@ export type ProductPageData = {
     // @sfdc-extension-block-end SFDC_EXT_RATINGS_REVIEWS
     // @sfdc-extension-block-start SFDC_EXT_PRODUCT_CONTENT
     returnsWarranty: Promise<ReturnsAndWarrantyData>;
-    pdpCollapsibles: Promise<Array<HtmlContent | null>>;
+    pdpCollapsibles: Promise<Array<SectionContent | null>>;
     // @sfdc-extension-block-end SFDC_EXT_PRODUCT_CONTENT
     // @sfdc-extension-block-start SFDC_EXT_SHIPPING_DELIVERY
     estimatedDelivery: Promise<EstimatedDeliveryData>;
@@ -245,12 +256,44 @@ export async function loader(args: Route.LoaderArgs): Promise<ProductPageData> {
     const writeReviewForm = getWriteReviewForm(productLookupId);
     // @sfdc-extension-block-end SFDC_EXT_RATINGS_REVIEWS
 
+    // @sfdc-extension-block-start SFDC_EXT_PRODUCT_CONTENT
+    // Get server translator for PDP section resolve functions
+    const { i18next } = getTranslation(context);
+    const tProduct = (key: string, options?: { count?: number }): string => {
+        // i18next expects namespace-prefixed keys on the server
+        const namespacedKey = key.startsWith('product:') ? key : `product:${key}`;
+        return i18next.t(namespacedKey, options) as string;
+    };
+    // @sfdc-extension-block-end SFDC_EXT_PRODUCT_CONTENT
+
+    // Service add-ons: read c_addonServiceProductIds from the product and fetch the service catalog items.
+    const addonIds = (product as Record<string, unknown>).c_addonServiceProductIds;
+    const serviceIds = Array.isArray(addonIds)
+        ? addonIds.filter((id): id is string => typeof id === 'string')
+        : typeof addonIds === 'string'
+          ? [addonIds]
+          : [];
+    const serviceAddons = serviceIds.length
+        ? fetchServiceAddons(context, serviceIds, currency ?? undefined)
+        : undefined;
+
+    // One room-category search feeds both furniture rails; resolve it once and derive each rail
+    // from the shared pool so the PDP issues a single SCAPI search instead of one per rail.
+    const roomPool = fetchRoomCandidatePool(context, product);
+
     return {
         product,
         page,
         pageKey: productId,
         pageUrl,
         productSchema: productSchemaPromise,
+        serviceAddons,
+        youMightAlsoLikeRecommendations: roomPool.then((hits: ShopperSearch.schemas['ProductSearchHit'][]) =>
+            deriveYouMightAlsoLike(hits, product)
+        ),
+        completeTheRoomRecommendations: roomPool.then((hits: ShopperSearch.schemas['ProductSearchHit'][]) =>
+            deriveCompleteTheRoom(hits, product)
+        ),
         // @sfdc-extension-block-start SFDC_EXT_BNPL
         bnplMessage: getBuyNowPayLaterMessage(productLookupId),
         bnplLearnMore: getBuyNowPayLaterLearnMore(productLookupId),
@@ -263,9 +306,18 @@ export async function loader(args: Route.LoaderArgs): Promise<ProductPageData> {
         // @sfdc-extension-block-start SFDC_EXT_PRODUCT_CONTENT
         returnsWarranty: getReturnsAndWarranty(productLookupId),
         pdpCollapsibles: Promise.all(
-            resolvePdpSections(product).map((section) =>
-                pdpSectionApi[section.apiMethod](productLookupId).catch(() => null)
-            )
+            resolvePdpSections(product).map((section) => {
+                const promise =
+                    'resolve' in section
+                        ? section.resolve(product, tProduct)
+                        : pdpSectionApi[section.apiMethod as keyof typeof pdpSectionApi](productLookupId);
+                return promise.catch((error) => {
+                    // Non-critical: a failed section is omitted so it can't reject the whole array.
+                    // Log with context so a broken merchant `resolve`/API doesn't vanish silently.
+                    logger.error('Error resolving PDP section in loader', { error, labelKey: section.labelKey });
+                    return null;
+                });
+            })
         ),
         // @sfdc-extension-block-end SFDC_EXT_PRODUCT_CONTENT
         // @sfdc-extension-block-start SFDC_EXT_SHIPPING_DELIVERY
@@ -282,6 +334,7 @@ export const shouldRevalidate = shouldRevalidateProduct;
 function ProductContent({
     product,
     url,
+    serviceAddonsPromise,
     // @sfdc-extension-block-start SFDC_EXT_RATINGS_REVIEWS
     reviewsSummary,
     reviewsList,
@@ -294,6 +347,7 @@ function ProductContent({
 }: {
     product: ShopperProducts.schemas['Product'];
     url: string;
+    serviceAddonsPromise?: Promise<ServiceAddon[]>;
     // @sfdc-extension-block-start SFDC_EXT_RATINGS_REVIEWS
     reviewsSummary: ReviewsSummaryData;
     reviewsList: Promise<ReviewsData>;
@@ -301,7 +355,7 @@ function ProductContent({
     // @sfdc-extension-block-end SFDC_EXT_RATINGS_REVIEWS
     // @sfdc-extension-block-start SFDC_EXT_PRODUCT_CONTENT
     returnsWarrantyPromise: Promise<ReturnsAndWarrantyData>;
-    pdpCollapsiblesPromise: Promise<Array<HtmlContent | null>>;
+    pdpCollapsiblesPromise: Promise<Array<SectionContent | null>>;
     // @sfdc-extension-block-end SFDC_EXT_PRODUCT_CONTENT
 }) {
     const analytics = useAnalytics();
@@ -351,11 +405,11 @@ function ProductContent({
                         <div className="space-y-8">
                             {isProductASet || isProductABundle ? (
                                 <>
-                                    <ProductView product={product} />
+                                    <ProductView product={product} serviceAddonsPromise={serviceAddonsPromise} />
                                     <ChildProducts parentProduct={product} />
                                 </>
                             ) : (
-                                <ProductView product={product} />
+                                <ProductView product={product} serviceAddonsPromise={serviceAddonsPromise} />
                             )}
 
                             {/* @sfdc-extension-block-start SFDC_EXT_RATINGS_REVIEWS */}
@@ -398,6 +452,7 @@ function ProductDetailView({ loaderData }: { loaderData: ProductPageData }) {
                 <ProductContent
                     product={loaderData.product}
                     url={loaderData.pageUrl}
+                    serviceAddonsPromise={loaderData.serviceAddons}
                     // @sfdc-extension-block-start SFDC_EXT_RATINGS_REVIEWS
                     reviewsSummary={loaderData.reviewsSummary}
                     reviewsList={loaderData.reviewsList}
@@ -409,31 +464,36 @@ function ProductDetailView({ loaderData }: { loaderData: ProductPageData }) {
                     // @sfdc-extension-block-end SFDC_EXT_PRODUCT_CONTENT
                 />
 
-                {/* Engagement Content Region - Shows page content or recommendations */}
-                <Region
-                    className="mt-16"
-                    page={loaderData.page}
-                    regionId="engagementContent"
-                    errorElement={
-                        <div className="mt-16 space-y-16">
-                            <ProductRecommendations
-                                recommenderName={EINSTEIN_RECOMMENDERS.PDP_COMPLETE_SET}
-                                recommenderTitle={t('recommendations.completeTheLook')}
-                                className="max-w-none px-0"
-                            />
-                            <ProductRecommendations
-                                recommenderName={EINSTEIN_RECOMMENDERS.PDP_MIGHT_ALSO_LIKE}
-                                recommenderTitle={t('recommendations.youMightAlsoLike')}
-                                className="max-w-none px-0"
-                            />
-                            <ProductRecommendations
-                                recommenderName={EINSTEIN_RECOMMENDERS.PDP_RECENTLY_VIEWED}
-                                recommenderTitle={t('recommendations.recentlyViewed')}
-                                className="max-w-none px-0"
-                            />
-                        </div>
-                    }
-                />
+                {/* Always-on catalog-derived recommendation carousels. Each ProductRecommendations
+                    fails closed to null (no title / empty recs / fetch error), so an empty recommender
+                    collapses without leaving a headless carousel. */}
+                <div className="mt-16 space-y-16">
+                    {/* Complete the Room leads the rail stack with squared tiles (imgAspectRatio={1}),
+                        matching the reference design; the other rails keep the default portrait tile. */}
+                    <ProductRecommendations
+                        data={loaderData.completeTheRoomRecommendations}
+                        recommenderTitle={t('recommendations.completeTheRoom')}
+                        className="complete-the-room-rail max-w-none px-0"
+                        imgAspectRatio={1}
+                        itemClassName="basis-1/2 md:basis-1/3 lg:basis-1/4 pl-4 py-1 flex"
+                        quickAddPlacement="inline"
+                        quickAddLabel={t('addToCart')}
+                    />
+                    <ProductRecommendations
+                        data={loaderData.youMightAlsoLikeRecommendations}
+                        recommenderTitle={t('recommendations.youMightAlsoLike')}
+                        className="max-w-none px-0"
+                    />
+                    <ProductRecommendations
+                        recommenderName={EINSTEIN_RECOMMENDERS.PDP_RECENTLY_VIEWED}
+                        recommenderTitle={t('recommendations.recentlyViewed')}
+                        className="max-w-none px-0"
+                    />
+                </div>
+
+                {/* Engagement Content Region - PD-authored engagement content below the always-on
+                    recommendations above, for further rails a merchant may want to add. */}
+                <Region className="mt-16" page={loaderData.page} regionId="engagementContent" />
             </div>
         </div>
     );
