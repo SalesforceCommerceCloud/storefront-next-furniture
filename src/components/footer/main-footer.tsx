@@ -21,10 +21,10 @@ import { useConfig } from '@salesforce/storefront-next-runtime/config';
 import { stripPathPrefix } from '@salesforce/storefront-next-runtime/site-context';
 import logo from '/images/logo.svg';
 import LegalLinks from '@/components/footer/legal-links';
-import NewsletterSection from './newsletter-section';
-import PolicyLinks from './policy-links';
-import SocialIcons from './social-icons';
-import Switchers from './switchers';
+import NewsletterSection from '@/components/footer/newsletter-section';
+import PolicyLinks from '@/components/footer/policy-links';
+import SocialIcons from '@/components/footer/social-icons';
+import Switchers from '@/components/footer/switchers';
 
 export default function MainFooter(): ReactElement {
     const { t } = useTranslation('footer');
@@ -40,11 +40,10 @@ export default function MainFooter(): ReactElement {
             <div className="bg-footer-background py-12 section-container">
                 <div className="text-footer-foreground">
                     <div className="flex flex-col gap-6">
-                        {/* Top Row: Logo + Policy Links on Left, Social Media on Right */}
-                        <div className="flex w-full flex-col items-start lg:flex-row gap-6">
+                        <div className="flex w-full flex-col items-start gap-6 lg:flex-row">
                             <div className="flex w-full items-center gap-6">
                                 <Link to="/">
-                                    <img src={logo} alt={t('logoAlt')} className="h-4 w-auto" />
+                                    <img src={logo} alt={t('logoAlt')} className="h-11 w-auto" />
                                 </Link>
                                 <PolicyLinks className="hidden lg:flex" />
                                 <SocialIcons className="ml-auto" />
@@ -52,12 +51,11 @@ export default function MainFooter(): ReactElement {
                             <PolicyLinks className="flex lg:hidden" />
                         </div>
 
-                        {/* Bottom Row: Copyright on Left, Switchers + Legal Links on Right */}
-                        <div className="flex flex-col items-start xl:flex-row xl:items-center justify-between gap-4 text-sm font-normal leading-5 text-muted-foreground">
+                        <div className="flex flex-col items-start justify-between gap-4 text-sm font-normal leading-5 text-muted-foreground xl:flex-row xl:items-center">
                             <div>
                                 © {new Date().getFullYear()} {t('copyright')}
                             </div>
-                            <div className="flex flex-col items-start sm:flex-row sm:items-center gap-4">
+                            <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
                                 <Switchers />
                                 <LegalLinks />
                             </div>

@@ -11,7 +11,7 @@
         "noFilterOptionsAvailable": "No filter options available."
     },
     "common": {
-        "defaultSiteName": "Furniture",
+        "defaultSiteName": "Furniture Next",
         "loading": "Loading",
         "loadingMore": "Loading more...",
         "product": "the product",
@@ -22,7 +22,7 @@
         "productImageAlt": "Product Image",
         "suggestionImageAlt": "Suggestion Image",
         "hero": {
-            "defaultTitle": "Make it home",
+            "defaultTitle": "Pieces made to live with.",
             "defaultImageAlt": "Hero Image",
             "defaultCtaText": "Shop the collection",
             "emptyTitle": "Add your title here",
@@ -1375,41 +1375,41 @@
     "home": {
         "hero": {
             "slide1": {
-                "title": "The New Season",
-                "subtitle": "A new collection shaped by contrast, proportion, and modern attitude. Introducing key pieces for the season ahead.",
-                "ctaText": "Discover the Collection",
-                "ctaAriaLabel": "Discover the Collection: The New Season",
-                "imageAlt": "Women's Slacks Jackets and Purses"
+                "title": "The living room, considered",
+                "subtitle": "Sofas and seating built for the way you actually live.",
+                "ctaText": "Shop furniture",
+                "ctaAriaLabel": "Shop the furniture collection",
+                "imageAlt": "A linen sofa in a sunlit living room."
             },
             "slide2": {
-                "title": "The Modern Wardrobe",
-                "subtitle": "Elevated silhouettes, refined textures, and a bold approach to everyday dressing. Designed to move with you.",
-                "ctaText": "Shop the Look",
-                "ctaAriaLabel": "Shop the Look: The Modern Wardrobe",
-                "imageAlt": "Women's White Linen Dress"
+                "title": "Made to your measure",
+                "subtitle": "Choose the size, fabric, and finish that suit your room.",
+                "ctaText": "Shop furniture",
+                "ctaAriaLabel": "Shop the furniture collection",
+                "imageAlt": "Fabric swatches and finish samples on an oak table."
             },
             "slide3": {
-                "title": "After Hours",
-                "subtitle": "Statement pieces and refined layers designed for nights out, late moments, and everything in between.",
-                "ctaText": "Explore the Collection",
-                "ctaAriaLabel": "Explore the Collection: After Hours",
-                "imageAlt": "Women's Black Suit"
+                "title": "The bedroom edit",
+                "subtitle": "Beds and storage that bring calm to the beginning and end of every day.",
+                "ctaText": "Shop furniture",
+                "ctaAriaLabel": "Shop the furniture collection",
+                "imageAlt": "An upholstered bed in warm morning light."
             },
             "slide4": {
-                "title": "New Perspectives",
-                "subtitle": "A curated drop of standout pieces that redefine contemporary fashion. Confident. Expressive. Uncompromising.",
-                "ctaText": "Shop Now",
-                "ctaAriaLabel": "Shop Now: New Perspectives",
-                "imageAlt": "Women's Grey Dress"
+                "title": "Gather round",
+                "subtitle": "Dining tables and chairs designed for long dinners and longer conversations.",
+                "ctaText": "Shop furniture",
+                "ctaAriaLabel": "Shop the furniture collection",
+                "imageAlt": "A solid oak dining table set for a relaxed meal."
             }
         },
         "meta": {
-            "title": "Furniture",
-            "description": "Well-made pieces for every room."
+            "title": "Furniture Next | Furniture made to live with",
+            "description": "Considered furniture for real rooms, measured to fit and made to last."
         },
         "featuredProducts": {
-            "title": "Featured Products",
-            "shopAll": "Shop all",
+            "title": "Featured pieces",
+            "shopAll": "Shop all furniture",
             "loadFailed": "Unable to load featured products."
         },
         "categoryGrid": {
@@ -1455,6 +1455,38 @@
                     "imageAlt": "New arrivals collection"
                 }
             }
+        },
+        "shopByRoom": {
+            "title": "Shop by room",
+            "subtitle": "Start with the space, then find the pieces that belong there.",
+            "exploreRoom": "Explore {{room}}"
+        },
+        "midBanner": {
+            "title": "The bedroom edit",
+            "subtitle": "Beds and storage measured for rest, with finishes that settle in.",
+            "ctaText": "Shop furniture",
+            "ctaAriaLabel": "Shop the furniture collection",
+            "imageAlt": "An upholstered bed framed by warm morning light."
+        },
+        "editorial": {
+            "madeToOrder": {
+                "title": "Made to order",
+                "description": "Configure the size, fabric, and legs, then we build it for your room.",
+                "ctaText": "Shop furniture",
+                "ctaAriaLabel": "Shop the furniture collection",
+                "imageAlt": "Furniture materials, fabric swatches, and hardware on a work surface."
+            },
+            "swatches": {
+                "title": "Free swatches",
+                "description": "See colour and texture at home before you choose. Up to five fabrics, on us.",
+                "ctaText": "Shop furniture",
+                "ctaAriaLabel": "Shop the furniture collection",
+                "imageAlt": "A softly styled bedroom showing layered fabric textures."
+            },
+            "brand": {
+                "title": "Furniture Next",
+                "description": "We design furniture for rooms people actually live in — warm materials, honest proportions, and the quiet confidence of pieces that last."
+            }
         }
     },
     "footer": {
@@ -1491,14 +1523,14 @@
             "title": "Join Our Community",
             "description": "Be the first to discover new arrivals, exclusive offers, and style inspiration.",
             "emailPlaceholder": "Your email",
-            "emailLabel": "Email address for newsletter subscription",
+            "emailLabel": "Email address for Furniture Next updates",
             "subscribeButton": "Subscribe",
-            "emailRequired": "Email address is required",
-            "invalidEmail": "Please enter a valid email address"
+            "emailRequired": "Enter your email address.",
+            "invalidEmail": "Enter a valid email address."
         },
-        "copyright": "Salesforce or its affiliates. All rights reserved. This is a demo store only. Orders made WILL NOT be processed.",
+        "copyright": "Furniture Next. All rights reserved.",
         "address": "415 Mission St, San Francisco, CA 94105",
-        "logoAlt": "Market Street"
+        "logoAlt": "Furniture Next"
     },
     "aboutUs": {
         "breadcrumb": {

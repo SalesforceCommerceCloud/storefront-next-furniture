@@ -15,18 +15,19 @@
  */
 import { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import Signup from './signup';
+import Signup from '@/components/footer/signup';
 
 export default function NewsletterSection(): ReactElement {
     const { t } = useTranslation('footer');
+
     return (
-        <div className="section-container">
-            <div className="bg-newsletter-background text-newsletter-foreground px-6 sm:px-8 py-12 md:py-16 rounded-ui">
-                <div className="max-w-2xl mx-auto text-center">
-                    <h2 className="text-2xl font-semibold leading-[120%] tracking-[-0.6px] text-newsletter-foreground mb-3">
+        <section className="bg-newsletter-background py-12 text-newsletter-foreground md:py-16">
+            <div className="section-container text-center">
+                <div className="mx-auto w-full max-w-2xl">
+                    <h2 className="mb-3 text-2xl font-semibold leading-[120%] tracking-[-0.6px] text-newsletter-foreground">
                         {t('newsletter.title')}
                     </h2>
-                    <p className="text-sm font-normal leading-5 text-newsletter-foreground mb-6">
+                    <p className="mb-6 text-sm font-normal leading-5 text-newsletter-foreground">
                         {t('newsletter.description')}
                     </p>
                     <div className="flex justify-center">
@@ -34,6 +35,6 @@ export default function NewsletterSection(): ReactElement {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }

@@ -1,18 +1,42 @@
 {
     "name": "Home Page",
-    "description": "Main landing page with hero carousel, featured products, and help sections",
+    "description": "Furniture landing page with static marketing sections and interspersed Page Designer slots.",
     "arch_type": "headless",
     "region_definitions": [
         {
             "id": "headerbanner",
             "name": "Header Banner Region",
-            "description": "Region for promotional banners and hero content",
+            "description": "Content displayed before the Furniture home hero.",
+            "max_components": 3
+        },
+        {
+            "id": "afterHero",
+            "name": "After Hero Slot",
+            "description": "Empty slot between the hero carousel and room discovery.",
+            "max_components": 3
+        },
+        {
+            "id": "afterRoomDiscovery",
+            "name": "After Room Discovery Slot",
+            "description": "Empty slot between room discovery and the bedroom banner.",
+            "max_components": 3
+        },
+        {
+            "id": "afterBedroomBanner",
+            "name": "After Bedroom Banner Slot",
+            "description": "Empty slot between the bedroom banner and featured products.",
             "max_components": 3
         },
         {
             "id": "main",
             "name": "Main Content Region",
-            "description": "Region for main content",
+            "description": "Content displayed after the Furniture home product sections.",
+            "max_components": 10
+        },
+        {
+            "id": "bottom",
+            "name": "Bottom Slot",
+            "description": "Empty slot below the Furniture home editorial content.",
             "max_components": 10
         }
     ],
