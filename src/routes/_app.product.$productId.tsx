@@ -86,10 +86,6 @@ import { resolvePdpSections } from '@/extensions/product-content/lib/pdp-section
 import { ProductContentDataProvider } from '@/extensions/product-content/context/product-content-data-context';
 // @sfdc-extension-block-end SFDC_EXT_PRODUCT_CONTENT
 // @sfdc-extension-block-start SFDC_EXT_SHIPPING_DELIVERY
-import {
-    getEstimatedDelivery,
-    type EstimatedDeliveryData,
-} from '@/extensions/shipping-delivery/lib/api/shipping-delivery.server';
 import { ShippingDeliveryProvider } from '@/extensions/shipping-delivery/context/shipping-delivery-context';
 // @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY
 
@@ -136,9 +132,6 @@ export type ProductPageData = {
     returnsWarranty: Promise<ReturnsAndWarrantyData>;
     pdpCollapsibles: Promise<Array<SectionContent | null>>;
     // @sfdc-extension-block-end SFDC_EXT_PRODUCT_CONTENT
-    // @sfdc-extension-block-start SFDC_EXT_SHIPPING_DELIVERY
-    estimatedDelivery: Promise<EstimatedDeliveryData>;
-    // @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY
 };
 
 /**
@@ -320,9 +313,6 @@ export async function loader(args: Route.LoaderArgs): Promise<ProductPageData> {
             })
         ),
         // @sfdc-extension-block-end SFDC_EXT_PRODUCT_CONTENT
-        // @sfdc-extension-block-start SFDC_EXT_SHIPPING_DELIVERY
-        estimatedDelivery: getEstimatedDelivery(productLookupId),
-        // @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY
     };
 }
 
@@ -511,9 +501,7 @@ function ProductDetailView({ loaderData }: { loaderData: ProductPageData }) {
     // @sfdc-extension-block-end SFDC_EXT_BNPL
     // @sfdc-extension-block-start SFDC_EXT_SHIPPING_DELIVERY
     finalContent = (
-        <ShippingDeliveryProvider estimatedDeliveryPromise={loaderData.estimatedDelivery}>
-            {finalContent}
-        </ShippingDeliveryProvider>
+        <ShippingDeliveryProvider productId={loaderData.product.id}>{finalContent}</ShippingDeliveryProvider>
     );
     // @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY
 

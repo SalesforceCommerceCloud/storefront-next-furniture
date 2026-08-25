@@ -116,9 +116,6 @@ export default function ProductView({ product, serviceAddonsPromise }: ProductVi
                         />
                     )}
                     <UITarget targetId="sfcc.pdp.returnsWarranty" />
-                    {/* @sfdc-extension-block-start SFDC_EXT_SHIPPING_DELIVERY */}
-                    <UITarget targetId="sfcc.pdp.estimatedDelivery" />
-                    {/* @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY */}
                     <UITarget targetId="sfcc.pdp.collapsibles" />
                 </div>
             </div>

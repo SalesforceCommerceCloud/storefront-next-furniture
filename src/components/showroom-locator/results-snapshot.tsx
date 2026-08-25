@@ -16,14 +16,14 @@
 import { composeStories } from '@storybook/react-vite';
 import { afterEach, beforeAll, describe, expect, test } from 'vitest';
 import { cleanup, render } from '@testing-library/react';
-import furnitureTranslations from '../../locales/en-GB/overrides';
 import * as ShowroomResultStories from './results.stories';
+import { showroomTranslations } from './showroom-translations';
 
 const composed = composeStories(ShowroomResultStories);
 
 beforeAll(async () => {
     const { default: i18next } = await import('i18next');
-    i18next.addResourceBundle('en-GB', 'showrooms', furnitureTranslations.showrooms, true, true);
+    i18next.addResourceBundle('en-GB', 'showrooms', showroomTranslations, true, true);
 });
 
 afterEach(cleanup);

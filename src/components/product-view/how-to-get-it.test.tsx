@@ -23,7 +23,7 @@ vi.mock('react-i18next', () => ({
 
 // Reuse-verbatim contract: HowToGetIt only wraps the canonical DeliveryOptions. Stub it so the test
 // asserts the furniture wrapper + gating without pulling in the bopis provider stack.
-vi.mock('@/extensions/bopis/components/delivery-options/delivery-options', () => ({
+vi.mock('@/components/fulfillment/delivery-options', () => ({
     default: (props: { quantity: number }) => (
         <div data-testid="delivery-options-stub" data-quantity={props.quantity} />
     ),

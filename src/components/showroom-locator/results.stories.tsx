@@ -16,8 +16,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { waitForStorybookReady } from '@storybook/test-utils';
-import furnitureTranslations from '../../locales/en-GB/overrides';
 import ShowroomResults from './results';
+import { showroomTranslations } from './showroom-translations';
 import type { Showroom } from './types';
 
 const showrooms = [
@@ -64,7 +64,7 @@ const showrooms = [
 
 const withFurnitureTranslations = async () => {
     const { default: i18next } = await import('i18next');
-    i18next.addResourceBundle('en-GB', 'showrooms', furnitureTranslations.showrooms, true, true);
+    i18next.addResourceBundle('en-GB', 'showrooms', showroomTranslations, true, true);
 };
 
 const meta = {

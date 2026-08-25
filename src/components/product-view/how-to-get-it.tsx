@@ -18,7 +18,8 @@ import { useTranslation } from 'react-i18next';
 import type { ShopperProducts } from '@/scapi';
 import { useProductView } from '@/providers/product-view';
 import { isProductSet, isProductBundle } from '@/lib/product/product-utils';
-import DeliveryOptions from '@/extensions/bopis/components/delivery-options/delivery-options';
+import { getInventoryForResolvedSelection } from '@/lib/product/inventory-utils';
+import DeliveryOptions from '@/components/fulfillment/delivery-options';
 
 /**
  * Furniture "How to get it" section: groups the canonical delivery/pickup experience under a single
@@ -32,7 +33,15 @@ import DeliveryOptions from '@/extensions/bopis/components/delivery-options/deli
  */
 export default function HowToGetIt(): ReactElement | null {
     const { t } = useTranslation('product');
-    const { product, currentVariant, quantity, basketPickupStore, isOutOfStock } = useProductView();
+    const {
+        product,
+        currentVariant,
+        quantity,
+        basketPickupStore,
+        isOutOfStock,
+        isVariantInventoryLoading,
+        setFulfillmentSelection,
+    } = useProductView();
 
     // Mirror the canonical ProductInfo gate: no delivery block for out-of-stock items, sets, or bundles.
     const suppressed = isOutOfStock || isProductSet(product) || isProductBundle(product);
@@ -40,6 +49,7 @@ export default function HowToGetIt(): ReactElement | null {
     // Hydrate delivery inventory checks with the selected variant's inventory while preserving the
     // master id — identical to ProductInfo's productForDeliveryOptions.
     const productForDeliveryOptions = useMemo(() => {
+        if (isVariantInventoryLoading) return { ...product, inventories: undefined };
         if (!currentVariant) return product;
         const variantWithInventory = currentVariant as ShopperProducts.schemas['Variant'] & {
             inventory?: ShopperProducts.schemas['Inventory'];
@@ -50,7 +60,11 @@ export default function HowToGetIt(): ReactElement | null {
             inventory: variantWithInventory.inventory ?? product.inventory,
             inventories: variantWithInventory.inventories ?? product.inventories,
         };
-    }, [product, currentVariant]);
+    }, [product, currentVariant, isVariantInventoryLoading]);
+    const inventoryForResolvedSelection = getInventoryForResolvedSelection(product, currentVariant);
+    const deliveryAvailabilityIsUnknown =
+        inventoryForResolvedSelection == null ||
+        (typeof inventoryForResolvedSelection.ats !== 'number' && inventoryForResolvedSelection.orderable !== false);
 
     if (suppressed) return null;
 
@@ -63,7 +77,9 @@ export default function HowToGetIt(): ReactElement | null {
                 <DeliveryOptions
                     product={productForDeliveryOptions}
                     quantity={quantity}
-                    basketPickupStore={basketPickupStore}
+                    deliveryAvailable={deliveryAvailabilityIsUnknown ? true : undefined}
+                    pickupLocation={basketPickupStore}
+                    onSelectionChange={setFulfillmentSelection}
                 />
             </div>
         </section>
