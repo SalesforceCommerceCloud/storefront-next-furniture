@@ -2127,6 +2127,47 @@
         "cooldownActive": "Please wait {{seconds}} seconds before requesting a new code.",
         "codeResentHint": "Didn't receive the email? Check your spam folder or wait 15 minutes before requesting a new code."
     },
+    "furnitureAboutUs": {
+        "meta": {
+            "title": "About Furniture",
+            "description": "Thoughtfully made furniture for rooms that welcome everyday life."
+        },
+        "breadcrumb": {
+            "home": "Home",
+            "aboutUs": "About Us"
+        },
+        "title": "About Us",
+        "hero": {
+            "eyebrow": "Our point of view",
+            "title": "Furniture for the life unfolding around it.",
+            "body": "A home is never finished. It gathers quiet mornings, impromptu dinners, and the people who make a room feel lived in.\n\nWe create considered furniture with a warm point of view: enduring shapes, honest materials, and details that become more familiar over time.",
+            "imageAlt": "A warm living room with a neutral sofa, dark accent chair, and brass lamp.",
+            "ctaText": "Explore the collection",
+            "ctaLink": "/category/root"
+        },
+        "principles": {
+            "eyebrow": "Made with intention",
+            "title": "The details make a home feel like yours.",
+            "materials": {
+                "title": "Materials that invite living",
+                "content": "Natural texture, solid construction, and a palette that layers easily. Each finish is chosen to look at home on its first day and every day after.",
+                "imageAlt": "Fabric swatches and furniture hardware arranged on a wood surface."
+            },
+            "living": {
+                "title": "Designed around real routines",
+                "content": "For slow mornings, shared meals, and the moments in between. Our pieces are made to support the way a room changes through the day.",
+                "imageAlt": "A calm bedroom with layered bedding, a wood nightstand, and a brass lamp."
+            }
+        },
+        "closing": {
+            "eyebrow": "Make room for living",
+            "title": "Bring the people and rituals you love together.",
+            "content": "From the chair pulled closer to the table to the lamp left on at the end of the night, thoughtful furniture gives everyday life a place to happen.",
+            "imageAlt": "A warm dining room with a wood table set for a meal.",
+            "ctaText": "Shop Now",
+            "ctaLink": "/category/root"
+        }
+    },
     "showrooms": {
         "meta": {
             "title": "Showrooms",

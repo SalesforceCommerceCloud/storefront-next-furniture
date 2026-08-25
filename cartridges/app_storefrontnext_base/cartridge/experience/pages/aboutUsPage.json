@@ -1,18 +1,30 @@
 {
     "name": "About Us Page",
-    "description": "About Us page containing company information and a contact form.",
+    "description": "Furniture brand story with static editorial content and Page Designer slots.",
     "arch_type": "headless",
     "region_definitions": [
         {
-            "id": "headline",
-            "name": "Headline Region",
-            "description": "Main content area displayed above the contact form",
+            "id": "afterIntro",
+            "name": "After Intro Slot",
+            "description": "Optional content between the brand introduction and the design principles.",
             "max_components": 10
         },
         {
-            "id": "additionalinformation",
-            "name": "Additional Information Region",
-            "description": "Secondary content area displayed below the contact form",
+            "id": "afterPrinciples",
+            "name": "After Principles Slot",
+            "description": "Optional content between the design principles and contact section.",
+            "max_components": 10
+        },
+        {
+            "id": "afterContact",
+            "name": "After Contact Slot",
+            "description": "Optional content between the contact section and closing invitation.",
+            "max_components": 10
+        },
+        {
+            "id": "bottom",
+            "name": "Bottom Slot",
+            "description": "Optional content below the closing invitation.",
             "max_components": 10
         }
     ],
