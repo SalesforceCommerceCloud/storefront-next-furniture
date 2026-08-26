@@ -29,9 +29,10 @@ import { Spinner } from '@/components/spinner';
 import { Typography } from '@/components/typography';
 import HtmlFragment from '@/components/html-fragment';
 import CartQuantityPicker from '@/components/cart/cart-quantity-picker';
-import BundledProductItems from './bundled-product-items';
-import ProductPrice from '../product-price';
-import { getPriceData } from '../product-price/utils';
+import BundledProductItems from '@/components/product-item/bundled-product-items';
+import ProductPrice from '@/components/product-price';
+import { getPriceData } from '@/components/product-price/utils';
+import CartLineFulfillmentInfo from '../../components/cart-line-fulfillment-info';
 
 // Hooks
 import { useItemFetcherLoading } from '@/hooks/use-item-fetcher';
@@ -282,7 +283,9 @@ interface ProductItemProps {
 }
 
 /**
- * ProductItem component that displays individual product information in cart or summary views
+ * Furniture overlay of ProductItem: identical to canonical except the `sfcc.cart.shipping.deliveryEstimate`
+ * UITarget slot is filled with {@link CartLineFulfillmentInfo} (dimensions + lead time), instead of staying
+ * empty. Props are unchanged from canonical.
  *
  * This component handles:
  * - Product image display with fallback
@@ -339,16 +342,16 @@ function ProductItem({
     const isAutoBonusProduct = isBonusProduct && !isChoiceBasedBonusProduct;
 
     // Determine stock level: site-level ATS by default, store-specific for pickup items
-    const stockLevel =
-        // @sfdc-extension-block-start SFDC_EXT_BOPIS
-        isPickup && productItem
-            ? getEffectiveStockLevel({
-                  product: productItem as unknown as ShopperProducts.schemas['Product'],
-                  isPickup: true,
-                  storeInventoryId: productItem.inventoryId,
-              })
-            : // @sfdc-extension-block-end SFDC_EXT_BOPIS
-              productItem?.inventory?.ats;
+    let stockLevel = productItem?.inventory?.ats;
+    // @sfdc-extension-block-start SFDC_EXT_BOPIS
+    if (isPickup && productItem) {
+        stockLevel = getEffectiveStockLevel({
+            product: productItem as unknown as ShopperProducts.schemas['Product'],
+            isPickup: true,
+            storeInventoryId: productItem.inventoryId,
+        });
+    }
+    // @sfdc-extension-block-end SFDC_EXT_BOPIS
 
     if (!productItem || typeof productItem !== 'object') {
         return <div data-testid="product-item-error">Product data not available</div>;
@@ -395,6 +398,7 @@ function ProductItem({
         );
     }
     const lineItemExtraContent = !isAutoBonusProduct ? lineItemExtra : undefined;
+    const inventoryMessage = typeof productItem?.inventoryMessage === 'string' ? productItem.inventoryMessage : null;
 
     // Default variant - full product item with card styling
     return (
@@ -478,9 +482,6 @@ function ProductItem({
                                                             className:
                                                                 'text-xl font-normal leading-[120%] tracking-[-0.6px] text-card-foreground text-right line-through relative',
                                                         }}
-                                                        afterPriceContent={
-                                                            <UITarget targetId="sfcc.cart.shipping.deliveryEstimate" />
-                                                        }
                                                     />
                                                 )}
                                             </div>
@@ -495,6 +496,13 @@ function ProductItem({
                                                     each
                                                 </div>
                                             )}
+                                            <UITarget targetId="sfcc.cart.shipping.deliveryEstimate">
+                                                <CartLineFulfillmentInfo
+                                                    product={
+                                                        productItem as unknown as ShopperProducts.schemas['Product']
+                                                    }
+                                                />
+                                            </UITarget>
                                         </div>
                                         {showLineItemPromoBadge && (
                                             <ProductItemPromotions productItem={productItem} alignEnd />
@@ -525,9 +533,9 @@ function ProductItem({
                             </div>
 
                             {/* Inventory Message */}
-                            {Boolean(productItem?.showInventoryMessage) && (
+                            {Boolean(productItem?.showInventoryMessage) && inventoryMessage && (
                                 <div className="text-destructive font-semibold text-sm break-words">
-                                    {productItem?.inventoryMessage as string}
+                                    {inventoryMessage}
                                 </div>
                             )}
                         </div>

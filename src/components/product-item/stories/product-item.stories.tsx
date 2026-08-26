@@ -15,7 +15,7 @@
  */
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import ProductItem from '../index';
-import { mockStandardProductOrderable } from '../../__mocks__/standard-product';
+import { mockStandardProductOrderable } from '@/components/__mocks__/standard-product';
 import { ConfigProvider } from '@salesforce/storefront-next-runtime/config';
 import { mockConfig, mockLocale, mockSiteObject } from '@/test-utils/config';
 import { expect, within, userEvent } from 'storybook/test';
@@ -39,7 +39,7 @@ const meta: Meta<typeof ProductItem> = {
         docs: {
             description: {
                 component: `
-A component that displays individual product information in cart or summary views.
+Furniture overlay of \`ProductItem\`: identical to canonical except the \`sfcc.cart.shipping.deliveryEstimate\` UITarget slot is filled with \`CartLineFulfillmentInfo\`, showing dimensions and lead time or quick-ship status below the price.
 
 ### Features:
 - Product image display with fallback
@@ -434,5 +434,55 @@ export const WithInventoryMessage: Story = {
         await waitForStorybookReady(canvasElement);
         const canvas = within(canvasElement);
         await expect(canvas.getByText('Only 2 left in stock — order soon')).toBeInTheDocument();
+    },
+};
+
+export const WithLeadTime: Story = {
+    args: {
+        productItem: {
+            ...mockProductItem,
+            c_width: 84,
+            c_depth: 36,
+            c_height: 32,
+            c_leadTimeDays: 14,
+        },
+    },
+    parameters: {
+        docs: {
+            description: {
+                story: 'A made-to-order item: shows dimensions and a "Ships in 14 days" lead-time estimate.',
+            },
+        },
+    },
+    play: async ({ canvasElement }) => {
+        await waitForStorybookReady(canvasElement);
+        const canvas = within(canvasElement);
+        await expect(canvas.getByText('84W x 36D x 32H in')).toBeInTheDocument();
+        await expect(canvas.getByText('Ships in 14 days')).toBeInTheDocument();
+    },
+};
+
+export const WithQuickShip: Story = {
+    args: {
+        productItem: {
+            ...mockProductItem,
+            c_width: 30,
+            c_depth: 30,
+            c_height: 18,
+            c_quickShip: true,
+        },
+    },
+    parameters: {
+        docs: {
+            description: {
+                story: 'An in-stock item flagged `c_quickShip`: shows dimensions and "Ships quickly" instead of a lead time.',
+            },
+        },
+    },
+    play: async ({ canvasElement }) => {
+        await waitForStorybookReady(canvasElement);
+        const canvas = within(canvasElement);
+        await expect(canvas.getByText('30W x 30D x 18H in')).toBeInTheDocument();
+        await expect(canvas.getByText('Ships quickly')).toBeInTheDocument();
     },
 };

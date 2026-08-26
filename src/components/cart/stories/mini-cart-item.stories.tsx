@@ -22,7 +22,7 @@ import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { mockConfig } from '@/test-utils/config';
 import { mockCartLineProduct } from '@/components/__mocks__';
-import CartTitle from '../cart-title';
+import CartTitle from '@/components/cart/cart-title';
 
 /**
  * Reusable mini cart shell wrapper that adds the "My Cart" header (close button
@@ -101,7 +101,7 @@ const meta: Meta<typeof MiniCartItem> = {
         docs: {
             description: {
                 component: `
-\`MiniCartItem\` displays a product in the mini cart flyout. Owns the product image, name, variation attributes, pricing block, quantity stepper, and remove button. Used inside \`<CartSheet>\` from the header — its single production importer.
+Furniture overlay of \`MiniCartItem\`: identical to canonical except the \`sfcc.miniCart.shipping.deliveryEstimate\` UITarget slot is filled with \`CartLineFulfillmentInfo\`, showing dimensions and lead time or quick-ship status below the price.
 
 ## Stories
 
@@ -110,6 +110,8 @@ const meta: Meta<typeof MiniCartItem> = {
 | **Default** | Standard line with savings; \`product\` is exposed as a control so quantity / variation attributes / pricing / images can be tweaked without spawning new stories (Pattern 10). The default fixture has \`imageGroups: []\` so the "No image" placeholder renders rather than a broken thumbnail — flip the \`product\` control to add an image. |
 | **AtStockLimit** | Boundary: increment disabled, "Maximum stock reached" alert |
 | **EmptyCart** | The empty-state shell (no \`<MiniCartItem>\` rendered — exercises the cart-flyout layout when the basket is empty) |
+| **WithLeadTime** | A made-to-order item: shows dimensions and a "Ships in 14 days" lead-time estimate. |
+| **WithQuickShip** | An in-stock item flagged \`c_quickShip\`: shows dimensions and "Ships quickly" instead of a lead time. |
                 `,
             },
         },
@@ -273,5 +275,41 @@ export const EmptyCart: Story = {
 
         const startShoppingButton = await canvas.findByRole('button', { name: /start shopping/i });
         await expect(startShoppingButton).toBeInTheDocument();
+    },
+};
+
+export const WithLeadTime: Story = {
+    args: {
+        product: { ...baseProduct, c_width: 84, c_depth: 36, c_height: 32, c_leadTimeDays: 14 },
+    },
+    parameters: {
+        docs: {
+            description: {
+                story: 'A made-to-order item in the mini cart: shows dimensions and a "Ships in 14 days" lead-time estimate.',
+            },
+        },
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        await expect(canvas.getByText('84W x 36D x 32H in')).toBeInTheDocument();
+        await expect(canvas.getByText('Ships in 14 days')).toBeInTheDocument();
+    },
+};
+
+export const WithQuickShip: Story = {
+    args: {
+        product: { ...baseProduct, c_width: 30, c_depth: 30, c_height: 18, c_quickShip: true },
+    },
+    parameters: {
+        docs: {
+            description: {
+                story: 'An in-stock item flagged `c_quickShip` in the mini cart: shows dimensions and "Ships quickly" instead of a lead time.',
+            },
+        },
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        await expect(canvas.getByText('30W x 30D x 18H in')).toBeInTheDocument();
+        await expect(canvas.getByText('Ships quickly')).toBeInTheDocument();
     },
 };

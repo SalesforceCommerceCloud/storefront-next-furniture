@@ -43,6 +43,7 @@ import QuantityPicker from '@/components/quantity-picker/quantity-picker';
 import { Label } from '@/components/ui/label';
 import { ProductItemPromotions } from '@/components/product-item';
 import { UITarget } from '@/targets/ui-target';
+import CartLineFulfillmentInfo from '../cart-line-fulfillment-info';
 
 /**
  * Basket item data enriched with product details for mini cart display
@@ -74,7 +75,10 @@ interface MiniCartItemProps {
 }
 
 /**
- * MiniCartItem component for displaying products in the mini cart slideout
+ * Furniture overlay of MiniCartItem: identical to canonical except the
+ * `sfcc.miniCart.shipping.deliveryEstimate` UITarget slot is filled with
+ * {@link CartLineFulfillmentInfo} (dimensions + lead time), instead of staying empty.
+ * The adjacent `sfcc.miniCart.tax.lineItemMessage` UITarget is left unchanged.
  *
  * This component handles:
  * - Product image display with variation-specific images
@@ -120,16 +124,16 @@ export default function MiniCartItem({
         componentName: 'mini-cart-item',
     });
 
-    const stockLevel =
-        // @sfdc-extension-block-start SFDC_EXT_BOPIS
-        isPickup
-            ? getEffectiveStockLevel({
-                  product: product as unknown as ShopperProducts.schemas['Product'],
-                  isPickup: true,
-                  storeInventoryId: product.inventoryId,
-              })
-            : // @sfdc-extension-block-end SFDC_EXT_BOPIS
-              product.inventory?.ats;
+    let stockLevel = product.inventory?.ats;
+    // @sfdc-extension-block-start SFDC_EXT_BOPIS
+    if (isPickup) {
+        stockLevel = getEffectiveStockLevel({
+            product: product as unknown as ShopperProducts.schemas['Product'],
+            isPickup: true,
+            storeInventoryId: product.inventoryId,
+        });
+    }
+    // @sfdc-extension-block-end SFDC_EXT_BOPIS
     const { quantity, stockValidationError, stockMax, handleQuantityChange } = useCartQuantityUpdate({
         itemId: product.itemId || '',
         initialValue: product.quantity || 1,
@@ -252,7 +256,11 @@ export default function MiniCartItem({
                                 {tMiniCart('each')}
                             </div>
                         )}
-                        <UITarget targetId="sfcc.miniCart.shipping.deliveryEstimate" />
+                        <UITarget targetId="sfcc.miniCart.shipping.deliveryEstimate">
+                            <CartLineFulfillmentInfo
+                                product={product as unknown as ShopperProducts.schemas['Product']}
+                            />
+                        </UITarget>
                         <UITarget targetId="sfcc.miniCart.tax.lineItemMessage" />
                         <ProductItemPromotions
                             productItem={product}
