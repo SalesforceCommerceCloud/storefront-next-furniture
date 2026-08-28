@@ -59,6 +59,8 @@ interface UIConfig {
             sidebarCategoryRefinement?: {
                 enabled: boolean;
             };
+            /** When true, product tiles link to the master product PDP instead of the represented variant. @default false */
+            tileLinksToMasterProduct?: boolean;
         };
         product: {
             showRatingAverage: boolean;
@@ -91,6 +93,10 @@ export const uiConfig: UIConfig = {
                 mobileBatchSize: 12,
                 maxProducts: 200,
             },
+            // Furniture tiles link to the master PDP so the shopper configures size/fabric/leg from
+            // scratch (paired with the PDP "Choose Options" flow), rather than deep-linking to the
+            // search API's represented variant. Every other vertical leaves this off.
+            tileLinksToMasterProduct: true,
         },
         product: {
             showRatingAverage: false,

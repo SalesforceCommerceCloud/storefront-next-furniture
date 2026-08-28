@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useEffect, useRef, Suspense, Fragment } from 'react';
+import { lazy, useEffect, useRef, Suspense, Fragment } from 'react';
 import { Await, useRouteLoaderData } from 'react-router';
 import type { loader as rootLoader } from '@/root';
 import { shouldRevalidate as shouldRevalidateProduct } from '@/lib/revalidation/routes/product';
@@ -23,6 +23,9 @@ import { fetchProductById } from '@/lib/api/products.server';
 import { NormalizedApiError } from '@/lib/api/normalized-api-error';
 import { siteContext } from '@salesforce/storefront-next-runtime/site-context';
 import ProductView from '@/components/product-view/product-view';
+import ProductViewProvider from '@/providers/product-view';
+import { useDeferredRender } from '@/hooks/use-deferred-render';
+import ServiceAddonsProvider from '../context/service-addons-context';
 import ChildProducts from '@/components/product-view/child-products';
 import CategoryBreadcrumbs from '@/components/category-breadcrumbs';
 import { isProductSet, isProductBundle } from '@/lib/product/product-utils';
@@ -89,6 +92,10 @@ import { ProductContentDataProvider } from '@/extensions/product-content/context
 // @sfdc-extension-block-start SFDC_EXT_SHIPPING_DELIVERY
 import { ShippingDeliveryProvider } from '@/extensions/shipping-delivery/context/shipping-delivery-context';
 // @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY
+
+// Lazy + idle-deferred (CLAUDE.md #18 / useDeferredRender): the sticky bottom bar is a below-the-fold
+// overlay hidden on first paint, so its chunk loads and it mounts only after the critical content paints.
+const ProductBottomBar = lazy(() => import('../components/product-bottom-bar'));
 
 @PageType({
     name: 'Product Detail Page',
@@ -431,6 +438,9 @@ function ProductContent({
  */
 function ProductDetailView({ loaderData }: { loaderData: ProductPageData }) {
     const { t } = useTranslation('product');
+    // Defer mounting the sticky bottom bar until the browser is idle — it's a below-the-fold overlay,
+    // so it must not compete with the critical paint (CLAUDE.md #18).
+    const showBottomBar = useDeferredRender();
     const content = (
         <div className="min-h-screen bg-background">
             <div className="section-container pb-4 lg:pb-8">
@@ -444,21 +454,37 @@ function ProductDetailView({ loaderData }: { loaderData: ProductPageData }) {
                     <CategoryBreadcrumbs category={loaderData.product.primaryCategory} />
                 ) : null}
 
-                {/* Main Product Content — product is resolved synchronously by the loader */}
-                <ProductContent
-                    product={loaderData.product}
-                    url={loaderData.pageUrl}
-                    serviceAddonsPromise={loaderData.serviceAddons}
-                    // @sfdc-extension-block-start SFDC_EXT_RATINGS_REVIEWS
-                    reviewsSummary={loaderData.reviewsSummary}
-                    reviewsList={loaderData.reviewsList}
-                    writeReviewForm={loaderData.writeReviewForm}
-                    // @sfdc-extension-block-end SFDC_EXT_RATINGS_REVIEWS
-                    // @sfdc-extension-block-start SFDC_EXT_PRODUCT_CONTENT
-                    returnsWarrantyPromise={loaderData.returnsWarranty}
-                    pdpCollapsiblesPromise={loaderData.pdpCollapsibles}
-                    // @sfdc-extension-block-end SFDC_EXT_PRODUCT_CONTENT
-                />
+                {/* Main Product Content — product is resolved synchronously by the loader.
+                    ServiceAddonsProvider shares the selected add-ons between ProductView's
+                    AvailableServices and the sticky ProductBottomBar. This single ProductViewProvider
+                    is the shared source of add-to-cart state (quantity, variant, canAddToCart) for
+                    BOTH the in-page controls (furniture ProductView reuses it instead of nesting its
+                    own) and the route-level bar, so the picker and the bar can never disagree. The bar
+                    is a sibling of ProductContent (top-level) so its `fixed` positioning is
+                    viewport-relative. */}
+                <ServiceAddonsProvider productId={loaderData.pageKey}>
+                    <ProductViewProvider product={loaderData.product} mode="add">
+                        <ProductContent
+                            product={loaderData.product}
+                            url={loaderData.pageUrl}
+                            serviceAddonsPromise={loaderData.serviceAddons}
+                            // @sfdc-extension-block-start SFDC_EXT_RATINGS_REVIEWS
+                            reviewsSummary={loaderData.reviewsSummary}
+                            reviewsList={loaderData.reviewsList}
+                            writeReviewForm={loaderData.writeReviewForm}
+                            // @sfdc-extension-block-end SFDC_EXT_RATINGS_REVIEWS
+                            // @sfdc-extension-block-start SFDC_EXT_PRODUCT_CONTENT
+                            returnsWarrantyPromise={loaderData.returnsWarranty}
+                            pdpCollapsiblesPromise={loaderData.pdpCollapsibles}
+                            // @sfdc-extension-block-end SFDC_EXT_PRODUCT_CONTENT
+                        />
+                        {showBottomBar && (
+                            <Suspense fallback={null}>
+                                <ProductBottomBar product={loaderData.product} />
+                            </Suspense>
+                        )}
+                    </ProductViewProvider>
+                </ServiceAddonsProvider>
 
                 {/* Always-on catalog-derived recommendation carousels. Each ProductRecommendations
                     fails closed to null (no title / empty recs / fetch error), so an empty recommender
