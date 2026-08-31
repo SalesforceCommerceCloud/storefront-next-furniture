@@ -78,6 +78,11 @@ export default function HowToGetIt(): ReactElement | null {
                     product={productForDeliveryOptions}
                     quantity={quantity}
                     deliveryAvailable={deliveryAvailabilityIsUnknown ? true : undefined}
+                    instanceId={`${product.id}-furniture-pdp-delivery-options`}
+                    // @sfdc-extension-block-start SFDC_EXT_BOPIS
+                    // @sfdc-extension-line SFDC_EXT_SHIPPING_DELIVERY
+                    enableDeliveryEstimatePresentation
+                    // @sfdc-extension-block-end SFDC_EXT_BOPIS
                     pickupLocation={basketPickupStore}
                     onSelectionChange={setFulfillmentSelection}
                 />
