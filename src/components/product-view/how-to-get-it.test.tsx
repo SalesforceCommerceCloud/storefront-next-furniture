@@ -24,8 +24,23 @@ vi.mock('react-i18next', () => ({
 // Reuse-verbatim contract: HowToGetIt only wraps the canonical DeliveryOptions. Stub it so the test
 // asserts the furniture wrapper + gating without pulling in the bopis provider stack.
 vi.mock('@/components/fulfillment/delivery-options', () => ({
-    default: (props: { quantity: number }) => (
-        <div data-testid="delivery-options-stub" data-quantity={props.quantity} />
+    default: (props: {
+        quantity: number;
+        instanceId?: string;
+        // @sfdc-extension-block-start SFDC_EXT_BOPIS
+        // @sfdc-extension-line SFDC_EXT_SHIPPING_DELIVERY
+        enableDeliveryEstimatePresentation?: boolean;
+        // @sfdc-extension-block-end SFDC_EXT_BOPIS
+    }) => (
+        <div
+            data-testid="delivery-options-stub"
+            data-quantity={props.quantity}
+            data-instance-id={props.instanceId}
+            // @sfdc-extension-block-start SFDC_EXT_BOPIS
+            // @sfdc-extension-line SFDC_EXT_SHIPPING_DELIVERY
+            data-enable-delivery-estimate-presentation={props.enableDeliveryEstimatePresentation}
+            // @sfdc-extension-block-end SFDC_EXT_BOPIS
+        />
     ),
 }));
 
@@ -53,6 +68,11 @@ describe('HowToGetIt', () => {
         expect(stub).toBeInTheDocument();
         // Quantity is threaded through from the product-view context.
         expect(stub).toHaveAttribute('data-quantity', '2');
+        expect(stub).toHaveAttribute('data-instance-id', 'sofa-1-furniture-pdp-delivery-options');
+        // @sfdc-extension-block-start SFDC_EXT_BOPIS
+        // @sfdc-extension-line SFDC_EXT_SHIPPING_DELIVERY
+        expect(stub).toHaveAttribute('data-enable-delivery-estimate-presentation', 'true');
+        // @sfdc-extension-block-end SFDC_EXT_BOPIS
     });
 
     test('renders nothing when the product is out of stock', () => {

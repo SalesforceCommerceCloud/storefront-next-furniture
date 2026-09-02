@@ -354,12 +354,12 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
         >
           <button
             aria-checked="false"
-            aria-describedby="fulfillment-option-test-product-123-delivery-description"
+            aria-describedby="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
             data-radix-collection-item=""
             data-slot="radio-group-item"
             data-state="unchecked"
-            id="fulfillment-option-test-product-123-delivery"
+            id="fulfillment-option-test-product-123-pdp-delivery-options-delivery"
             role="radio"
             tabindex="-1"
             type="button"
@@ -367,7 +367,7 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
           />
           <label
             class="absolute inset-0 cursor-pointer"
-            for="fulfillment-option-test-product-123-delivery"
+            for="fulfillment-option-test-product-123-pdp-delivery-options-delivery"
           >
             <span
               class="sr-only"
@@ -375,15 +375,14 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
               Delivery
             </span>
           </label>
-          <label
+          <div
             aria-hidden="true"
-            class="mt-0.5 shrink-0"
-            for="fulfillment-option-test-product-123-delivery"
+            class="relative z-10 mt-0.5 shrink-0 pointer-events-none"
           >
             <div
               class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-          </label>
+          </div>
           <div
             class="relative z-10 flex-1 min-w-0 pointer-events-none"
           >
@@ -398,7 +397,7 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
             </div>
             <div
               class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-              id="fulfillment-option-test-product-123-delivery-description"
+              id="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             >
               <p>
                 Enter postal code to see delivery estimate
@@ -411,12 +410,12 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
         >
           <button
             aria-checked="false"
-            aria-describedby="fulfillment-option-test-product-123-pickup-description"
+            aria-describedby="fulfillment-option-test-product-123-pdp-delivery-options-pickup-description"
             class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
             data-radix-collection-item=""
             data-slot="radio-group-item"
             data-state="unchecked"
-            id="fulfillment-option-test-product-123-pickup"
+            id="fulfillment-option-test-product-123-pdp-delivery-options-pickup"
             role="radio"
             tabindex="-1"
             type="button"
@@ -424,7 +423,7 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
           />
           <label
             class="absolute inset-0 cursor-pointer"
-            for="fulfillment-option-test-product-123-pickup"
+            for="fulfillment-option-test-product-123-pdp-delivery-options-pickup"
           >
             <span
               class="sr-only"
@@ -432,15 +431,14 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
               Free pickup in
             </span>
           </label>
-          <label
+          <div
             aria-hidden="true"
-            class="mt-0.5 shrink-0"
-            for="fulfillment-option-test-product-123-pickup"
+            class="relative z-10 mt-0.5 shrink-0 pointer-events-none"
           >
             <div
               class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-          </label>
+          </div>
           <div
             class="relative z-10 flex-1 min-w-0 pointer-events-none"
           >
@@ -455,7 +453,7 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
             </div>
             <div
               class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-              id="fulfillment-option-test-product-123-pickup-description"
+              id="fulfillment-option-test-product-123-pdp-delivery-options-pickup-description"
             >
               <p>
                 Select Store
@@ -1068,12 +1066,12 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
         >
           <button
             aria-checked="false"
-            aria-describedby="fulfillment-option-test-product-123-delivery-description"
+            aria-describedby="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
             data-radix-collection-item=""
             data-slot="radio-group-item"
             data-state="unchecked"
-            id="fulfillment-option-test-product-123-delivery"
+            id="fulfillment-option-test-product-123-pdp-delivery-options-delivery"
             role="radio"
             tabindex="-1"
             type="button"
@@ -1081,7 +1079,7 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
           />
           <label
             class="absolute inset-0 cursor-pointer"
-            for="fulfillment-option-test-product-123-delivery"
+            for="fulfillment-option-test-product-123-pdp-delivery-options-delivery"
           >
             <span
               class="sr-only"
@@ -1089,15 +1087,14 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
               Delivery
             </span>
           </label>
-          <label
+          <div
             aria-hidden="true"
-            class="mt-0.5 shrink-0"
-            for="fulfillment-option-test-product-123-delivery"
+            class="relative z-10 mt-0.5 shrink-0 pointer-events-none"
           >
             <div
               class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-          </label>
+          </div>
           <div
             class="relative z-10 flex-1 min-w-0 pointer-events-none"
           >
@@ -1112,7 +1109,7 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
             </div>
             <div
               class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-              id="fulfillment-option-test-product-123-delivery-description"
+              id="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             >
               <p>
                 Enter postal code to see delivery estimate
@@ -1125,12 +1122,12 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
         >
           <button
             aria-checked="false"
-            aria-describedby="fulfillment-option-test-product-123-pickup-description"
+            aria-describedby="fulfillment-option-test-product-123-pdp-delivery-options-pickup-description"
             class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
             data-radix-collection-item=""
             data-slot="radio-group-item"
             data-state="unchecked"
-            id="fulfillment-option-test-product-123-pickup"
+            id="fulfillment-option-test-product-123-pdp-delivery-options-pickup"
             role="radio"
             tabindex="-1"
             type="button"
@@ -1138,7 +1135,7 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
           />
           <label
             class="absolute inset-0 cursor-pointer"
-            for="fulfillment-option-test-product-123-pickup"
+            for="fulfillment-option-test-product-123-pdp-delivery-options-pickup"
           >
             <span
               class="sr-only"
@@ -1146,15 +1143,14 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
               Free pickup in
             </span>
           </label>
-          <label
+          <div
             aria-hidden="true"
-            class="mt-0.5 shrink-0"
-            for="fulfillment-option-test-product-123-pickup"
+            class="relative z-10 mt-0.5 shrink-0 pointer-events-none"
           >
             <div
               class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-          </label>
+          </div>
           <div
             class="relative z-10 flex-1 min-w-0 pointer-events-none"
           >
@@ -1169,7 +1165,7 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
             </div>
             <div
               class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-              id="fulfillment-option-test-product-123-pickup-description"
+              id="fulfillment-option-test-product-123-pdp-delivery-options-pickup-description"
             >
               <p>
                 Select Store
@@ -1659,12 +1655,12 @@ exports[`ProductInfo stories snapshot > ImageSwatchesOnNonColorAxis story render
         >
           <button
             aria-checked="false"
-            aria-describedby="fulfillment-option-test-product-123-delivery-description"
+            aria-describedby="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
             data-radix-collection-item=""
             data-slot="radio-group-item"
             data-state="unchecked"
-            id="fulfillment-option-test-product-123-delivery"
+            id="fulfillment-option-test-product-123-pdp-delivery-options-delivery"
             role="radio"
             tabindex="-1"
             type="button"
@@ -1672,7 +1668,7 @@ exports[`ProductInfo stories snapshot > ImageSwatchesOnNonColorAxis story render
           />
           <label
             class="absolute inset-0 cursor-pointer"
-            for="fulfillment-option-test-product-123-delivery"
+            for="fulfillment-option-test-product-123-pdp-delivery-options-delivery"
           >
             <span
               class="sr-only"
@@ -1680,15 +1676,14 @@ exports[`ProductInfo stories snapshot > ImageSwatchesOnNonColorAxis story render
               Delivery
             </span>
           </label>
-          <label
+          <div
             aria-hidden="true"
-            class="mt-0.5 shrink-0"
-            for="fulfillment-option-test-product-123-delivery"
+            class="relative z-10 mt-0.5 shrink-0 pointer-events-none"
           >
             <div
               class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-          </label>
+          </div>
           <div
             class="relative z-10 flex-1 min-w-0 pointer-events-none"
           >
@@ -1703,7 +1698,7 @@ exports[`ProductInfo stories snapshot > ImageSwatchesOnNonColorAxis story render
             </div>
             <div
               class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-              id="fulfillment-option-test-product-123-delivery-description"
+              id="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             >
               <p>
                 Enter postal code to see delivery estimate
@@ -1716,12 +1711,12 @@ exports[`ProductInfo stories snapshot > ImageSwatchesOnNonColorAxis story render
         >
           <button
             aria-checked="false"
-            aria-describedby="fulfillment-option-test-product-123-pickup-description"
+            aria-describedby="fulfillment-option-test-product-123-pdp-delivery-options-pickup-description"
             class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
             data-radix-collection-item=""
             data-slot="radio-group-item"
             data-state="unchecked"
-            id="fulfillment-option-test-product-123-pickup"
+            id="fulfillment-option-test-product-123-pdp-delivery-options-pickup"
             role="radio"
             tabindex="-1"
             type="button"
@@ -1729,7 +1724,7 @@ exports[`ProductInfo stories snapshot > ImageSwatchesOnNonColorAxis story render
           />
           <label
             class="absolute inset-0 cursor-pointer"
-            for="fulfillment-option-test-product-123-pickup"
+            for="fulfillment-option-test-product-123-pdp-delivery-options-pickup"
           >
             <span
               class="sr-only"
@@ -1737,15 +1732,14 @@ exports[`ProductInfo stories snapshot > ImageSwatchesOnNonColorAxis story render
               Free pickup in
             </span>
           </label>
-          <label
+          <div
             aria-hidden="true"
-            class="mt-0.5 shrink-0"
-            for="fulfillment-option-test-product-123-pickup"
+            class="relative z-10 mt-0.5 shrink-0 pointer-events-none"
           >
             <div
               class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-          </label>
+          </div>
           <div
             class="relative z-10 flex-1 min-w-0 pointer-events-none"
           >
@@ -1760,7 +1754,7 @@ exports[`ProductInfo stories snapshot > ImageSwatchesOnNonColorAxis story render
             </div>
             <div
               class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-              id="fulfillment-option-test-product-123-pickup-description"
+              id="fulfillment-option-test-product-123-pdp-delivery-options-pickup-description"
             >
               <p>
                 Select Store
@@ -2368,14 +2362,14 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
         >
           <button
             aria-checked="false"
-            aria-describedby="fulfillment-option-test-product-123-delivery-description"
+            aria-describedby="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
             data-disabled=""
             data-radix-collection-item=""
             data-slot="radio-group-item"
             data-state="unchecked"
             disabled=""
-            id="fulfillment-option-test-product-123-delivery"
+            id="fulfillment-option-test-product-123-pdp-delivery-options-delivery"
             role="radio"
             tabindex="-1"
             type="button"
@@ -2383,7 +2377,7 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
           />
           <label
             class="absolute inset-0 cursor-not-allowed"
-            for="fulfillment-option-test-product-123-delivery"
+            for="fulfillment-option-test-product-123-pdp-delivery-options-delivery"
           >
             <span
               class="sr-only"
@@ -2391,15 +2385,14 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
               Delivery
             </span>
           </label>
-          <label
+          <div
             aria-hidden="true"
-            class="mt-0.5 shrink-0"
-            for="fulfillment-option-test-product-123-delivery"
+            class="relative z-10 mt-0.5 shrink-0 pointer-events-none"
           >
             <div
               class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-          </label>
+          </div>
           <div
             class="relative z-10 flex-1 min-w-0 pointer-events-none"
           >
@@ -2414,7 +2407,7 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
             </div>
             <div
               class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-              id="fulfillment-option-test-product-123-delivery-description"
+              id="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             >
               <p>
                 Enter postal code to see delivery estimate
@@ -2427,12 +2420,12 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
         >
           <button
             aria-checked="false"
-            aria-describedby="fulfillment-option-test-product-123-pickup-description"
+            aria-describedby="fulfillment-option-test-product-123-pdp-delivery-options-pickup-description"
             class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
             data-radix-collection-item=""
             data-slot="radio-group-item"
             data-state="unchecked"
-            id="fulfillment-option-test-product-123-pickup"
+            id="fulfillment-option-test-product-123-pdp-delivery-options-pickup"
             role="radio"
             tabindex="-1"
             type="button"
@@ -2440,7 +2433,7 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
           />
           <label
             class="absolute inset-0 cursor-pointer"
-            for="fulfillment-option-test-product-123-pickup"
+            for="fulfillment-option-test-product-123-pdp-delivery-options-pickup"
           >
             <span
               class="sr-only"
@@ -2448,15 +2441,14 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
               Free pickup in
             </span>
           </label>
-          <label
+          <div
             aria-hidden="true"
-            class="mt-0.5 shrink-0"
-            for="fulfillment-option-test-product-123-pickup"
+            class="relative z-10 mt-0.5 shrink-0 pointer-events-none"
           >
             <div
               class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-          </label>
+          </div>
           <div
             class="relative z-10 flex-1 min-w-0 pointer-events-none"
           >
@@ -2471,7 +2463,7 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
             </div>
             <div
               class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-              id="fulfillment-option-test-product-123-pickup-description"
+              id="fulfillment-option-test-product-123-pdp-delivery-options-pickup-description"
             >
               <p>
                 Select Store
@@ -3084,12 +3076,12 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
         >
           <button
             aria-checked="false"
-            aria-describedby="fulfillment-option-test-product-123-delivery-description"
+            aria-describedby="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
             data-radix-collection-item=""
             data-slot="radio-group-item"
             data-state="unchecked"
-            id="fulfillment-option-test-product-123-delivery"
+            id="fulfillment-option-test-product-123-pdp-delivery-options-delivery"
             role="radio"
             tabindex="-1"
             type="button"
@@ -3097,7 +3089,7 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
           />
           <label
             class="absolute inset-0 cursor-pointer"
-            for="fulfillment-option-test-product-123-delivery"
+            for="fulfillment-option-test-product-123-pdp-delivery-options-delivery"
           >
             <span
               class="sr-only"
@@ -3105,15 +3097,14 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
               Delivery
             </span>
           </label>
-          <label
+          <div
             aria-hidden="true"
-            class="mt-0.5 shrink-0"
-            for="fulfillment-option-test-product-123-delivery"
+            class="relative z-10 mt-0.5 shrink-0 pointer-events-none"
           >
             <div
               class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-          </label>
+          </div>
           <div
             class="relative z-10 flex-1 min-w-0 pointer-events-none"
           >
@@ -3128,7 +3119,7 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
             </div>
             <div
               class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-              id="fulfillment-option-test-product-123-delivery-description"
+              id="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             >
               <p>
                 Enter postal code to see delivery estimate
@@ -3141,12 +3132,12 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
         >
           <button
             aria-checked="false"
-            aria-describedby="fulfillment-option-test-product-123-pickup-description"
+            aria-describedby="fulfillment-option-test-product-123-pdp-delivery-options-pickup-description"
             class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
             data-radix-collection-item=""
             data-slot="radio-group-item"
             data-state="unchecked"
-            id="fulfillment-option-test-product-123-pickup"
+            id="fulfillment-option-test-product-123-pdp-delivery-options-pickup"
             role="radio"
             tabindex="-1"
             type="button"
@@ -3154,7 +3145,7 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
           />
           <label
             class="absolute inset-0 cursor-pointer"
-            for="fulfillment-option-test-product-123-pickup"
+            for="fulfillment-option-test-product-123-pdp-delivery-options-pickup"
           >
             <span
               class="sr-only"
@@ -3162,15 +3153,14 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
               Free pickup in
             </span>
           </label>
-          <label
+          <div
             aria-hidden="true"
-            class="mt-0.5 shrink-0"
-            for="fulfillment-option-test-product-123-pickup"
+            class="relative z-10 mt-0.5 shrink-0 pointer-events-none"
           >
             <div
               class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-          </label>
+          </div>
           <div
             class="relative z-10 flex-1 min-w-0 pointer-events-none"
           >
@@ -3185,7 +3175,7 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
             </div>
             <div
               class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-              id="fulfillment-option-test-product-123-pickup-description"
+              id="fulfillment-option-test-product-123-pdp-delivery-options-pickup-description"
             >
               <p>
                 Select Store
@@ -3733,12 +3723,12 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
         >
           <button
             aria-checked="false"
-            aria-describedby="fulfillment-option-test-product-123-delivery-description"
+            aria-describedby="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
             data-radix-collection-item=""
             data-slot="radio-group-item"
             data-state="unchecked"
-            id="fulfillment-option-test-product-123-delivery"
+            id="fulfillment-option-test-product-123-pdp-delivery-options-delivery"
             role="radio"
             tabindex="-1"
             type="button"
@@ -3746,7 +3736,7 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
           />
           <label
             class="absolute inset-0 cursor-pointer"
-            for="fulfillment-option-test-product-123-delivery"
+            for="fulfillment-option-test-product-123-pdp-delivery-options-delivery"
           >
             <span
               class="sr-only"
@@ -3754,15 +3744,14 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
               Delivery
             </span>
           </label>
-          <label
+          <div
             aria-hidden="true"
-            class="mt-0.5 shrink-0"
-            for="fulfillment-option-test-product-123-delivery"
+            class="relative z-10 mt-0.5 shrink-0 pointer-events-none"
           >
             <div
               class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-          </label>
+          </div>
           <div
             class="relative z-10 flex-1 min-w-0 pointer-events-none"
           >
@@ -3777,7 +3766,7 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
             </div>
             <div
               class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-              id="fulfillment-option-test-product-123-delivery-description"
+              id="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             >
               <p>
                 Enter postal code to see delivery estimate
@@ -3790,12 +3779,12 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
         >
           <button
             aria-checked="false"
-            aria-describedby="fulfillment-option-test-product-123-pickup-description"
+            aria-describedby="fulfillment-option-test-product-123-pdp-delivery-options-pickup-description"
             class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
             data-radix-collection-item=""
             data-slot="radio-group-item"
             data-state="unchecked"
-            id="fulfillment-option-test-product-123-pickup"
+            id="fulfillment-option-test-product-123-pdp-delivery-options-pickup"
             role="radio"
             tabindex="-1"
             type="button"
@@ -3803,7 +3792,7 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
           />
           <label
             class="absolute inset-0 cursor-pointer"
-            for="fulfillment-option-test-product-123-pickup"
+            for="fulfillment-option-test-product-123-pdp-delivery-options-pickup"
           >
             <span
               class="sr-only"
@@ -3811,15 +3800,14 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
               Free pickup in
             </span>
           </label>
-          <label
+          <div
             aria-hidden="true"
-            class="mt-0.5 shrink-0"
-            for="fulfillment-option-test-product-123-pickup"
+            class="relative z-10 mt-0.5 shrink-0 pointer-events-none"
           >
             <div
               class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-          </label>
+          </div>
           <div
             class="relative z-10 flex-1 min-w-0 pointer-events-none"
           >
@@ -3834,7 +3822,7 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
             </div>
             <div
               class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-              id="fulfillment-option-test-product-123-pickup-description"
+              id="fulfillment-option-test-product-123-pdp-delivery-options-pickup-description"
             >
               <p>
                 Select Store
