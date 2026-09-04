@@ -95,7 +95,8 @@ import { ShippingDeliveryProvider } from '@/extensions/shipping-delivery/context
 
 // Lazy + idle-deferred (CLAUDE.md #18 / useDeferredRender): the sticky bottom bar is a below-the-fold
 // overlay hidden on first paint, so its chunk loads and it mounts only after the critical content paints.
-const ProductBottomBar = lazy(() => import('../components/product-bottom-bar'));
+// Keep the alias import so the Furniture component overlay resolves in the source tree and flattened build.
+const ProductBottomBar = lazy(() => import('@/components/product-bottom-bar'));
 
 @PageType({
     name: 'Product Detail Page',

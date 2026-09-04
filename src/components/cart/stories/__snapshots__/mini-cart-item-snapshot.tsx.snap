@@ -141,7 +141,7 @@ exports[`MiniCartItem stories snapshot > AtStockLimit story renders and matches 
                       >
                         <span>
                           Color
-                          : 
+                          :\x20
                         </span>
                         <span>
                           Grey
@@ -152,7 +152,7 @@ exports[`MiniCartItem stories snapshot > AtStockLimit story renders and matches 
                       >
                         <span>
                           Size
-                          : 
+                          :\x20
                         </span>
                         <span>
                           XL
@@ -178,10 +178,10 @@ exports[`MiniCartItem stories snapshot > AtStockLimit story renders and matches 
                         class="sr-only"
                       >
                         Product Name
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         Current price: £15.00
                       </span>
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       <h5
                         aria-hidden="true"
                         class="text-left text-xl font-normal leading-[120%] tracking-[-0.6px] text-card-foreground line-through [&:not(:first-child)]:mt-0"
@@ -194,7 +194,7 @@ exports[`MiniCartItem stories snapshot > AtStockLimit story renders and matches 
                         class="sr-only"
                       >
                         Product Name
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         List price: £80.00
                       </span>
                     </div>
@@ -202,7 +202,7 @@ exports[`MiniCartItem stories snapshot > AtStockLimit story renders and matches 
                       class="text-right text-muted-foreground text-sm"
                     >
                       £3.75
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       each
                     </div>
                     <span
@@ -445,7 +445,7 @@ exports[`MiniCartItem stories snapshot > Default story renders and matches snaps
                       >
                         <span>
                           Color
-                          : 
+                          :\x20
                         </span>
                         <span>
                           Grey
@@ -456,7 +456,7 @@ exports[`MiniCartItem stories snapshot > Default story renders and matches snaps
                       >
                         <span>
                           Size
-                          : 
+                          :\x20
                         </span>
                         <span>
                           XL
@@ -482,10 +482,10 @@ exports[`MiniCartItem stories snapshot > Default story renders and matches snaps
                         class="sr-only"
                       >
                         Product Name
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         Current price: £15.00
                       </span>
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       <h5
                         aria-hidden="true"
                         class="text-left text-xl font-normal leading-[120%] tracking-[-0.6px] text-card-foreground line-through [&:not(:first-child)]:mt-0"
@@ -498,7 +498,7 @@ exports[`MiniCartItem stories snapshot > Default story renders and matches snaps
                         class="sr-only"
                       >
                         Product Name
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         List price: £20.00
                       </span>
                     </div>
@@ -732,6 +732,352 @@ exports[`MiniCartItem stories snapshot > EmptyCart story renders and matches sna
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MiniCartItem stories snapshot > WithLeadTime story renders and matches snapshot 1`] = `
+<div
+  class="w-full max-w-md"
+>
+  <div
+    class="flex gap-4"
+    data-testid="mini-cart-item"
+  >
+    <div
+      class="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 bg-muted overflow-hidden rounded-ui transition-all duration-500"
+    >
+      <div
+        class="w-full h-full bg-muted flex items-center justify-center text-muted-foreground text-xs"
+      >
+        No image
+      </div>
+    </div>
+    <div
+      class="flex-1 min-w-0 flex flex-col"
+    >
+      <div
+        class="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-x-4 gap-y-2 mb-2"
+      >
+        <div
+          class="min-w-0"
+        >
+          <a
+            class="hover:underline"
+            data-discover="true"
+            href="/RefArchGlobal/en-GB/product/mock-product-1"
+          >
+            <h3
+              class="text-left text-xl font-semibold leading-none tracking-[-0.6px] text-card-foreground line-clamp-2"
+            >
+              Product Name
+            </h3>
+          </a>
+          <div
+            class="mt-1 space-y-0.5"
+          >
+            <span
+              class="text-left inline-block w-full text-sm font-normal leading-5 text-muted-foreground"
+            >
+              <span>
+                Color
+                :\x20
+              </span>
+              <span>
+                Grey
+              </span>
+            </span>
+            <span
+              class="text-left inline-block w-full text-sm font-normal leading-5 text-muted-foreground"
+            >
+              <span>
+                Size
+                :\x20
+              </span>
+              <span>
+                XL
+              </span>
+            </span>
+          </div>
+        </div>
+        <div
+          class="flex w-full max-w-[11rem] justify-self-end flex-col items-end text-right"
+        >
+          <div
+            class="flex flex-col-reverse items-end gap-0 text-right"
+          >
+            <h5
+              aria-hidden="true"
+              class="text-left text-xl font-semibold leading-none tracking-[-0.6px] text-card-foreground [&:not(:first-child)]:mt-0"
+            >
+              £15.00
+            </h5>
+            <span
+              aria-atomic="true"
+              aria-live="polite"
+              class="sr-only"
+            >
+              Product Name
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+              Current price: £15.00
+            </span>
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+            <h5
+              aria-hidden="true"
+              class="text-left text-xl font-normal leading-[120%] tracking-[-0.6px] text-card-foreground line-through [&:not(:first-child)]:mt-0"
+            >
+              £20.00
+            </h5>
+            <span
+              aria-atomic="true"
+              aria-live="polite"
+              class="sr-only"
+            >
+              Product Name
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+              List price: £20.00
+            </span>
+          </div>
+          <div
+            class="text-right text-xs text-muted-foreground"
+            data-slot="cart-line-fulfillment-info"
+          >
+            <p>
+              84W x 36D x 32H in
+            </p>
+            <p>
+              Ships in 14 days
+            </p>
+          </div>
+          <span
+            class="inline-flex items-center justify-center rounded-full w-fit shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden border-transparent [a&]:hover:bg-primary/90 h-auto min-h-0 border-0 bg-muted px-1.5 py-0.5 text-xs font-semibold text-secondary-foreground mt-1 max-w-full whitespace-normal break-words text-right leading-normal"
+            data-slot="badge"
+          >
+            Saved £5.00
+          </span>
+        </div>
+      </div>
+      <div
+        class="mb-2 flex w-fit max-w-full flex-col items-start gap-1"
+      >
+        <label
+          class="flex items-center gap-2 select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-base font-semibold leading-6 text-card-foreground"
+          data-slot="label"
+          for="quantity-mock-cart-line-1"
+        >
+          Quantity
+        </label>
+        <div
+          aria-label="Quantity for Product Name"
+          class="inline-flex border border-input rounded-ui overflow-hidden h-9 w-fit max-w-full items-center gap-2 px-2 py-2"
+          role="group"
+        >
+          <button
+            aria-label="Decrement Quantity for Product Name"
+            class="px-2.5 py-1.5 text-base font-semibold leading-normal text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] disabled:opacity-50 disabled:cursor-not-allowed"
+            data-testid="quantity-decrement"
+            disabled=""
+          >
+            −
+          </button>
+          <input
+            aria-label="Quantity"
+            class="w-9 min-w-[2ch] text-center text-sm font-semibold leading-normal text-foreground border-0 bg-transparent focus-visible:outline-2 focus-visible:outline-offset-[-2px] disabled:opacity-50 disabled:cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            min="1"
+            step="1"
+            type="number"
+            value="1"
+          />
+          <button
+            aria-label="Increment Quantity for Product Name"
+            class="px-2.5 py-1.5 text-base font-semibold leading-normal text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] disabled:opacity-50 disabled:cursor-not-allowed"
+            data-testid="quantity-increment"
+          >
+            +
+          </button>
+        </div>
+      </div>
+      <button
+        aria-label="Remove item from cart"
+        class="text-sm font-medium leading-5 text-primary hover:underline text-left"
+        type="button"
+      >
+        Remove
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MiniCartItem stories snapshot > WithQuickShip story renders and matches snapshot 1`] = `
+<div
+  class="w-full max-w-md"
+>
+  <div
+    class="flex gap-4"
+    data-testid="mini-cart-item"
+  >
+    <div
+      class="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 bg-muted overflow-hidden rounded-ui transition-all duration-500"
+    >
+      <div
+        class="w-full h-full bg-muted flex items-center justify-center text-muted-foreground text-xs"
+      >
+        No image
+      </div>
+    </div>
+    <div
+      class="flex-1 min-w-0 flex flex-col"
+    >
+      <div
+        class="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-x-4 gap-y-2 mb-2"
+      >
+        <div
+          class="min-w-0"
+        >
+          <a
+            class="hover:underline"
+            data-discover="true"
+            href="/RefArchGlobal/en-GB/product/mock-product-1"
+          >
+            <h3
+              class="text-left text-xl font-semibold leading-none tracking-[-0.6px] text-card-foreground line-clamp-2"
+            >
+              Product Name
+            </h3>
+          </a>
+          <div
+            class="mt-1 space-y-0.5"
+          >
+            <span
+              class="text-left inline-block w-full text-sm font-normal leading-5 text-muted-foreground"
+            >
+              <span>
+                Color
+                :\x20
+              </span>
+              <span>
+                Grey
+              </span>
+            </span>
+            <span
+              class="text-left inline-block w-full text-sm font-normal leading-5 text-muted-foreground"
+            >
+              <span>
+                Size
+                :\x20
+              </span>
+              <span>
+                XL
+              </span>
+            </span>
+          </div>
+        </div>
+        <div
+          class="flex w-full max-w-[11rem] justify-self-end flex-col items-end text-right"
+        >
+          <div
+            class="flex flex-col-reverse items-end gap-0 text-right"
+          >
+            <h5
+              aria-hidden="true"
+              class="text-left text-xl font-semibold leading-none tracking-[-0.6px] text-card-foreground [&:not(:first-child)]:mt-0"
+            >
+              £15.00
+            </h5>
+            <span
+              aria-atomic="true"
+              aria-live="polite"
+              class="sr-only"
+            >
+              Product Name
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+              Current price: £15.00
+            </span>
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+            <h5
+              aria-hidden="true"
+              class="text-left text-xl font-normal leading-[120%] tracking-[-0.6px] text-card-foreground line-through [&:not(:first-child)]:mt-0"
+            >
+              £20.00
+            </h5>
+            <span
+              aria-atomic="true"
+              aria-live="polite"
+              class="sr-only"
+            >
+              Product Name
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+              List price: £20.00
+            </span>
+          </div>
+          <div
+            class="text-right text-xs text-muted-foreground"
+            data-slot="cart-line-fulfillment-info"
+          >
+            <p>
+              30W x 30D x 18H in
+            </p>
+            <p>
+              Ships quickly
+            </p>
+          </div>
+          <span
+            class="inline-flex items-center justify-center rounded-full w-fit shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden border-transparent [a&]:hover:bg-primary/90 h-auto min-h-0 border-0 bg-muted px-1.5 py-0.5 text-xs font-semibold text-secondary-foreground mt-1 max-w-full whitespace-normal break-words text-right leading-normal"
+            data-slot="badge"
+          >
+            Saved £5.00
+          </span>
+        </div>
+      </div>
+      <div
+        class="mb-2 flex w-fit max-w-full flex-col items-start gap-1"
+      >
+        <label
+          class="flex items-center gap-2 select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-base font-semibold leading-6 text-card-foreground"
+          data-slot="label"
+          for="quantity-mock-cart-line-1"
+        >
+          Quantity
+        </label>
+        <div
+          aria-label="Quantity for Product Name"
+          class="inline-flex border border-input rounded-ui overflow-hidden h-9 w-fit max-w-full items-center gap-2 px-2 py-2"
+          role="group"
+        >
+          <button
+            aria-label="Decrement Quantity for Product Name"
+            class="px-2.5 py-1.5 text-base font-semibold leading-normal text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] disabled:opacity-50 disabled:cursor-not-allowed"
+            data-testid="quantity-decrement"
+            disabled=""
+          >
+            −
+          </button>
+          <input
+            aria-label="Quantity"
+            class="w-9 min-w-[2ch] text-center text-sm font-semibold leading-normal text-foreground border-0 bg-transparent focus-visible:outline-2 focus-visible:outline-offset-[-2px] disabled:opacity-50 disabled:cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            min="1"
+            step="1"
+            type="number"
+            value="1"
+          />
+          <button
+            aria-label="Increment Quantity for Product Name"
+            class="px-2.5 py-1.5 text-base font-semibold leading-normal text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] disabled:opacity-50 disabled:cursor-not-allowed"
+            data-testid="quantity-increment"
+          >
+            +
+          </button>
+        </div>
+      </div>
+      <button
+        aria-label="Remove item from cart"
+        class="text-sm font-medium leading-5 text-primary hover:underline text-left"
+        type="button"
+      >
+        Remove
+      </button>
     </div>
   </div>
 </div>

@@ -183,7 +183,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           merchandising-grid-1
         </p>
         <div
@@ -287,10 +287,10 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               class="sr-only"
             >
               Featured product 1
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Current price: £63.99
             </span>
-             
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -303,7 +303,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               class="sr-only"
             >
               Featured product 1
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               List price: £67.99
             </span>
           </div>
@@ -377,8 +377,8 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-label="Featured product 2"
             class="absolute inset-0 z-[1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-2?pid=701642823919M"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-2?pid=701642823919M"
+            href="/RefArchGlobal/en-GB/product/merchandising-grid-2"
+            to="/RefArchGlobal/en-GB/product/merchandising-grid-2"
           />
           <div
             class="absolute top-2 right-2 flex flex-col items-end gap-2 z-20"
@@ -458,9 +458,9 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-hidden="true"
             class="hover:underline"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-2?pid=701642823919M"
+            href="/RefArchGlobal/en-GB/product/merchandising-grid-2"
             tabindex="-1"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-2?pid=701642823919M"
+            to="/RefArchGlobal/en-GB/product/merchandising-grid-2"
           >
             Featured product 2
           </a>
@@ -470,7 +470,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           merchandising-grid-2
         </p>
         <div
@@ -574,10 +574,10 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               class="sr-only"
             >
               Featured product 2
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Current price: £18.55
             </span>
-             
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -590,7 +590,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               class="sr-only"
             >
               Featured product 2
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               List price from £31.36
             </span>
           </div>
@@ -673,8 +673,8 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-label="Featured product 3"
             class="absolute inset-0 z-[1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-3?pid=750518894461M"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-3?pid=750518894461M"
+            href="/RefArchGlobal/en-GB/product/merchandising-grid-3"
+            to="/RefArchGlobal/en-GB/product/merchandising-grid-3"
           />
           <div
             class="absolute top-2 right-2 flex flex-col items-end gap-2 z-20"
@@ -754,9 +754,9 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-hidden="true"
             class="hover:underline"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-3?pid=750518894461M"
+            href="/RefArchGlobal/en-GB/product/merchandising-grid-3"
             tabindex="-1"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-3?pid=750518894461M"
+            to="/RefArchGlobal/en-GB/product/merchandising-grid-3"
           >
             Featured product 3
           </a>
@@ -766,7 +766,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           merchandising-grid-3
         </p>
         <div
@@ -870,10 +870,10 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               class="sr-only"
             >
               Featured product 3
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Price range from £143.99 to £191.99
             </span>
-             
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           </div>
           <div
             class="items-center gap-2 text-xs text-active-foreground mt-1"
@@ -1045,7 +1045,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           merchandising-grid-4
         </p>
         <div
@@ -1149,10 +1149,10 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               class="sr-only"
             >
               Featured product 4
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Current price: £63.99
             </span>
-             
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -1165,7 +1165,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               class="sr-only"
             >
               Featured product 4
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               List price: £67.99
             </span>
           </div>
@@ -1239,8 +1239,8 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-label="Featured product 5"
             class="absolute inset-0 z-[1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-5?pid=701642823919M"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-5?pid=701642823919M"
+            href="/RefArchGlobal/en-GB/product/merchandising-grid-5"
+            to="/RefArchGlobal/en-GB/product/merchandising-grid-5"
           />
           <div
             class="absolute top-2 right-2 flex flex-col items-end gap-2 z-20"
@@ -1320,9 +1320,9 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-hidden="true"
             class="hover:underline"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-5?pid=701642823919M"
+            href="/RefArchGlobal/en-GB/product/merchandising-grid-5"
             tabindex="-1"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-5?pid=701642823919M"
+            to="/RefArchGlobal/en-GB/product/merchandising-grid-5"
           >
             Featured product 5
           </a>
@@ -1332,7 +1332,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           merchandising-grid-5
         </p>
         <div
@@ -1436,10 +1436,10 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               class="sr-only"
             >
               Featured product 5
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Current price: £18.55
             </span>
-             
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -1452,7 +1452,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               class="sr-only"
             >
               Featured product 5
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               List price from £31.36
             </span>
           </div>
@@ -1535,8 +1535,8 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-label="Featured product 6"
             class="absolute inset-0 z-[1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-6?pid=750518894461M"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-6?pid=750518894461M"
+            href="/RefArchGlobal/en-GB/product/merchandising-grid-6"
+            to="/RefArchGlobal/en-GB/product/merchandising-grid-6"
           />
           <div
             class="absolute top-2 right-2 flex flex-col items-end gap-2 z-20"
@@ -1616,9 +1616,9 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-hidden="true"
             class="hover:underline"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-6?pid=750518894461M"
+            href="/RefArchGlobal/en-GB/product/merchandising-grid-6"
             tabindex="-1"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-6?pid=750518894461M"
+            to="/RefArchGlobal/en-GB/product/merchandising-grid-6"
           >
             Featured product 6
           </a>
@@ -1628,7 +1628,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           merchandising-grid-6
         </p>
         <div
@@ -1732,10 +1732,10 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               class="sr-only"
             >
               Featured product 6
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Price range from £143.99 to £191.99
             </span>
-             
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           </div>
           <div
             class="items-center gap-2 text-xs text-active-foreground mt-1"
@@ -1907,7 +1907,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           merchandising-grid-7
         </p>
         <div
@@ -2011,10 +2011,10 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               class="sr-only"
             >
               Featured product 7
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Current price: £63.99
             </span>
-             
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -2027,7 +2027,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               class="sr-only"
             >
               Featured product 7
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               List price: £67.99
             </span>
           </div>
@@ -2101,8 +2101,8 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-label="Featured product 8"
             class="absolute inset-0 z-[1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-8?pid=701642823919M"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-8?pid=701642823919M"
+            href="/RefArchGlobal/en-GB/product/merchandising-grid-8"
+            to="/RefArchGlobal/en-GB/product/merchandising-grid-8"
           />
           <div
             class="absolute top-2 right-2 flex flex-col items-end gap-2 z-20"
@@ -2182,9 +2182,9 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-hidden="true"
             class="hover:underline"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-8?pid=701642823919M"
+            href="/RefArchGlobal/en-GB/product/merchandising-grid-8"
             tabindex="-1"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-8?pid=701642823919M"
+            to="/RefArchGlobal/en-GB/product/merchandising-grid-8"
           >
             Featured product 8
           </a>
@@ -2194,7 +2194,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           merchandising-grid-8
         </p>
         <div
@@ -2298,10 +2298,10 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               class="sr-only"
             >
               Featured product 8
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Current price: £18.55
             </span>
-             
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -2314,7 +2314,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               class="sr-only"
             >
               Featured product 8
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               List price from £31.36
             </span>
           </div>

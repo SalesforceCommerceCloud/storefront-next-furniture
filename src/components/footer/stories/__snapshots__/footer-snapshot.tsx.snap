@@ -11,9 +11,9 @@ exports[`Footer stories snapshot > CheckoutVariant story renders and matches sna
       class="flex flex-col sm:flex-row justify-between items-center gap-2 text-sm text-muted-foreground"
     >
       <div>
-        © 
-        Market Street
-         
+        ©\x20
+        Furniture Next
+\x20\x20\x20\x20\x20\x20\x20\x20\x20
         415 Mission St, San Francisco, CA 94105
       </div>
       <div
@@ -41,22 +41,22 @@ exports[`Footer stories snapshot > Default story renders and matches snapshot 1`
 <footer
   class="mt-auto"
 >
-  <div
-    class="section-container"
+  <section
+    class="bg-newsletter-background py-12 text-newsletter-foreground md:py-16"
   >
     <div
-      class="bg-newsletter-background text-newsletter-foreground px-6 sm:px-8 py-12 md:py-16 rounded-ui"
+      class="section-container text-center"
     >
       <div
-        class="max-w-2xl mx-auto text-center"
+        class="mx-auto w-full max-w-2xl"
       >
         <h2
-          class="text-2xl font-semibold leading-[120%] tracking-[-0.6px] text-newsletter-foreground mb-3"
+          class="mb-3 text-2xl font-semibold leading-[120%] tracking-[-0.6px] text-newsletter-foreground"
         >
           Join Our Community
         </h2>
         <p
-          class="text-sm font-normal leading-5 text-newsletter-foreground mb-6"
+          class="mb-6 text-sm font-normal leading-5 text-newsletter-foreground"
         >
           Be the first to discover new arrivals, exclusive offers, and style inspiration.
         </p>
@@ -70,7 +70,7 @@ exports[`Footer stories snapshot > Default story renders and matches snapshot 1`
               class="sr-only"
               for="footer-newsletter-email"
             >
-              Email address for newsletter subscription
+              Email address for Furniture Next updates
             </label>
             <div
               class="flex flex-row gap-2 sm:gap-3"
@@ -97,7 +97,7 @@ exports[`Footer stories snapshot > Default story renders and matches snapshot 1`
         </div>
       </div>
     </div>
-  </div>
+  </section>
   <div
     class="bg-footer-background py-12 section-container"
   >
@@ -108,7 +108,7 @@ exports[`Footer stories snapshot > Default story renders and matches snapshot 1`
         class="flex flex-col gap-6"
       >
         <div
-          class="flex w-full flex-col items-start lg:flex-row gap-6"
+          class="flex w-full flex-col items-start gap-6 lg:flex-row"
         >
           <div
             class="flex w-full items-center gap-6"
@@ -117,8 +117,8 @@ exports[`Footer stories snapshot > Default story renders and matches snapshot 1`
               href="/"
             >
               <img
-                alt="Market Street"
-                class="h-4 w-auto"
+                alt="Furniture Next"
+                class="h-11 w-auto"
                 src="__ASSET_MOCK__"
               />
             </a>
@@ -269,16 +269,16 @@ exports[`Footer stories snapshot > Default story renders and matches snapshot 1`
           </div>
         </div>
         <div
-          class="flex flex-col items-start xl:flex-row xl:items-center justify-between gap-4 text-sm font-normal leading-5 text-muted-foreground"
+          class="flex flex-col items-start justify-between gap-4 text-sm font-normal leading-5 text-muted-foreground xl:flex-row xl:items-center"
         >
           <div>
-            © 
+            ©\x20
             2026
-             
-            Salesforce or its affiliates. All rights reserved. This is a demo store only. Orders made WILL NOT be processed.
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+            Furniture Next. All rights reserved.
           </div>
           <div
-            class="flex flex-col items-start sm:flex-row sm:items-center gap-4"
+            class="flex flex-col items-start gap-4 sm:flex-row sm:items-center"
           >
             <div
               class="flex items-center gap-4"
@@ -326,22 +326,22 @@ exports[`Footer stories snapshot > FooterSelectsForcedFocus story renders and ma
 <footer
   class="mt-auto"
 >
-  <div
-    class="section-container"
+  <section
+    class="bg-newsletter-background py-12 text-newsletter-foreground md:py-16"
   >
     <div
-      class="bg-newsletter-background text-newsletter-foreground px-6 sm:px-8 py-12 md:py-16 rounded-ui"
+      class="section-container text-center"
     >
       <div
-        class="max-w-2xl mx-auto text-center"
+        class="mx-auto w-full max-w-2xl"
       >
         <h2
-          class="text-2xl font-semibold leading-[120%] tracking-[-0.6px] text-newsletter-foreground mb-3"
+          class="mb-3 text-2xl font-semibold leading-[120%] tracking-[-0.6px] text-newsletter-foreground"
         >
           Join Our Community
         </h2>
         <p
-          class="text-sm font-normal leading-5 text-newsletter-foreground mb-6"
+          class="mb-6 text-sm font-normal leading-5 text-newsletter-foreground"
         >
           Be the first to discover new arrivals, exclusive offers, and style inspiration.
         </p>
@@ -355,7 +355,7 @@ exports[`Footer stories snapshot > FooterSelectsForcedFocus story renders and ma
               class="sr-only"
               for="footer-newsletter-email"
             >
-              Email address for newsletter subscription
+              Email address for Furniture Next updates
             </label>
             <div
               class="flex flex-row gap-2 sm:gap-3"
@@ -382,7 +382,7 @@ exports[`Footer stories snapshot > FooterSelectsForcedFocus story renders and ma
         </div>
       </div>
     </div>
-  </div>
+  </section>
   <div
     class="bg-footer-background py-12 section-container"
   >
@@ -393,7 +393,7 @@ exports[`Footer stories snapshot > FooterSelectsForcedFocus story renders and ma
         class="flex flex-col gap-6"
       >
         <div
-          class="flex w-full flex-col items-start lg:flex-row gap-6"
+          class="flex w-full flex-col items-start gap-6 lg:flex-row"
         >
           <div
             class="flex w-full items-center gap-6"
@@ -402,8 +402,8 @@ exports[`Footer stories snapshot > FooterSelectsForcedFocus story renders and ma
               href="/"
             >
               <img
-                alt="Market Street"
-                class="h-4 w-auto"
+                alt="Furniture Next"
+                class="h-11 w-auto"
                 src="__ASSET_MOCK__"
               />
             </a>
@@ -554,16 +554,16 @@ exports[`Footer stories snapshot > FooterSelectsForcedFocus story renders and ma
           </div>
         </div>
         <div
-          class="flex flex-col items-start xl:flex-row xl:items-center justify-between gap-4 text-sm font-normal leading-5 text-muted-foreground"
+          class="flex flex-col items-start justify-between gap-4 text-sm font-normal leading-5 text-muted-foreground xl:flex-row xl:items-center"
         >
           <div>
-            © 
+            ©\x20
             2026
-             
-            Salesforce or its affiliates. All rights reserved. This is a demo store only. Orders made WILL NOT be processed.
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+            Furniture Next. All rights reserved.
           </div>
           <div
-            class="flex flex-col items-start sm:flex-row sm:items-center gap-4"
+            class="flex flex-col items-start gap-4 sm:flex-row sm:items-center"
           >
             <div
               class="flex items-center gap-4"
@@ -611,22 +611,22 @@ exports[`Footer stories snapshot > MobileView story renders and matches snapshot
 <footer
   class="mt-auto"
 >
-  <div
-    class="section-container"
+  <section
+    class="bg-newsletter-background py-12 text-newsletter-foreground md:py-16"
   >
     <div
-      class="bg-newsletter-background text-newsletter-foreground px-6 sm:px-8 py-12 md:py-16 rounded-ui"
+      class="section-container text-center"
     >
       <div
-        class="max-w-2xl mx-auto text-center"
+        class="mx-auto w-full max-w-2xl"
       >
         <h2
-          class="text-2xl font-semibold leading-[120%] tracking-[-0.6px] text-newsletter-foreground mb-3"
+          class="mb-3 text-2xl font-semibold leading-[120%] tracking-[-0.6px] text-newsletter-foreground"
         >
           Join Our Community
         </h2>
         <p
-          class="text-sm font-normal leading-5 text-newsletter-foreground mb-6"
+          class="mb-6 text-sm font-normal leading-5 text-newsletter-foreground"
         >
           Be the first to discover new arrivals, exclusive offers, and style inspiration.
         </p>
@@ -640,7 +640,7 @@ exports[`Footer stories snapshot > MobileView story renders and matches snapshot
               class="sr-only"
               for="footer-newsletter-email"
             >
-              Email address for newsletter subscription
+              Email address for Furniture Next updates
             </label>
             <div
               class="flex flex-row gap-2 sm:gap-3"
@@ -667,7 +667,7 @@ exports[`Footer stories snapshot > MobileView story renders and matches snapshot
         </div>
       </div>
     </div>
-  </div>
+  </section>
   <div
     class="bg-footer-background py-12 section-container"
   >
@@ -678,7 +678,7 @@ exports[`Footer stories snapshot > MobileView story renders and matches snapshot
         class="flex flex-col gap-6"
       >
         <div
-          class="flex w-full flex-col items-start lg:flex-row gap-6"
+          class="flex w-full flex-col items-start gap-6 lg:flex-row"
         >
           <div
             class="flex w-full items-center gap-6"
@@ -687,8 +687,8 @@ exports[`Footer stories snapshot > MobileView story renders and matches snapshot
               href="/"
             >
               <img
-                alt="Market Street"
-                class="h-4 w-auto"
+                alt="Furniture Next"
+                class="h-11 w-auto"
                 src="__ASSET_MOCK__"
               />
             </a>
@@ -839,16 +839,16 @@ exports[`Footer stories snapshot > MobileView story renders and matches snapshot
           </div>
         </div>
         <div
-          class="flex flex-col items-start xl:flex-row xl:items-center justify-between gap-4 text-sm font-normal leading-5 text-muted-foreground"
+          class="flex flex-col items-start justify-between gap-4 text-sm font-normal leading-5 text-muted-foreground xl:flex-row xl:items-center"
         >
           <div>
-            © 
+            ©\x20
             2026
-             
-            Salesforce or its affiliates. All rights reserved. This is a demo store only. Orders made WILL NOT be processed.
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+            Furniture Next. All rights reserved.
           </div>
           <div
-            class="flex flex-col items-start sm:flex-row sm:items-center gap-4"
+            class="flex flex-col items-start gap-4 sm:flex-row sm:items-center"
           >
             <div
               class="flex items-center gap-4"
