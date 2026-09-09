@@ -293,4 +293,22 @@ describe('MiniCartItem', () => {
         await user.click(incrementButton);
         // Quantity change is handled by mocked hook
     });
+
+    // Furniture overlay behavior: a fabric-swatch line (identified by c_fabricFamily) is one-each,
+    // so the mini-cart stepper is capped at maxQtyPerSwatch (furniture config = 1) and cannot be raised.
+    it('locks quantity for a fabric-swatch line (increment disabled at the per-swatch cap)', () => {
+        const swatchProduct = {
+            ...mockProduct,
+            price: 0,
+            priceAfterItemDiscount: 0,
+            c_fabricFamily: 'Linen',
+        };
+        renderWithRouter(<MiniCartItem product={swatchProduct} />);
+        expect(screen.getByTestId('quantity-increment')).toBeDisabled();
+    });
+
+    it('does not lock quantity for a normal (non-swatch) line', () => {
+        renderWithRouter(<MiniCartItem product={mockProduct} />);
+        expect(screen.getByTestId('quantity-increment')).not.toBeDisabled();
+    });
 });

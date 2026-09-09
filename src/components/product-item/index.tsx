@@ -328,6 +328,12 @@ function ProductItem({
     // Check if this is a bonus product
     const isBonusProduct = Boolean(productItem?.bonusProductLineItem);
 
+    // Fabric-swatch line: carries the c_fabricFamily custom attribute (spread onto the enriched
+    // item). Its quantity is locked to the per-vertical maxQtyPerSwatch (swatches are one-each), and
+    // the fabric family renders as a subtitle under the name.
+    const fabricFamily = (productItem as { c_fabricFamily?: string } | undefined)?.c_fabricFamily;
+    const isSwatchLine = Boolean(fabricFamily);
+
     // Determine if this is a choice-based bonus product by checking bonusDiscountLineItems
     // Must be called before any early returns (React Hooks rules)
     const isChoiceBasedBonusProduct = useMemo(() => {
@@ -420,6 +426,15 @@ function ProductItem({
                                         productItem={productItem}
                                         showBonusBadge={showLineItemBonusBadge}
                                     />
+                                    {fabricFamily && (
+                                        <Typography
+                                            as="p"
+                                            variant="muted"
+                                            className="-mt-2 mb-2 text-sm md:-mt-3"
+                                            data-slot="swatch-fabric-family">
+                                            {fabricFamily}
+                                        </Typography>
+                                    )}
                                     {productItem.bundledProducts && (
                                         <BundledProductItems bundledProducts={productItem.bundledProducts} />
                                     )}
@@ -514,7 +529,13 @@ function ProductItem({
                                             value={String(productItem.quantity)}
                                             itemId={productItem.itemId || ''}
                                             stockLevel={stockLevel}
-                                            max={isBonusProduct ? maxBonusQuantity : undefined}
+                                            max={
+                                                isBonusProduct
+                                                    ? maxBonusQuantity
+                                                    : isSwatchLine
+                                                      ? uiConfig.pages.swatches.maxQtyPerSwatch
+                                                      : undefined
+                                            }
                                             disabled={isAutoBonusProduct}
                                         />
                                     </div>

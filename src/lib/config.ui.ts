@@ -39,6 +39,10 @@
  * below).
  */
 interface UIConfig {
+    checkout: {
+        /** When true, allow placing orders with $0 total without payment instruments or billing addresses. @default false */
+        allowZeroTotalOrders: boolean;
+    };
     pages: {
         cart: {
             showRecommendations: boolean;
@@ -46,6 +50,12 @@ interface UIConfig {
             showLineItemListPrice: boolean;
             showLineItemPromoBadge: boolean;
             showLineItemBonusBadge: boolean;
+        };
+        swatches: {
+            /** Maximum number of distinct swatches that can be selected per order. @default 0 */
+            maxDistinctSwatches: number;
+            /** Maximum quantity allowed per individual swatch product. @default 1 */
+            maxQtyPerSwatch: number;
         };
         category: {
             showCategoryLabel: boolean;
@@ -77,6 +87,9 @@ interface UIConfig {
 }
 
 export const uiConfig: UIConfig = {
+    checkout: {
+        allowZeroTotalOrders: true,
+    },
     pages: {
         cart: {
             showRecommendations: true,
@@ -84,6 +97,10 @@ export const uiConfig: UIConfig = {
             showLineItemListPrice: true,
             showLineItemPromoBadge: true,
             showLineItemBonusBadge: true,
+        },
+        swatches: {
+            maxDistinctSwatches: 5,
+            maxQtyPerSwatch: 1,
         },
         category: {
             showCategoryLabel: false,

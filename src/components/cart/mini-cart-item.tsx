@@ -44,6 +44,7 @@ import { Label } from '@/components/ui/label';
 import { ProductItemPromotions } from '@/components/product-item';
 import { UITarget } from '@/targets/ui-target';
 import CartLineFulfillmentInfo from '../cart-line-fulfillment-info';
+import { uiConfig } from '@/lib/config.ui';
 
 /**
  * Basket item data enriched with product details for mini cart display
@@ -157,6 +158,15 @@ export default function MiniCartItem({
 
     // Build product URL for linking to PDP
     const productUrl = product.productId ? `/product/${product.productId}` : undefined;
+
+    // Furniture free-fabric-swatch lines are one-each. The swatch product carries a `c_fabricFamily`
+    // custom attribute (returned top-level by getProducts), so a present value marks a swatch line.
+    // Cap its quantity at the MORE restrictive of the per-swatch limit and available stock, so the
+    // mini-cart stepper can't raise a $0 swatch above the per-vertical cap and never above stock.
+    // When stock is unknown, fall back to the per-swatch limit so the cap is never widened.
+    const isSwatchLine = Boolean((product as { c_fabricFamily?: string }).c_fabricFamily);
+    const { maxQtyPerSwatch } = uiConfig.pages.swatches;
+    const quantityMax = isSwatchLine ? Math.min(maxQtyPerSwatch, stockMax ?? maxQtyPerSwatch) : stockMax;
 
     return (
         <div className="flex gap-4" data-testid="mini-cart-item">
@@ -280,7 +290,7 @@ export default function MiniCartItem({
                         value={String(quantity)}
                         onChange={handleQuantityChange}
                         min={1}
-                        max={stockMax}
+                        max={quantityMax}
                         productName={product.productName}
                         className="h-9 w-fit max-w-full items-center gap-2 px-2 py-2"
                     />

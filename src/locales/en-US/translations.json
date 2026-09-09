@@ -1463,8 +1463,8 @@
             "swatches": {
                 "title": "Free swatches",
                 "description": "See color and texture at home before you choose. Up to five fabrics, on us.",
-                "ctaText": "Shop furniture",
-                "ctaAriaLabel": "Shop the furniture collection",
+                "ctaText": "Order Swatches",
+                "ctaAriaLabel": "Order free fabric swatches",
                 "imageAlt": "A softly styled bedroom showing layered fabric textures."
             },
             "brand": {
@@ -2168,6 +2168,28 @@
             "imageAlt": "A warm dining room with a wood table set for a meal.",
             "ctaText": "Shop Now",
             "ctaLink": "/category/root"
+        }
+    },
+    "swatches": {
+        "meta": {
+            "title": "Free fabric swatches",
+            "description": "Compare texture, color, and finish at home before you configure. Choose up to five swatches and we will send them your way."
+        },
+        "eyebrow": "Try before you buy",
+        "title": "Free fabric swatches",
+        "description": "Compare texture, color, and finish at home before you configure. Choose up to five swatches and we will send them your way.",
+        "gallery": {
+            "heading": "Fabric Swatches",
+            "selectHint": "See and feel the texture before you commit.",
+            "selectedCount": "{{count}} of {{max}} selected"
+        },
+        "form": {
+            "submit": "Order Free Swatches",
+            "submitting": "Processing..."
+        },
+        "alreadyOrdered": {
+            "heading": "Swatches ordered",
+            "body": "You've already ordered your free fabric swatches. Check your email for shipping confirmation."
         }
     }
 }

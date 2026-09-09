@@ -364,7 +364,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
                             imageAlt={t('editorial.swatches.imageAlt')}
                             buttonText={t('editorial.swatches.ctaText')}
                             buttonAriaLabel={t('editorial.swatches.ctaAriaLabel')}
-                            buttonLink={rootCategoryUrl}
+                            buttonLink="/swatches"
                             showBackground={false}
                             showBorder={false}
                             loading="lazy"
