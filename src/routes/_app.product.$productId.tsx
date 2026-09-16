@@ -50,8 +50,8 @@ import { fetchPageWithComponentData } from '@/lib/page-designer/page-loader.serv
 import { JsonLd } from '@/components/json-ld';
 import { SeoMeta } from '@/components/seo-meta';
 import { generateProductSchema } from '@/utils/product-schema';
-import { getPublicOrigin } from '@/utils/schema-url';
-import { buildCanonicalUrl } from '@/utils/canonical-url';
+import { buildSeoPageUrl } from '@/lib/seo/page-url.server';
+import { redirectToCanonicalPath } from '@/lib/seo/canonical-redirect.server';
 import { getLogger } from '@/lib/logger.server';
 import { UITarget } from '@/targets/ui-target';
 import { getTranslation } from '@salesforce/storefront-next-runtime/i18n';
@@ -158,6 +158,7 @@ export async function loader(args: Route.LoaderArgs): Promise<ProductPageData> {
     const { request, context } = args;
     const logger = getLogger(context);
     const requestUrl = new URL(request.url);
+    redirectToCanonicalPath(requestUrl);
     const productId = decodeFinalRawSegment(requestUrl, args.params);
     const { searchParams } = requestUrl;
     const variantPid = searchParams.get('pid');
@@ -224,7 +225,7 @@ export async function loader(args: Route.LoaderArgs): Promise<ProductPageData> {
     // has them on first paint. Data-gated (no-op without `c_swatchProductIds`) and non-fatal.
     await resolveSwatchProductImages(context, product);
 
-    const pageUrl = buildCanonicalUrl(requestUrl.origin, requestUrl.pathname, requestUrl.search);
+    const pageUrl = buildSeoPageUrl(context, requestUrl);
 
     // Generate product schema in loader (server-side) for SEO.
     // Wrapped in a Promise so it can be rendered through Suspense without blocking
@@ -235,12 +236,9 @@ export async function loader(args: Route.LoaderArgs): Promise<ProductPageData> {
     const productSchemaPromise: Promise<ReturnType<typeof generateProductSchema> | null> = Promise.resolve().then(
         () => {
             try {
-                // Use public origin from request headers instead of request.url
-                // to avoid exposing internal AWS Lambda URLs in schema
-                const publicOrigin = getPublicOrigin(request);
-                const url = new URL(request.url);
-                const productUrl = `${publicOrigin}${url.pathname}${url.search}`;
-                return generateProductSchema(product, productUrl);
+                // Reuse the canonical page URL so structured data points at the same
+                // preferred URL as the canonical <link> and og:url.
+                return generateProductSchema(product, pageUrl);
             } catch (error) {
                 logger.error('Error generating product schema in loader', { error });
                 return null;
