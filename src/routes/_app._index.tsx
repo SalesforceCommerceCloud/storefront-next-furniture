@@ -37,7 +37,8 @@ import { SeoMeta } from '@/components/seo-meta';
 import { buildCanonicalUrl } from '@/utils/canonical-url';
 import { useTranslation } from 'react-i18next';
 import type { NormalizedApiError } from '@/lib/api/normalized-api-error';
-import { routes, routeHref } from '@/route-paths';
+import { createCategoryUrlFromLegacyPath } from '@/route-paths';
+import { useSeoUrlContext } from '@/hooks/use-seo-url-context';
 
 import hero01 from '/images/hero-01.webp';
 import hero02 from '/images/hero-02.webp';
@@ -210,7 +211,11 @@ export function loader(args: Route.LoaderArgs): HomePageData {
 
 export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
     const { t } = useTranslation('home');
-    const rootCategoryUrl = routeHref(routes.category, { categoryId: loaderData.rootCategoryId });
+    const seoUrlContext = useSeoUrlContext();
+    const rootCategoryUrl = createCategoryUrlFromLegacyPath(
+        `/category/${encodeURIComponent(loaderData.rootCategoryId)}`,
+        seoUrlContext
+    );
 
     const heroSlides: HeroSlide[] = [
         {

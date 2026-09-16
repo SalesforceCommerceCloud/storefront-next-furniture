@@ -20,6 +20,10 @@ import type { ShopperProducts, ShopperSearch } from '@/scapi';
 import { getRegionDefinitions } from '@/lib/decorators/region-definition';
 import HomePage, { HomePageMetadata, type HomePageData } from './_app._index';
 
+vi.mock('@/hooks/use-seo-url-context', () => ({
+    useSeoUrlContext: () => ({ siteId: 'RefArchGlobal' }),
+}));
+
 vi.mock('@/components/region', () => ({
     Region: ({
         regionId,
