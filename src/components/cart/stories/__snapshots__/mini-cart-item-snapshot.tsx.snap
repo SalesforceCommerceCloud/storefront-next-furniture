@@ -141,7 +141,7 @@ exports[`MiniCartItem stories snapshot > AtStockLimit story renders and matches 
                       >
                         <span>
                           Color
-                          :\x20
+                          : 
                         </span>
                         <span>
                           Grey
@@ -152,7 +152,7 @@ exports[`MiniCartItem stories snapshot > AtStockLimit story renders and matches 
                       >
                         <span>
                           Size
-                          :\x20
+                          : 
                         </span>
                         <span>
                           XL
@@ -178,10 +178,10 @@ exports[`MiniCartItem stories snapshot > AtStockLimit story renders and matches 
                         class="sr-only"
                       >
                         Product Name
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+                         
                         Current price: £15.00
                       </span>
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+                       
                       <h5
                         aria-hidden="true"
                         class="text-left text-xl font-normal leading-[120%] tracking-[-0.6px] text-card-foreground line-through [&:not(:first-child)]:mt-0"
@@ -194,7 +194,7 @@ exports[`MiniCartItem stories snapshot > AtStockLimit story renders and matches 
                         class="sr-only"
                       >
                         Product Name
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+                         
                         List price: £80.00
                       </span>
                     </div>
@@ -202,7 +202,7 @@ exports[`MiniCartItem stories snapshot > AtStockLimit story renders and matches 
                       class="text-right text-muted-foreground text-sm"
                     >
                       £3.75
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+                       
                       each
                     </div>
                     <span
@@ -445,7 +445,7 @@ exports[`MiniCartItem stories snapshot > Default story renders and matches snaps
                       >
                         <span>
                           Color
-                          :\x20
+                          : 
                         </span>
                         <span>
                           Grey
@@ -456,7 +456,7 @@ exports[`MiniCartItem stories snapshot > Default story renders and matches snaps
                       >
                         <span>
                           Size
-                          :\x20
+                          : 
                         </span>
                         <span>
                           XL
@@ -482,10 +482,10 @@ exports[`MiniCartItem stories snapshot > Default story renders and matches snaps
                         class="sr-only"
                       >
                         Product Name
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+                         
                         Current price: £15.00
                       </span>
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+                       
                       <h5
                         aria-hidden="true"
                         class="text-left text-xl font-normal leading-[120%] tracking-[-0.6px] text-card-foreground line-through [&:not(:first-child)]:mt-0"
@@ -498,7 +498,7 @@ exports[`MiniCartItem stories snapshot > Default story renders and matches snaps
                         class="sr-only"
                       >
                         Product Name
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+                         
                         List price: £20.00
                       </span>
                     </div>
@@ -782,7 +782,7 @@ exports[`MiniCartItem stories snapshot > WithLeadTime story renders and matches 
             >
               <span>
                 Color
-                :\x20
+                : 
               </span>
               <span>
                 Grey
@@ -793,7 +793,7 @@ exports[`MiniCartItem stories snapshot > WithLeadTime story renders and matches 
             >
               <span>
                 Size
-                :\x20
+                : 
               </span>
               <span>
                 XL
@@ -819,10 +819,10 @@ exports[`MiniCartItem stories snapshot > WithLeadTime story renders and matches 
               class="sr-only"
             >
               Product Name
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               Current price: £15.00
             </span>
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             <h5
               aria-hidden="true"
               class="text-left text-xl font-normal leading-[120%] tracking-[-0.6px] text-card-foreground line-through [&:not(:first-child)]:mt-0"
@@ -835,7 +835,7 @@ exports[`MiniCartItem stories snapshot > WithLeadTime story renders and matches 
               class="sr-only"
             >
               Product Name
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               List price: £20.00
             </span>
           </div>
@@ -955,7 +955,7 @@ exports[`MiniCartItem stories snapshot > WithQuickShip story renders and matches
             >
               <span>
                 Color
-                :\x20
+                : 
               </span>
               <span>
                 Grey
@@ -966,7 +966,7 @@ exports[`MiniCartItem stories snapshot > WithQuickShip story renders and matches
             >
               <span>
                 Size
-                :\x20
+                : 
               </span>
               <span>
                 XL
@@ -992,10 +992,10 @@ exports[`MiniCartItem stories snapshot > WithQuickShip story renders and matches
               class="sr-only"
             >
               Product Name
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               Current price: £15.00
             </span>
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             <h5
               aria-hidden="true"
               class="text-left text-xl font-normal leading-[120%] tracking-[-0.6px] text-card-foreground line-through [&:not(:first-child)]:mt-0"
@@ -1008,7 +1008,7 @@ exports[`MiniCartItem stories snapshot > WithQuickShip story renders and matches
               class="sr-only"
             >
               Product Name
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               List price: £20.00
             </span>
           </div>

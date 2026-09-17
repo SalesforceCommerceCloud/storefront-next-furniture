@@ -11,9 +11,9 @@ exports[`Footer stories snapshot > CheckoutVariant story renders and matches sna
       class="flex flex-col sm:flex-row justify-between items-center gap-2 text-sm text-muted-foreground"
     >
       <div>
-        ©\x20
+        © 
         Furniture Next
-\x20\x20\x20\x20\x20\x20\x20\x20\x20
+         
         415 Mission St, San Francisco, CA 94105
       </div>
       <div
@@ -272,9 +272,9 @@ exports[`Footer stories snapshot > Default story renders and matches snapshot 1`
           class="flex flex-col items-start justify-between gap-4 text-sm font-normal leading-5 text-muted-foreground xl:flex-row xl:items-center"
         >
           <div>
-            ©\x20
+            © 
             2026
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             Furniture Next. All rights reserved.
           </div>
           <div
@@ -557,9 +557,9 @@ exports[`Footer stories snapshot > FooterSelectsForcedFocus story renders and ma
           class="flex flex-col items-start justify-between gap-4 text-sm font-normal leading-5 text-muted-foreground xl:flex-row xl:items-center"
         >
           <div>
-            ©\x20
+            © 
             2026
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             Furniture Next. All rights reserved.
           </div>
           <div
@@ -842,9 +842,9 @@ exports[`Footer stories snapshot > MobileView story renders and matches snapshot
           class="flex flex-col items-start justify-between gap-4 text-sm font-normal leading-5 text-muted-foreground xl:flex-row xl:items-center"
         >
           <div>
-            ©\x20
+            © 
             2026
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             Furniture Next. All rights reserved.
           </div>
           <div

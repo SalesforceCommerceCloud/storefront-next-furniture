@@ -182,7 +182,7 @@ exports[`ProductTile stories snapshot > Default story renders and matches snapsh
         data-testid="product-tile-sku"
       >
         SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20
+         
         25686571M
       </p>
       <div
@@ -286,10 +286,10 @@ exports[`ProductTile stories snapshot > Default story renders and matches snapsh
             class="sr-only"
           >
             Charcoal Single Pleat Wool Suit
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             Price range from £143.99 to £191.99
           </span>
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+           
         </div>
         <div
           class="items-center gap-2 text-xs text-active-foreground mt-1"
@@ -494,7 +494,7 @@ exports[`ProductTile stories snapshot > OutOfStock story renders and matches sna
         data-testid="product-tile-sku"
       >
         SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20
+         
         25686571M
       </p>
       <div
@@ -598,10 +598,10 @@ exports[`ProductTile stories snapshot > OutOfStock story renders and matches sna
             class="sr-only"
           >
             Charcoal Single Pleat Wool Suit
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             Price range from £143.99 to £191.99
           </span>
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+           
         </div>
         <div
           class="items-center gap-2 text-xs text-active-foreground mt-1"
@@ -848,7 +848,7 @@ exports[`ProductTile stories snapshot > Playground story renders and matches sna
         data-testid="product-tile-sku"
       >
         SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20
+         
         25518101M
       </p>
       <div
@@ -952,10 +952,10 @@ exports[`ProductTile stories snapshot > Playground story renders and matches sna
             class="sr-only"
           >
             Long Sleeve Embellished Boat Neck Top
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             Current price: £18.55
           </span>
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+           
           <span
             aria-hidden="true"
             class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -968,7 +968,7 @@ exports[`ProductTile stories snapshot > Playground story renders and matches sna
             class="sr-only"
           >
             Long Sleeve Embellished Boat Neck Top
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             List price from £31.36
           </span>
         </div>
@@ -1133,7 +1133,7 @@ exports[`ProductTile stories snapshot > ProductSetWithPriceRange story renders a
         data-testid="product-tile-sku"
       >
         SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20
+         
         winter-lookM
       </p>
       <div
@@ -1237,7 +1237,7 @@ exports[`ProductTile stories snapshot > ProductSetWithPriceRange story renders a
             class="sr-only"
           >
             Winter Look
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             Price range from £40.16 to £71.03
           </span>
         </div>

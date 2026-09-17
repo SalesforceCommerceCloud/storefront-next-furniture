@@ -16,13 +16,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { describe, expect, test, vi } from 'vitest';
+import { ConfigProvider } from '@salesforce/storefront-next-runtime/config';
+import { SiteProvider } from '@salesforce/storefront-next-runtime/site-context';
 import type { ShopperProducts, ShopperSearch } from '@/scapi';
 import { getRegionDefinitions } from '@/lib/decorators/region-definition';
 import HomePage, { HomePageMetadata, type HomePageData } from './_app._index';
-
-vi.mock('@/hooks/use-seo-url-context', () => ({
-    useSeoUrlContext: () => ({ siteId: 'RefArchGlobal' }),
-}));
+import { mockConfig, mockLocale, mockSiteObject } from '@/test-utils/config';
+import type { AppConfig } from '@/types/config';
 
 vi.mock('@/components/region', () => ({
     Region: ({
@@ -132,6 +132,36 @@ const categories = Array.from({ length: 5 }, (_, index) => ({
 
 const searchResult = { hits: [] } as unknown as ShopperSearch.schemas['ProductSearchResult'];
 
+const testConfig: AppConfig = {
+    ...mockConfig,
+    url: {
+        ...mockConfig.url,
+        seoRoutes: {
+            [mockSiteObject.id]: {
+                product: { prefix: 'p' },
+                category: { prefix: 'c', mode: 'id-suffix' },
+            },
+        },
+    },
+};
+
+function HomePageProviders({ children }: { children: ReactNode }) {
+    return (
+        <ConfigProvider config={testConfig}>
+            <SiteProvider
+                site={mockSiteObject}
+                locale={mockLocale}
+                language={mockSiteObject.defaultLocale}
+                currency={mockSiteObject.defaultCurrency}>
+                {children}
+            </SiteProvider>
+        </ConfigProvider>
+    );
+}
+
+const renderHomePage = (data: HomePageData = loaderData) =>
+    render(<HomePage loaderData={data} />, { wrapper: HomePageProviders });
+
 const loaderData: HomePageData = {
     page: Promise.resolve({ id: 'homepage', regions: [], componentData: {} } as never),
     products: Promise.resolve(searchResult),
@@ -143,7 +173,7 @@ const loaderData: HomePageData = {
 
 describe('Furniture home page', () => {
     test('intersperses empty Page Designer slots between static home content', async () => {
-        const { container } = render(<HomePage loaderData={loaderData} />);
+        const { container } = renderHomePage();
 
         expect(screen.getByRole('heading', { name: 'Furniture Next', level: 1 })).toBeInTheDocument();
         expect(screen.getByTestId('hero-carousel')).toBeInTheDocument();
@@ -159,7 +189,7 @@ describe('Furniture home page', () => {
 
         expect(screen.getAllByTestId('content-card')).toHaveLength(3);
         expect(screen.getByText('Curated for your space')).toBeInTheDocument();
-        expect(screen.getByRole('link', { name: 'Shop all' })).toHaveAttribute('href', '/category/root');
+        expect(screen.getByRole('link', { name: 'Shop all' })).toHaveAttribute('href', '/c/root');
         expect(Array.from(container.querySelectorAll('[data-slot="page-designer-region"]'))).toHaveLength(6);
         expect(
             Array.from(container.querySelectorAll('[data-slot="page-designer-region"]')).map((region) =>
@@ -173,7 +203,7 @@ describe('Furniture home page', () => {
     });
 
     test('renders the Furniture Next brand card at the full page width', () => {
-        render(<HomePage loaderData={loaderData} />);
+        renderHomePage();
 
         const brandSection = document.querySelector('[data-slot="furniture-home-brand"]');
         expect(brandSection).toHaveClass('mt-16', 'px-4');
@@ -229,7 +259,7 @@ describe('Furniture home page', () => {
         const rejectedCategories = Promise.reject(new Error('Category API failed'));
         rejectedCategories.catch(() => undefined);
 
-        render(<HomePage loaderData={{ ...loaderData, categories: rejectedCategories }} />);
+        renderHomePage({ ...loaderData, categories: rejectedCategories });
 
         await waitFor(() => {
             expect(screen.getByTestId('product-merchandising-grid')).toBeInTheDocument();
@@ -244,7 +274,7 @@ describe('Furniture home page', () => {
     test('reserves the featured-products heading while its category search resolves', () => {
         const pendingProducts = new Promise<ShopperSearch.schemas['ProductSearchResult']>(() => undefined);
 
-        render(<HomePage loaderData={{ ...loaderData, products: pendingProducts }} />);
+        renderHomePage({ ...loaderData, products: pendingProducts });
 
         expect(screen.getByTestId('product-merchandising-grid-skeleton')).toHaveAttribute(
             'data-title',
@@ -256,14 +286,20 @@ describe('Furniture home page', () => {
         );
         expect(screen.getByTestId('product-merchandising-grid-skeleton')).toHaveAttribute(
             'data-shop-all-url',
-            '/category/root'
+            '/c/root'
         );
+    });
+
+    test('uses the configured SEO category prefix for the root category link', async () => {
+        renderHomePage();
+
+        expect(await screen.findByRole('link', { name: 'Shop all' })).toHaveAttribute('href', '/c/root');
     });
 
     test('reserves the room-mosaic layout while categories load', () => {
         const pendingCategories = new Promise<ShopperProducts.schemas['Category'][]>(() => undefined);
 
-        render(<HomePage loaderData={{ ...loaderData, categories: pendingCategories }} />);
+        renderHomePage({ ...loaderData, categories: pendingCategories });
 
         expect(document.querySelector('[data-slot="shop-by-room-grid-skeleton"]')).toBeInTheDocument();
     });
