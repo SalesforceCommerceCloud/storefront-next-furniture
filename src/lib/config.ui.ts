@@ -82,7 +82,11 @@ interface UIConfig {
             collapsibleSwatchSections?: boolean;
             /** PDP product-image gallery layout: 'stacked' (hero + thumbnails) or 'mosaic'. @default 'stacked' */
             galleryLayout?: 'stacked' | 'mosaic';
-            /** PDP quantity UX. Furniture retains the pre-add picker for service add-ons. @default 'inline' */
+            /**
+             * PDP quantity UX: 'inline' turns Add to Cart into an in-cart stepper; 'pre-select' keeps the
+             * pre-add quantity picker. @default 'pre-select' documents the type-level fallback for an unset
+             * value; furniture sets 'inline' below since shoppers rarely buy multiple large items.
+             */
             addToCartQuantityMode?: 'inline' | 'pre-select';
         };
     };
@@ -123,7 +127,7 @@ export const uiConfig: UIConfig = {
             imageCardAxes: ['size', 'legStyle'],
             collapsibleSwatchSections: true,
             galleryLayout: 'mosaic',
-            addToCartQuantityMode: 'pre-select',
+            addToCartQuantityMode: 'inline',
         },
     },
 };

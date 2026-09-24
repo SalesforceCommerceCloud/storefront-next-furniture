@@ -61,9 +61,10 @@ describe('Furniture ProductView estimated delivery', () => {
         render(<RouterProvider router={router} />);
 
         expect(screen.getAllByTestId('estimated-delivery-calculator')).toHaveLength(1);
-        // Furniture config retains the pre-add picker next to the CTA for service add-on batching.
-        expect(document.querySelector('[data-slot="qty-add-row"]')).toBeInTheDocument();
-        expect(screen.queryByTestId('inline-add-to-cart')).not.toBeInTheDocument();
+        // Furniture defaults to the inline add-to-cart stepper (opt-in via addToCartQuantityMode),
+        // so the standalone pre-add picker row is not rendered.
+        expect(document.querySelector('[data-slot="inline-add-to-cart"]')).toBeInTheDocument();
+        expect(document.querySelector('[data-slot="qty-add-row"]')).not.toBeInTheDocument();
     });
 
     test('uses the PDP-only zoom gallery for the mosaic PDP', () => {
