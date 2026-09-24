@@ -15,7 +15,7 @@
  */
 import { type ReactElement, useState, useEffect } from 'react';
 import type { ShopperProducts } from '@/scapi';
-import ImageGallery from '@/components/image-gallery';
+import ProductZoomGallery from '@/components/product-zoom-gallery';
 import ProductInfo from '@/components/product-view/product-info';
 import ProductCartActions, { type AdditionalItem } from '@/components/product-cart-actions';
 import ConfigurationSummary from './configuration-summary';
@@ -28,6 +28,7 @@ import { useProductImages } from '@/hooks/product/use-product-images';
 import { useSelectedVariations } from '@/hooks/product/use-selected-variations';
 import { isProductSet, isProductBundle } from '@/lib/product/product-utils';
 import { uiConfig } from '@/lib/config.ui';
+import { usesInlineAddToCartQuantity } from '@/lib/product/add-to-cart-quantity-mode';
 import CollapsibleHtmlSection from '@/components/collapsible-section/collapsible-html-section';
 import { useTranslation } from 'react-i18next';
 import { UITarget } from '@/targets/ui-target';
@@ -83,12 +84,13 @@ export default function ProductView({ product, serviceAddonsPromise }: ProductVi
     // Furniture opts into the mosaic PDP gallery via config; every other vertical stays 'stacked'
     // (hero + thumbnails). Read here (the PDP caller) so non-PDP ImageGallery usages are unaffected.
     const galleryLayout = uiConfig.pages.product.galleryLayout ?? 'stacked';
+    const useInlineCartQuantity = usesInlineAddToCartQuantity();
 
     const content = (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12">
             {/* Left Column - Image Gallery + Description */}
             <div className="order-1">
-                <ImageGallery
+                <ProductZoomGallery
                     key={product.id}
                     images={galleryImages}
                     eager={!isProductASet && !isProductABundle}
@@ -120,9 +122,16 @@ export default function ProductView({ product, serviceAddonsPromise }: ProductVi
                         </>
                     }
                     hideDeliveryOptions
+                    // Furniture's picker lives beside the CTA so its selected quantity can be
+                    // batched with service add-ons. Keep ProductInfo's standalone picker hidden.
                     showQuantityPicker={false}
                 />
-                <ProductCartActions product={product} additionalItems={additionalItems} showInlineQuantity />
+                <ProductCartActions
+                    product={product}
+                    additionalItems={additionalItems}
+                    showInlineQuantity={!useInlineCartQuantity}
+                    showInlineCartQuantity={useInlineCartQuantity}
+                />
                 {serviceAddonsPromise && (
                     <AvailableServices servicesPromise={serviceAddonsPromise} onSelectionChange={setAdditionalItems} />
                 )}

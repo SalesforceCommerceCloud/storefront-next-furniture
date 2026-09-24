@@ -16,13 +16,18 @@
 /** @sfdc-extension-file SFDC_EXT_SHIPPING_DELIVERY */
 import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
-import { describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import ProductView from './product-view';
 import { masterProduct as mockProduct } from '@/components/__mocks__/master-variant-product';
 import { AllProvidersWrapper } from '@/test-utils/context-provider';
 
-vi.mock('@/components/image-gallery', () => ({
-    default: ({ productName }: { productName?: string }) => <div data-testid="image-gallery">{productName}</div>,
+const capturedProductZoomGalleryProps: { last: Record<string, unknown> | null } = { last: null };
+
+vi.mock('@/components/product-zoom-gallery', () => ({
+    default: ({ productName, ...props }: { productName?: string } & Record<string, unknown>) => {
+        capturedProductZoomGalleryProps.last = props;
+        return <div data-testid="image-gallery">{productName}</div>;
+    },
 }));
 
 vi.mock('@/extensions/shipping-delivery/components/target/delivery-estimate-summary-target', () => ({
@@ -34,6 +39,10 @@ vi.mock('@/components/toast', () => ({
 }));
 
 describe('Furniture ProductView estimated delivery', () => {
+    beforeEach(() => {
+        capturedProductZoomGalleryProps.last = null;
+    });
+
     test('renders one estimated delivery calculator', () => {
         const router = createMemoryRouter(
             [
@@ -52,5 +61,30 @@ describe('Furniture ProductView estimated delivery', () => {
         render(<RouterProvider router={router} />);
 
         expect(screen.getAllByTestId('estimated-delivery-calculator')).toHaveLength(1);
+        // Furniture config retains the pre-add picker next to the CTA for service add-on batching.
+        expect(document.querySelector('[data-slot="qty-add-row"]')).toBeInTheDocument();
+        expect(screen.queryByTestId('inline-add-to-cart')).not.toBeInTheDocument();
+    });
+
+    test('uses the PDP-only zoom gallery for the mosaic PDP', () => {
+        const router = createMemoryRouter(
+            [
+                {
+                    path: '/product/:productId',
+                    element: (
+                        <AllProvidersWrapper>
+                            <ProductView product={mockProduct} />
+                        </AllProvidersWrapper>
+                    ),
+                },
+            ],
+            { initialEntries: ['/product/test-product'] }
+        );
+
+        render(<RouterProvider router={router} />);
+
+        expect(capturedProductZoomGalleryProps.last).toEqual(
+            expect.objectContaining({ showNavigationArrows: true, navigationArrowSize: 'lg' })
+        );
     });
 });

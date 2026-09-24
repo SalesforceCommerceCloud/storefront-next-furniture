@@ -23,6 +23,15 @@ import { siteContext, type SiteContext } from '@salesforce/storefront-next-runti
 const CANDIDATE_POOL_SIZE = 48;
 
 /**
+ * Hard cap on how long the candidate-pool search is allowed to take. `entry.server.tsx` aborts
+ * the whole SSR stream at `streamTimeout` (5s) + 1s; a slow/cold-cache SCAPI category search here
+ * could otherwise still be in flight when that fires, which forces React Router to reject this
+ * deferred value with an uncaught `Server Timeout` and crash the entire PDP instead of just this
+ * rail. Racing against a local timeout keeps the degrade-to-empty behavior in our own hands.
+ */
+const CANDIDATE_POOL_TIMEOUT_MS = 3_000;
+
+/**
  * The set of product ids that mean "this is the product on the current PDP": the current
  * variant's own sku (`product.id`) plus its master sku (`product.master?.masterId`), plus any
  * represented-product ids. Mirrors footwear's identity logic.
@@ -73,13 +82,24 @@ export async function fetchRoomCandidatePool(
     if (!roomCategoryId) return [];
 
     const { currency } = context.get(siteContext) as SiteContext;
-    const result = await fetchCarouselProducts(context, {
+    const searchPromise = fetchCarouselProducts(context, {
         categoryId: roomCategoryId,
         limit: CANDIDATE_POOL_SIZE,
         currency: currency ?? undefined,
     }).catch(() => null);
 
-    return result?.hits ?? [];
+    let resolveTimeout: (hits: null) => void;
+    const timeoutPromise = new Promise<null>((resolve) => {
+        resolveTimeout = resolve;
+    });
+    const timeoutId = setTimeout(() => resolveTimeout(null), CANDIDATE_POOL_TIMEOUT_MS);
+
+    try {
+        const result = await Promise.race([searchPromise, timeoutPromise]);
+        return result?.hits ?? [];
+    } finally {
+        clearTimeout(timeoutId);
+    }
 }
 
 /**

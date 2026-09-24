@@ -82,6 +82,8 @@ interface UIConfig {
             collapsibleSwatchSections?: boolean;
             /** PDP product-image gallery layout: 'stacked' (hero + thumbnails) or 'mosaic'. @default 'stacked' */
             galleryLayout?: 'stacked' | 'mosaic';
+            /** PDP quantity UX. Furniture retains the pre-add picker for service add-ons. @default 'inline' */
+            addToCartQuantityMode?: 'inline' | 'pre-select';
         };
     };
 }
@@ -121,6 +123,7 @@ export const uiConfig: UIConfig = {
             imageCardAxes: ['size', 'legStyle'],
             collapsibleSwatchSections: true,
             galleryLayout: 'mosaic',
+            addToCartQuantityMode: 'pre-select',
         },
     },
 };
