@@ -202,6 +202,29 @@ describe('Furniture home page', () => {
         }
     });
 
+    test('excludes menu-hidden helper categories from the Shop by Room grid', async () => {
+        // Helper categories (add-on services, fabric swatches) are flagged c_showInMenu:false and carry no
+        // <position>, so SCAPI returns them ahead of the positioned rooms. The grid must skip them the same way
+        // the mega-menu does, rather than letting them fill the first tiles (W-24282465).
+        const mixedCategories = [
+            { id: 'addon-services', name: 'Add-on Services', c_showInMenu: 'false' },
+            { id: 'fabric-swatches', name: 'Fabric Swatches', c_showInMenu: 'false' },
+            { id: 'living-room', name: 'Living Room', c_showInMenu: 'true' },
+            { id: 'bedroom', name: 'Bedroom', c_showInMenu: 'true' },
+            { id: 'dining', name: 'Dining', c_showInMenu: 'true' },
+        ] as unknown as ShopperProducts.schemas['Category'][];
+
+        renderHomePage({ ...loaderData, categories: Promise.resolve(mixedCategories) });
+
+        await waitFor(() => {
+            expect(screen.getByText('Living Room')).toBeInTheDocument();
+        });
+        expect(screen.getByText('Bedroom')).toBeInTheDocument();
+        expect(screen.getByText('Dining')).toBeInTheDocument();
+        expect(screen.queryByText('Add-on Services')).not.toBeInTheDocument();
+        expect(screen.queryByText('Fabric Swatches')).not.toBeInTheDocument();
+    });
+
     test('renders the Furniture Next brand card at the full page width', () => {
         renderHomePage();
 

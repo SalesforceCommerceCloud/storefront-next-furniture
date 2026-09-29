@@ -110,7 +110,14 @@ function ProductsError() {
 }
 
 function ShopByRoomMosaic({ categories }: { categories: ShopperProducts.schemas['Category'][] }) {
-    const [primary, ...secondary] = categories.slice(0, 5);
+    // Helper categories (add-on services, swatch tiles, fabric swatches) are flagged c_showInMenu:false in the
+    // dataset — browsable by id but hidden from menus and grids. They carry no <position>, so SCAPI sorts them
+    // ahead of the positioned room categories; without this filter they leak into the first 5 tiles. Mirrors the
+    // mega-menu contract (navigation-menu) and the luxury vertical's CollectionGrid — no hardcoded ids needed.
+    const rooms = categories.filter(
+        (category) => String((category as { c_showInMenu?: unknown }).c_showInMenu) !== 'false'
+    );
+    const [primary, ...secondary] = rooms.slice(0, 5);
     const { t } = useTranslation('home');
 
     if (!primary) {
