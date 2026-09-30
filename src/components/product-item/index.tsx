@@ -158,6 +158,7 @@ export function ProductItemVariantName({
                     <Link
                         to={createProductUrlFromAttributes(productId, null, 'color', null, {
                             context: seoUrlContext,
+                            slug: productItem.slug,
                         })}
                         className="hover:text-primary block break-words"
                         title={productName}>

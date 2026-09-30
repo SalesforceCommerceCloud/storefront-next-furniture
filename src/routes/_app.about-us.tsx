@@ -35,6 +35,8 @@ import { PageType } from '@/lib/decorators/page-type';
 import { RegionDefinition } from '@/lib/decorators/region-definition';
 import { getLogger } from '@/lib/logger.server';
 import { fetchPageWithComponentData, type PageWithComponentData } from '@/lib/page-designer/page-loader.server';
+import { createCategoryUrlFromLegacyPath } from '@/route-paths';
+import { useSeoUrlContext } from '@/hooks/use-seo-url-context';
 import { buildCanonicalUrl } from '@/utils/canonical-url';
 import { useTranslation } from 'react-i18next';
 import heroLivingRoom from '/images/hero-01.webp';
@@ -98,6 +100,8 @@ function EditorialImage({ src, alt }: { src: string; alt: string }) {
 }
 
 function BrandIntroduction({ t }: { t: TFunction<'furnitureAboutUs'> }) {
+    const seoUrlContext = useSeoUrlContext();
+
     return (
         <section
             className="grid overflow-hidden rounded-ui bg-secondary md:grid-cols-2"
@@ -116,7 +120,9 @@ function BrandIntroduction({ t }: { t: TFunction<'furnitureAboutUs'> }) {
                     {t('hero.body')}
                 </p>
                 <Button asChild className="w-fit">
-                    <Link to={t('hero.ctaLink')}>{t('hero.ctaText')}</Link>
+                    <Link to={createCategoryUrlFromLegacyPath(t('hero.ctaLink'), seoUrlContext)}>
+                        {t('hero.ctaText')}
+                    </Link>
                 </Button>
             </div>
         </section>
@@ -171,6 +177,8 @@ function Principles({ t }: { t: TFunction<'furnitureAboutUs'> }) {
 }
 
 function ClosingInvitation({ t }: { t: TFunction<'furnitureAboutUs'> }) {
+    const seoUrlContext = useSeoUrlContext();
+
     return (
         <section
             className="grid overflow-hidden rounded-ui bg-foreground text-background md:grid-cols-2"
@@ -189,7 +197,9 @@ function ClosingInvitation({ t }: { t: TFunction<'furnitureAboutUs'> }) {
                     {t('closing.content')}
                 </p>
                 <Button asChild variant="secondary" className="w-fit">
-                    <Link to={t('closing.ctaLink')}>{t('closing.ctaText')}</Link>
+                    <Link to={createCategoryUrlFromLegacyPath(t('closing.ctaLink'), seoUrlContext)}>
+                        {t('closing.ctaText')}
+                    </Link>
                 </Button>
             </div>
         </section>

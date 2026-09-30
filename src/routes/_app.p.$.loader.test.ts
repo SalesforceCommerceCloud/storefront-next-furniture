@@ -16,6 +16,7 @@
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { ApiError } from '@/scapi';
 import { NormalizedApiError } from '@/lib/api/normalized-api-error';
+import { appConfigContext } from '@salesforce/storefront-next-runtime/config';
 import { siteContext } from '@salesforce/storefront-next-runtime/site-context';
 
 const { mockFetchProductById, mockAttemptRouteSeoFallback } = vi.hoisted(() => ({
@@ -38,28 +39,67 @@ vi.mock('@salesforce/storefront-next-runtime/i18n', () => ({
     getTranslation: vi.fn(() => ({ i18next: { t: (key: string) => key } })),
 }));
 
-import { loader } from './_app.product.$productId';
+import { loader } from './_app.p.$';
 
 describe('Furniture product route loader fallback', () => {
+    let activeAppConfig: object = {};
     const context = {
-        get: vi.fn((key) =>
-            key === siteContext ? { currency: 'USD', site: { id: 'test-site' }, locale: { id: 'en-US' } } : undefined
-        ),
+        get: vi.fn((key) => {
+            if (key === siteContext) {
+                return { currency: 'USD', site: { id: 'test-site' }, locale: { id: 'en-US' } };
+            }
+            if (key === appConfigContext) {
+                return activeAppConfig;
+            }
+            return undefined;
+        }),
     } as any;
     const invoke = (path: string) => {
-        const request = new Request(`https://example.com/product/${path}`);
+        const request = new Request(`https://example.com/p/${path}`);
         return loader({
             request,
-            params: { siteId: 'test-site', localeId: 'en-US', productId: path },
+            params: { siteId: 'test-site', localeId: 'en-US', '*': path },
             context,
             url: new URL(request.url),
-            pattern: '',
+            pattern: '/p/*',
         });
     };
 
     beforeEach(() => {
         vi.clearAllMocks();
+        activeAppConfig = {};
         mockAttemptRouteSeoFallback.mockResolvedValue(undefined);
+    });
+
+    test('301-redirects a stale slug from the existing product lookup', async () => {
+        activeAppConfig = {
+            url: {
+                seoRoutes: {
+                    'test-site': {
+                        product: { prefix: 'p' },
+                        category: { prefix: 'c', mode: 'id-suffix' },
+                    },
+                },
+            },
+        };
+        mockFetchProductById.mockResolvedValueOnce({ id: 'chair-123', slug: 'current café' });
+        const request = new Request('https://example.com/p/old-slug/chair-123?color=blue');
+
+        const response = await loader({
+            request,
+            params: { siteId: 'test-site', localeId: 'en-US', '*': 'stale-route-param' },
+            context,
+            url: new URL(request.url),
+            pattern: '/p/*',
+        }).then(
+            () => undefined,
+            (error: unknown) => error as Response
+        );
+
+        expect(response?.status).toBe(301);
+        expect(response?.headers.get('Location')).toBe('/p/current%20caf%C3%A9/chair-123?color=blue');
+        expect(mockFetchProductById).toHaveBeenCalledOnce();
+        expect(mockAttemptRouteSeoFallback).not.toHaveBeenCalled();
     });
 
     test('uses the unchanged .html path ID without fallback on primary success', async () => {
