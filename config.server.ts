@@ -15,7 +15,7 @@
  */
 
 import { defineConfig } from '@salesforce/storefront-next-runtime/config';
-import baseConfig, { defaultSeoRoute, protectedConfigPaths } from './config.server.base';
+import baseConfig, { protectedConfigPaths } from './config.server.base';
 
 export default defineConfig(
     {
@@ -40,13 +40,6 @@ export default defineConfig(
             },
             defaultSiteId: 'Furniture',
             siteAliasMap: { Furniture: 'Furniture' },
-            url: {
-                ...baseConfig?.app?.url,
-                seoRoutes: {
-                    ...baseConfig?.app?.url?.seoRoutes,
-                    Furniture: defaultSeoRoute,
-                },
-            },
         },
     },
     { protectedPaths: protectedConfigPaths }
