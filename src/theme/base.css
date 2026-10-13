@@ -247,3 +247,8 @@ footer a img {
     width: auto;
     display: block;
 }
+
+/* Add bottom padding when the product bottom bar is visible to prevent footer overlap */
+body:has([data-slot="product-bottom-bar"]:not(.translate-y-full)) {
+    padding-bottom: 88px;
+}

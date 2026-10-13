@@ -53,6 +53,7 @@ vi.mock('@/hooks/use-item-fetcher', () => ({
         state: 'idle',
         submit: vi.fn(),
     }),
+    getItemFetcherKey: (itemId: string, componentName: string) => (itemId ? `${itemId}-${componentName}` : ''),
 }));
 
 vi.mock('@/hooks/use-cart-quantity-update', () => ({
@@ -64,6 +65,14 @@ vi.mock('@/hooks/use-cart-quantity-update', () => ({
 
 vi.mock('@salesforce/storefront-next-runtime/config', () => ({
     useConfig: () => ({
+        url: {
+            seoRoutes: {
+                RefArchGlobal: {
+                    product: { prefix: 'p' },
+                    category: { prefix: 'c', mode: 'id-suffix' },
+                },
+            },
+        },
         pages: {
             cart: {
                 quantityUpdateDebounce: 500,
@@ -76,6 +85,7 @@ vi.mock('@salesforce/storefront-next-runtime/config', () => ({
 const mockProduct = {
     itemId: '1',
     productId: 'prod-1',
+    slug: 'test-product',
     productName: 'Test Product',
     quantity: 1,
     basePrice: 20.0,
@@ -187,6 +197,7 @@ describe('MiniCartItem', () => {
         const img = screen.getByAltText('Product image');
         expect(img).toBeInTheDocument();
         expect(img).toHaveAttribute('src', expect.stringContaining('placeholder.com'));
+        expect(img.closest('a')).toHaveAttribute('href', '/p/test-product/prod-1');
     });
 
     it('renders placeholder when no image', () => {
@@ -292,5 +303,23 @@ describe('MiniCartItem', () => {
         expect(decrementButton).toBeInTheDocument();
         await user.click(incrementButton);
         // Quantity change is handled by mocked hook
+    });
+
+    // Furniture overlay behavior: a fabric-swatch line (identified by c_fabricFamily) is one-each,
+    // so the mini-cart stepper is capped at maxQtyPerSwatch (furniture config = 1) and cannot be raised.
+    it('locks quantity for a fabric-swatch line (increment disabled at the per-swatch cap)', () => {
+        const swatchProduct = {
+            ...mockProduct,
+            price: 0,
+            priceAfterItemDiscount: 0,
+            c_fabricFamily: 'Linen',
+        };
+        renderWithRouter(<MiniCartItem product={swatchProduct} />);
+        expect(screen.getByTestId('quantity-increment')).toBeDisabled();
+    });
+
+    it('does not lock quantity for a normal (non-swatch) line', () => {
+        renderWithRouter(<MiniCartItem product={mockProduct} />);
+        expect(screen.getByTestId('quantity-increment')).not.toBeDisabled();
     });
 });

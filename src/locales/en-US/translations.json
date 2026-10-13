@@ -41,6 +41,14 @@
         "nextImage": "Next image",
         "thumbnailImage": "Product image {{current}} of {{total}}",
         "thumbnailImageLabeled": "{{label}}, product image {{current}} of {{total}}",
+        "zoom": {
+            "open": "Zoom image",
+            "openImage": "Zoom image {{current}} of {{total}}",
+            "magnify": "Toggle image magnification",
+            "title": "Product image",
+            "description": "Zoomed product image. Click the image to magnify. When magnified, use the arrow keys to pan. Otherwise, use left and right arrow keys to change image.",
+            "counter": "{{current}} of {{total}}"
+        },
         "quickCategoryFilters": "Quick category filters",
         "carousel": {
             "play": "Play carousel",
@@ -344,6 +352,8 @@
         "increaseQuantity": "Increase quantity",
         "decreaseQuantityForProduct": "Decrement Quantity for {{productName}}",
         "increaseQuantityForProduct": "Increment Quantity for {{productName}}",
+        "removeFromCartForProduct": "Remove {{productName}} from cart",
+        "quantityInCart": "{{count}} in cart",
         "quantityInput": "Quantity",
         "quantityUpdated": "Quantity updated",
         "quantityUpdateFailed": "Failed to update quantity",
@@ -889,6 +899,17 @@
                 "saveSuccess": "Pickup preferences saved successfully"
             }
         },
+        "lastOrderCard": {
+            "label": "Last order",
+            "heading": "Last order {{orderNo}}",
+            "itemCount_one": "{{count}} item",
+            "itemCount_other": "{{count}} items",
+            "description": "Add everything available from this order, or open it in My Account to add one item at a time.",
+            "addAllToCart": "Add all to cart",
+            "addingToCart": "Adding…",
+            "viewInMyAccount": "View in My Account",
+            "overflow": "+{{count}}"
+        },
         "overview": {
             "welcomeBack": "Welcome back, {{name}}!",
             "welcomeSubtitle": "Manage your account, view orders, and discover personalized recommendations.",
@@ -1143,6 +1164,7 @@
             "remove": "Remove",
             "default": "Default",
             "expires": "Expires",
+            "sepaDebit": "SEPA Debit",
             "addPaymentMethodTitle": "Add Payment Method",
             "creditCard": "Credit Card",
             "nameOnCard": "Name on Card*",
@@ -1463,8 +1485,8 @@
             "swatches": {
                 "title": "Free swatches",
                 "description": "See color and texture at home before you choose. Up to five fabrics, on us.",
-                "ctaText": "Shop furniture",
-                "ctaAriaLabel": "Shop the furniture collection",
+                "ctaText": "Order Swatches",
+                "ctaAriaLabel": "Order free fabric swatches",
                 "imageAlt": "A softly styled bedroom showing layered fabric textures."
             },
             "brand": {
@@ -1837,7 +1859,7 @@
             "delivery": "Delivery",
             "method": "Fulfillment method",
             "deliveryAddressDescription": "Deliver to shipping address",
-            "deliveryDescription": "Enter postal code to see delivery estimate"
+            "deliveryDescription": "Enter a postal code to get a delivery estimate"
         },
         "recommendations": {
             "youMightAlsoLike": "You might also like",
@@ -1875,13 +1897,15 @@
                 "preOrder": "Pre-order: ",
                 "backOrder": "Back order: "
             },
-            "unavailable": "Inventory unavailable"
+            "unavailable": "Inventory unavailable",
+            "allocated": "Limited allocation"
         },
         "selectAllOptions": "Select all your options above",
         "description": "Description",
         "imageAlt": "Product Image",
         "addingToCart": "Adding to Cart...",
         "addToCart": "Add to Cart",
+        "chooseOptions": "Choose Options",
         "moreOptions": "More Options",
         "quickAdd": "Quick Add",
         "buyItNow": "Buy It Now",
@@ -2060,7 +2084,8 @@
             "range": "{{min}} – {{max}}",
             "rangeA11y": "Price range from {{min}} to {{max}}",
             "listPriceFrom": "List price from {{price}}",
-            "listPrice": "List price: {{price}}"
+            "listPrice": "List price: {{price}}",
+            "onRequest": "Price on request"
         },
         "availableServices": "Available services",
         "servicesTotal": "Services total",
@@ -2169,52 +2194,26 @@
             "ctaLink": "/category/root"
         }
     },
-    "showrooms": {
+    "swatches": {
         "meta": {
-            "title": "Showrooms",
-            "description": "Find a nearby furniture showroom and explore pieces in person."
+            "title": "Free fabric swatches",
+            "description": "Compare texture, color, and finish at home before you configure. Choose up to five swatches and we will send them your way."
         },
-        "eyebrow": "Visit us",
-        "title": "Showrooms made for unhurried decisions",
-        "description": "See finishes in natural light, settle into every seat, and compare dimensions with help nearby.",
-        "search": {
-            "title": "Find a showroom near you",
-            "description": "Explore materials, comfort, and scale in person before choosing pieces for your home.",
-            "formLabel": "Showroom search form",
-            "country": "Country",
-            "selectCountry": "Select a country",
-            "postalCode": "Postal code",
-            "postalCodePlaceholder": "Enter postal code",
-            "submit": "Find showrooms",
-            "separator": "or",
-            "useLocation": "Use my location"
+        "eyebrow": "Try before you buy",
+        "title": "Free fabric swatches",
+        "description": "Compare texture, color, and finish at home before you configure. Choose up to five swatches and we will send them your way.",
+        "gallery": {
+            "heading": "Fabric Swatches",
+            "selectHint": "See and feel the texture before you commit.",
+            "selectedCount": "{{count}} of {{max}} selected"
         },
-        "messages": {
-            "loading": "Finding nearby showrooms",
-            "geolocationError": "We could not use your location. Search by postal code instead.",
-            "fetchError": "We could not find showrooms right now. Please try again.",
-            "noResults": "No showrooms found in this area."
+        "form": {
+            "submit": "Order Free Swatches",
+            "submitting": "Processing..."
         },
-        "map": {
-            "label": "Showroom locations",
-            "loadingLabel": "Loading showroom map"
-        },
-        "results": {
-            "label": "Showroom results",
-            "showMore": "Show more showrooms",
-            "showOnMap": "Show on map",
-            "shownOnMap": "Shown on map",
-            "details": "Showroom details",
-            "phone": "Phone:",
-            "email": "Email:",
-            "hours": "Showroom hours",
-            "distance": "{{distance}} {{unit}} away"
-        },
-        "availability": {
-            "available": "Available at this showroom",
-            "unavailable": "Not currently available at this showroom",
-            "unknown": "Availability unavailable"
-        },
-        "appointment": "Book a showroom appointment"
+        "alreadyOrdered": {
+            "heading": "Swatches ordered",
+            "body": "You've already ordered your free fabric swatches. Check your email for shipping confirmation."
+        }
     }
 }

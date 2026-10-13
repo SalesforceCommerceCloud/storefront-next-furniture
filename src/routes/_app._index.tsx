@@ -37,7 +37,8 @@ import { SeoMeta } from '@/components/seo-meta';
 import { buildCanonicalUrl } from '@/utils/canonical-url';
 import { useTranslation } from 'react-i18next';
 import type { NormalizedApiError } from '@/lib/api/normalized-api-error';
-import { routes, routeHref } from '@/route-paths';
+import { createCategoryUrlFromLegacyPath } from '@/route-paths';
+import { useSeoUrlContext } from '@/hooks/use-seo-url-context';
 
 import hero01 from '/images/hero-01.webp';
 import hero02 from '/images/hero-02.webp';
@@ -109,7 +110,14 @@ function ProductsError() {
 }
 
 function ShopByRoomMosaic({ categories }: { categories: ShopperProducts.schemas['Category'][] }) {
-    const [primary, ...secondary] = categories.slice(0, 5);
+    // Helper categories (add-on services, swatch tiles, fabric swatches) are flagged c_showInMenu:false in the
+    // dataset — browsable by id but hidden from menus and grids. They carry no <position>, so SCAPI sorts them
+    // ahead of the positioned room categories; without this filter they leak into the first 5 tiles. Mirrors the
+    // mega-menu contract (navigation-menu) and the luxury vertical's CollectionGrid — no hardcoded ids needed.
+    const rooms = categories.filter(
+        (category) => String((category as { c_showInMenu?: unknown }).c_showInMenu) !== 'false'
+    );
+    const [primary, ...secondary] = rooms.slice(0, 5);
     const { t } = useTranslation('home');
 
     if (!primary) {
@@ -210,7 +218,11 @@ export function loader(args: Route.LoaderArgs): HomePageData {
 
 export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
     const { t } = useTranslation('home');
-    const rootCategoryUrl = routeHref(routes.category, { categoryId: loaderData.rootCategoryId });
+    const seoUrlContext = useSeoUrlContext();
+    const rootCategoryUrl = createCategoryUrlFromLegacyPath(
+        `/category/${encodeURIComponent(loaderData.rootCategoryId)}`,
+        seoUrlContext
+    );
 
     const heroSlides: HeroSlide[] = [
         {
@@ -364,7 +376,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
                             imageAlt={t('editorial.swatches.imageAlt')}
                             buttonText={t('editorial.swatches.ctaText')}
                             buttonAriaLabel={t('editorial.swatches.ctaAriaLabel')}
-                            buttonLink={rootCategoryUrl}
+                            buttonLink="/swatches"
                             showBackground={false}
                             showBorder={false}
                             loading="lazy"

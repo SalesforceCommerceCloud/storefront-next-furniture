@@ -39,6 +39,10 @@
  * below).
  */
 interface UIConfig {
+    checkout: {
+        /** When true, allow placing orders with $0 total without payment instruments or billing addresses. @default false */
+        allowZeroTotalOrders: boolean;
+    };
     pages: {
         cart: {
             showRecommendations: boolean;
@@ -46,6 +50,12 @@ interface UIConfig {
             showLineItemListPrice: boolean;
             showLineItemPromoBadge: boolean;
             showLineItemBonusBadge: boolean;
+        };
+        swatches: {
+            /** Maximum number of distinct swatches that can be selected per order. @default 0 */
+            maxDistinctSwatches: number;
+            /** Maximum quantity allowed per individual swatch product. @default 1 */
+            maxQtyPerSwatch: number;
         };
         category: {
             showCategoryLabel: boolean;
@@ -59,6 +69,8 @@ interface UIConfig {
             sidebarCategoryRefinement?: {
                 enabled: boolean;
             };
+            /** When true, product tiles link to the master product PDP instead of the represented variant. @default false */
+            tileLinksToMasterProduct?: boolean;
         };
         product: {
             showRatingAverage: boolean;
@@ -70,11 +82,20 @@ interface UIConfig {
             collapsibleSwatchSections?: boolean;
             /** PDP product-image gallery layout: 'stacked' (hero + thumbnails) or 'mosaic'. @default 'stacked' */
             galleryLayout?: 'stacked' | 'mosaic';
+            /**
+             * PDP quantity UX: 'inline' turns Add to Cart into an in-cart stepper; 'pre-select' keeps the
+             * pre-add quantity picker. @default 'pre-select' documents the type-level fallback for an unset
+             * value; furniture sets 'inline' below since shoppers rarely buy multiple large items.
+             */
+            addToCartQuantityMode?: 'inline' | 'pre-select';
         };
     };
 }
 
 export const uiConfig: UIConfig = {
+    checkout: {
+        allowZeroTotalOrders: true,
+    },
     pages: {
         cart: {
             showRecommendations: true,
@@ -82,6 +103,10 @@ export const uiConfig: UIConfig = {
             showLineItemListPrice: true,
             showLineItemPromoBadge: true,
             showLineItemBonusBadge: true,
+        },
+        swatches: {
+            maxDistinctSwatches: 5,
+            maxQtyPerSwatch: 1,
         },
         category: {
             showCategoryLabel: false,
@@ -91,6 +116,10 @@ export const uiConfig: UIConfig = {
                 mobileBatchSize: 12,
                 maxProducts: 200,
             },
+            // Furniture tiles link to the master PDP so the shopper configures size/fabric/leg from
+            // scratch (paired with the PDP "Choose Options" flow), rather than deep-linking to the
+            // search API's represented variant. Every other vertical leaves this off.
+            tileLinksToMasterProduct: true,
         },
         product: {
             showRatingAverage: false,
@@ -98,6 +127,7 @@ export const uiConfig: UIConfig = {
             imageCardAxes: ['size', 'legStyle'],
             collapsibleSwatchSections: true,
             galleryLayout: 'mosaic',
+            addToCartQuantityMode: 'inline',
         },
     },
 };

@@ -19,6 +19,10 @@ import { describe, expect, test, vi } from 'vitest';
 import type { ShopperExperience } from '@/scapi';
 import AboutUs, { type AboutUsPageData } from './_app.about-us';
 
+vi.mock('@/hooks/use-seo-url-context', () => ({
+    useSeoUrlContext: () => ({ siteId: 'RefArchGlobal' }),
+}));
+
 vi.mock('@/components/link', () => ({
     Link: ({ to, children }: { to: string; children: ReactNode }) => <a href={to}>{children}</a>,
 }));
@@ -122,10 +126,10 @@ describe('Furniture AboutUs', () => {
         expect(screen.getByAltText('A warm dining room set for a meal.')).toBeInTheDocument();
     });
 
-    test('links About Us calls to action to the Furniture root category', () => {
+    test('converts legacy About Us category links to the configured route', () => {
         renderComponent();
 
-        expect(screen.getByRole('link', { name: 'Explore the collection' })).toHaveAttribute('href', '/category/root');
-        expect(screen.getByRole('link', { name: 'Shop Now' })).toHaveAttribute('href', '/category/root');
+        expect(screen.getByRole('link', { name: 'Explore the collection' })).toHaveAttribute('href', '/c/root');
+        expect(screen.getByRole('link', { name: 'Shop Now' })).toHaveAttribute('href', '/c/root');
     });
 });

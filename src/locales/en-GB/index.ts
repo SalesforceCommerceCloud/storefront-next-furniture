@@ -24,4 +24,12 @@ const allTranslations = {
     ...extensionTranslations,
 };
 
-export default allTranslations satisfies ResourceLanguage satisfies DeepPartial<typeof enUS>;
+// Brand namespaces absent from the base tree are widened to string-indexed records so i18next's
+// key-union type stays within TypeScript's instantiation limits for large locales. Only the t() key
+// type is affected — every other namespace keeps full key type-safety. Type-only, no runtime code.
+const resources = allTranslations as Omit<typeof allTranslations, 'furnitureAboutUs' | 'swatches'> & {
+    furnitureAboutUs: Record<string, unknown>;
+    swatches: Record<string, unknown>;
+};
+
+export default resources satisfies ResourceLanguage satisfies DeepPartial<typeof enUS>;

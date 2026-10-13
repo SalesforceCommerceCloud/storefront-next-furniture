@@ -15,18 +15,20 @@
  */
 import { type ReactElement, useState, useEffect } from 'react';
 import type { ShopperProducts } from '@/scapi';
-import ImageGallery from '@/components/image-gallery';
+import ProductZoomGallery from '@/components/product-zoom-gallery';
 import ProductInfo from '@/components/product-view/product-info';
 import ProductCartActions, { type AdditionalItem } from '@/components/product-cart-actions';
 import ConfigurationSummary from './configuration-summary';
 import HowToGetIt from './how-to-get-it';
 import AvailableServices from './available-services';
 import type { ServiceAddon } from '../../lib/service-addons.server';
-import ProductViewProvider from '@/providers/product-view';
+import { useOptionalServiceAddons } from '../../context/service-addons-context';
+import ProductViewProvider, { useOptionalProductView } from '@/providers/product-view';
 import { useProductImages } from '@/hooks/product/use-product-images';
 import { useSelectedVariations } from '@/hooks/product/use-selected-variations';
 import { isProductSet, isProductBundle } from '@/lib/product/product-utils';
 import { uiConfig } from '@/lib/config.ui';
+import { usesInlineAddToCartQuantity } from '@/lib/product/add-to-cart-quantity-mode';
 import CollapsibleHtmlSection from '@/components/collapsible-section/collapsible-html-section';
 import { useTranslation } from 'react-i18next';
 import { UITarget } from '@/targets/ui-target';
@@ -45,12 +47,26 @@ interface ProductViewProps {
  * control service availability without touching the canonical ProductCartActions component.
  */
 export default function ProductView({ product, serviceAddonsPromise }: ProductViewProps): ReactElement {
-    const [additionalItems, setAdditionalItems] = useState<AdditionalItem[]>([]);
+    // Selected service add-ons are shared with the route-level ProductBottomBar via
+    // ServiceAddonsProvider so both batch the same items into Add-to-Cart. When ProductView renders
+    // outside that provider (tests/Storybook), fall back to local state so it stays self-contained.
+    const sharedAddons = useOptionalServiceAddons();
+    const [localAdditionalItems, setLocalAdditionalItems] = useState<AdditionalItem[]>([]);
+    const additionalItems = sharedAddons?.additionalItems ?? localAdditionalItems;
+    const setAdditionalItems = sharedAddons?.setAdditionalItems ?? setLocalAdditionalItems;
 
-    // Reset additional items when navigating to a different product.
+    // The furniture PDP route mounts a ProductViewProvider around both this view and the sticky
+    // ProductBottomBar, so the bar can share add-to-cart state. Reuse that outer provider when
+    // present so the in-page quantity picker and the bar read/write ONE quantity (and variant)
+    // state — a nested provider here would fork it, leaving the bar stuck on quantity 1. Standalone
+    // renders (Storybook / tests) have no outer provider, so fall back to our own.
+    const hasOuterProvider = Boolean(useOptionalProductView());
+
+    // Reset the local fallback when navigating to a different product; when the shared provider is
+    // present it owns the reset (keyed by product id) instead.
     useEffect(() => {
-        setAdditionalItems([]);
-    }, [product.id]);
+        if (!sharedAddons) setLocalAdditionalItems([]);
+    }, [product.id, sharedAddons]);
 
     // Calculate directly without useMemo since these are simple operations
     const isProductASet = isProductSet(product);
@@ -68,57 +84,68 @@ export default function ProductView({ product, serviceAddonsPromise }: ProductVi
     // Furniture opts into the mosaic PDP gallery via config; every other vertical stays 'stacked'
     // (hero + thumbnails). Read here (the PDP caller) so non-PDP ImageGallery usages are unaffected.
     const galleryLayout = uiConfig.pages.product.galleryLayout ?? 'stacked';
+    const useInlineCartQuantity = usesInlineAddToCartQuantity();
 
-    return (
-        <ProductViewProvider product={product} mode="add">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12">
-                {/* Left Column - Image Gallery + Description */}
-                <div className="order-1">
-                    <ImageGallery
-                        key={product.id}
-                        images={galleryImages}
-                        eager={!isProductASet && !isProductABundle}
-                        showNavigationArrows
-                        navigationArrowSize="lg"
-                        productName={product.name}
-                        layout={galleryLayout}
+    const content = (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12">
+            {/* Left Column - Image Gallery + Description */}
+            <div className="order-1">
+                <ProductZoomGallery
+                    key={product.id}
+                    images={galleryImages}
+                    eager={!isProductASet && !isProductABundle}
+                    showNavigationArrows
+                    navigationArrowSize="lg"
+                    productName={product.name}
+                    layout={galleryLayout}
+                />
+                <UITarget targetId="sfcc.pdp.agent.productHelper" />
+                {product.longDescription && product.longDescription !== product.shortDescription && (
+                    <CollapsibleHtmlSection
+                        label={`${t('description')}:`}
+                        content={product.longDescription}
+                        contentType="bulleted-list"
+                        defaultOpen
+                        className="mt-6"
                     />
-                    <UITarget targetId="sfcc.pdp.agent.productHelper" />
-                    {product.longDescription && product.longDescription !== product.shortDescription && (
-                        <CollapsibleHtmlSection
-                            label={`${t('description')}:`}
-                            content={product.longDescription}
-                            contentType="bulleted-list"
-                            defaultOpen
-                            className="mt-6"
-                        />
-                    )}
-                </div>
-
-                {/* Right Column - Product Info */}
-                <div className="order-2">
-                    <ProductInfo
-                        product={product}
-                        afterVariations={
-                            <>
-                                <ConfigurationSummary />
-                                <HowToGetIt />
-                            </>
-                        }
-                        hideDeliveryOptions
-                        showQuantityPicker={false}
-                    />
-                    <ProductCartActions product={product} additionalItems={additionalItems} showInlineQuantity />
-                    {serviceAddonsPromise && (
-                        <AvailableServices
-                            servicesPromise={serviceAddonsPromise}
-                            onSelectionChange={setAdditionalItems}
-                        />
-                    )}
-                    <UITarget targetId="sfcc.pdp.returnsWarranty" />
-                    <UITarget targetId="sfcc.pdp.collapsibles" />
-                </div>
+                )}
             </div>
+
+            {/* Right Column - Product Info */}
+            <div className="order-2">
+                <ProductInfo
+                    product={product}
+                    afterVariations={
+                        <>
+                            <ConfigurationSummary />
+                            <HowToGetIt />
+                        </>
+                    }
+                    hideDeliveryOptions
+                    // Furniture's picker lives beside the CTA so its selected quantity can be
+                    // batched with service add-ons. Keep ProductInfo's standalone picker hidden.
+                    showQuantityPicker={false}
+                />
+                <ProductCartActions
+                    product={product}
+                    additionalItems={additionalItems}
+                    showInlineQuantity={!useInlineCartQuantity}
+                    showInlineCartQuantity={useInlineCartQuantity}
+                />
+                {serviceAddonsPromise && (
+                    <AvailableServices servicesPromise={serviceAddonsPromise} onSelectionChange={setAdditionalItems} />
+                )}
+                <UITarget targetId="sfcc.pdp.returnsWarranty" />
+                <UITarget targetId="sfcc.pdp.collapsibles" />
+            </div>
+        </div>
+    );
+
+    return hasOuterProvider ? (
+        content
+    ) : (
+        <ProductViewProvider product={product} mode="add">
+            {content}
         </ProductViewProvider>
     );
 }

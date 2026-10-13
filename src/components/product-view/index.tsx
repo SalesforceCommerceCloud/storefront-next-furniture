@@ -16,7 +16,7 @@
 // oxlint-disable-next-line react-refresh/only-export-components
 export { default } from './product-view';
 export { default as ProductView } from './product-view';
-export { default as ProductInfo } from './product-info';
-export { default as ProductAccordion } from './product-accordion';
-export { default as ChildProducts } from './child-products';
-export { default as ChildProductCard } from './child-product-card';
+export { default as ProductInfo } from '@/components/product-view/product-info';
+export { default as ProductAccordion } from '@/components/product-view/product-accordion';
+export { default as ChildProducts } from '@/components/product-view/child-products';
+export { default as ChildProductCard } from '@/components/product-view/child-product-card';
