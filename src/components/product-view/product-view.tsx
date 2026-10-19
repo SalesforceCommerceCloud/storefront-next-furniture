@@ -31,7 +31,10 @@ import { uiConfig } from '@/lib/config.ui';
 import { usesInlineAddToCartQuantity } from '@/lib/product/add-to-cart-quantity-mode';
 import CollapsibleHtmlSection from '@/components/collapsible-section/collapsible-html-section';
 import { useTranslation } from 'react-i18next';
+import { useRouteLoaderData } from 'react-router';
 import { UITarget } from '@/targets/ui-target';
+import EmbeddedAgentWidget, { isEmbeddedAgentConfigured, parsePdpQuestions } from '@/components/embedded-agent';
+import type { loader as rootLoader } from '@/root';
 
 interface ProductViewProps {
     product: ShopperProducts.schemas['Product'];
@@ -80,6 +83,9 @@ export default function ProductView({ product, serviceAddonsPromise }: ProductVi
     });
 
     const { t } = useTranslation('product');
+    const rootData = useRouteLoaderData<typeof rootLoader>('root');
+    const embeddedAgent = rootData?.appConfig?.commerce?.embeddedAgent;
+    const pdpQuestions = parsePdpQuestions((product as unknown as { c_pdpQuestions?: unknown }).c_pdpQuestions);
 
     // Furniture opts into the mosaic PDP gallery via config; every other vertical stays 'stacked'
     // (hero + thumbnails). Read here (the PDP caller) so non-PDP ImageGallery usages are unaffected.
@@ -134,6 +140,15 @@ export default function ProductView({ product, serviceAddonsPromise }: ProductVi
                 />
                 {serviceAddonsPromise && (
                     <AvailableServices servicesPromise={serviceAddonsPromise} onSelectionChange={setAdditionalItems} />
+                )}
+                {isEmbeddedAgentConfigured(embeddedAgent) && !isProductASet && !isProductABundle && (
+                    <div className="mt-6">
+                        <EmbeddedAgentWidget
+                            config={embeddedAgent}
+                            pdpQuestions={pdpQuestions}
+                            productName={product.name}
+                        />
+                    </div>
                 )}
                 <UITarget targetId="sfcc.pdp.returnsWarranty" />
                 <UITarget targetId="sfcc.pdp.collapsibles" />
