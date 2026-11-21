@@ -78,6 +78,7 @@ vi.mock('react-router', () => ({
         submit: vi.fn(),
         state: 'idle',
     }),
+    useFormAction: () => '.',
     useNavigation: () => ({
         state: 'idle',
     }),
