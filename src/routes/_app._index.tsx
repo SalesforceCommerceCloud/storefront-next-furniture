@@ -41,9 +41,13 @@ import { createCategoryUrlFromLegacyPath } from '@/route-paths';
 import { useSeoUrlContext } from '@/hooks/use-seo-url-context';
 
 import hero01 from '/images/hero-01.webp';
+import hero01Mobile from '/images/hero-01-mobile.webp';
 import hero02 from '/images/hero-02.webp';
+import hero02Mobile from '/images/hero-02-mobile.webp';
 import hero03 from '/images/hero-03.webp';
+import hero03Mobile from '/images/hero-03-mobile.webp';
 import hero04 from '/images/hero-04.webp';
+import hero04Mobile from '/images/hero-04-mobile.webp';
 
 export { shouldRevalidate } from '@/lib/revalidation/routes/home';
 
@@ -230,6 +234,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
             title: t('hero.slide1.title'),
             subtitle: t('hero.slide1.subtitle'),
             imageUrl: hero01,
+            mobileImageUrl: hero01Mobile,
             imageAlt: t('hero.slide1.imageAlt'),
             ctaText: t('hero.slide1.ctaText'),
             ctaAriaLabel: t('hero.slide1.ctaAriaLabel'),
@@ -242,6 +247,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
             title: t('hero.slide2.title'),
             subtitle: t('hero.slide2.subtitle'),
             imageUrl: hero02,
+            mobileImageUrl: hero02Mobile,
             imageAlt: t('hero.slide2.imageAlt'),
             ctaText: t('hero.slide2.ctaText'),
             ctaAriaLabel: t('hero.slide2.ctaAriaLabel'),
@@ -254,6 +260,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
             title: t('hero.slide3.title'),
             subtitle: t('hero.slide3.subtitle'),
             imageUrl: hero03,
+            mobileImageUrl: hero03Mobile,
             imageAlt: t('hero.slide3.imageAlt'),
             ctaText: t('hero.slide3.ctaText'),
             ctaAriaLabel: t('hero.slide3.ctaAriaLabel'),
@@ -266,6 +273,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
             title: t('hero.slide4.title'),
             subtitle: t('hero.slide4.subtitle'),
             imageUrl: hero04,
+            mobileImageUrl: hero04Mobile,
             imageAlt: t('hero.slide4.imageAlt'),
             ctaText: t('hero.slide4.ctaText'),
             ctaAriaLabel: t('hero.slide4.ctaAriaLabel'),
