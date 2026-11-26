@@ -41,7 +41,7 @@ vi.mock('../lib/pdp-recommendations.server', () => ({
 }));
 vi.mock('../lib/service-addons.server', () => ({ fetchServiceAddons: vi.fn() }));
 vi.mock('@salesforce/storefront-next-runtime/i18n', () => ({
-    getTranslation: vi.fn(() => ({ i18next: { t: (key: string) => key } })),
+    getTranslation: vi.fn(() => ({ t: (key: string) => key, i18next: { t: (key: string) => key } })),
 }));
 
 import { loader } from './_app.p.$';
